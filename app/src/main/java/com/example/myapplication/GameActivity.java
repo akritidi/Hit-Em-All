@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -13,7 +14,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity {
-private Timer countdown;
+
+    private Timer countdown;
 private TextView countdownText;
 private MediaPlayer countdownSound;
 
@@ -21,6 +23,8 @@ private MediaPlayer countdownSound;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+
 
         countdownSound = MediaPlayer.create(this,R.raw.countdown_sound);
         countdownText = findViewById(R.id.textCountdown);
@@ -34,6 +38,7 @@ private MediaPlayer countdownSound;
         },1000);
 
     }
+
     public void updateCountdown(){
        countdownText.setText("2");
         try {
@@ -49,4 +54,5 @@ private MediaPlayer countdownSound;
             e.printStackTrace();
         }
     }
+
 }
