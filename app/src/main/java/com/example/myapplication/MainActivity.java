@@ -25,6 +25,7 @@ private long backPressedTime;
 private Toast backToast;
 private MediaPlayer player;
 MyService myService;
+
 boolean isBound = false;
 private Intent intent;
 
