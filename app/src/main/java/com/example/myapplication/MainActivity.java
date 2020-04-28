@@ -2,8 +2,16 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -15,12 +23,22 @@ private Button scoresButton;
 private Button exitButton;
 private long backPressedTime;
 private Toast backToast;
-
+private MediaPlayer player;
+MyService myService;
+boolean isBound = false;
+private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+         intent = new Intent(this,MyService.class);// εδω αρχιζει το service
+        startService(intent);
+
+
 
         playButton = (Button) findViewById(R.id.button);
         playButton.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +71,7 @@ private Toast backToast;
                 exitMainActivity();
             }
         });
+
 
     }
 
@@ -88,5 +107,21 @@ private Toast backToast;
        ExitDialog exitDialog = new ExitDialog();
        exitDialog.show(getSupportFragmentManager(),"exit dialog");
     }
+
+    private ServiceConnection conect = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            MyService.LocalBinder binder = (MyService.LocalBinder)service;
+            myService = binder.getService();
+            isBound=true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+         isBound = false;
+        }
+    };
+
+
 
 }
