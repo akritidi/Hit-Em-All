@@ -118,10 +118,9 @@ private Intent intent;
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-         isBound = false;
+            isBound = false;
         }
     };
-
 
 
 }
