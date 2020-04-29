@@ -17,10 +17,17 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    private long backPressedTime;
-    private Toast backToast;
-    MyService myService;
-    boolean isBound = false;
+private Button playButton;
+private Button settingsButton;
+private Button scoresButton;
+private Button exitButton;
+private long backPressedTime;
+private Toast backToast;
+private MediaPlayer player;
+MyService myService;
+
+boolean isBound = false;
+private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +36,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(this, MyService.class);// εδω αρχιζει το service
+         intent = new Intent(this,MyService.class);// εδω αρχιζει το service
         startService(intent);
 
 
-        Button playButton = (Button) findViewById(R.id.button);
+
+        playButton = (Button) findViewById(R.id.button);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button settingsButton = (Button) findViewById(R.id.button2);
+        settingsButton = (Button) findViewById(R.id.button2);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button scoresButton = (Button) findViewById(R.id.button3);
+        scoresButton = (Button) findViewById(R.id.button3);
         scoresButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button exitButton = (Button) findViewById(R.id.button4);
+        exitButton = (Button) findViewById(R.id.button4);
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
