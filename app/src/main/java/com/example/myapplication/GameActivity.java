@@ -4,23 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import org.w3c.dom.Text;
 
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -30,6 +27,18 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private boolean countdownFinished;
     private Toast hitToast;
     private Toast missToast;
+    private int lives;
+    private Random randMole;
+    private ImageButton[] arrayOfButtons;
+    private ImageButton imageButton1;
+    private ImageButton imageButton2;
+    private ImageButton imageButton3;
+    private ImageButton imageButton4;
+    private ImageButton imageButton5;
+    private ImageButton imageButton6;
+    private ImageButton imageButton7;
+    private ImageButton imageButton8;
+    private ImageButton imageButton9;
 
     @SuppressLint({"ClickableViewAccessibility", "WrongViewCast"})
     @Override
@@ -38,6 +47,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_game);
 
         countdownFinished = false;
+        lives=3;
         countdownSound = MediaPlayer.create(this, R.raw.countdown_sound);
         countdownText = findViewById(R.id.textCountdown);
         Timer countdown = new Timer();
@@ -48,6 +58,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 updateCountdown();
             }
         },1000);
+
+        createButtons();
 
         hitSound = MediaPlayer.create(this,R.raw.hit);
         missSound = MediaPlayer.create(this,R.raw.miss);
@@ -68,28 +80,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        ImageButton imageButton1 = findViewById(R.id.imageButton1);
-        imageButton1.setVisibility(View.VISIBLE);
-        ImageButton imageButton2 = findViewById(R.id.imageButton2);
-        ImageButton imageButton3 = findViewById(R.id.imageButton3);
-        ImageButton imageButton4 = findViewById(R.id.imageButton4);
-        ImageButton imageButton5 = findViewById(R.id.imageButton5);
-        imageButton5.setVisibility(View.VISIBLE);
-        ImageButton imageButton6 = findViewById(R.id.imageButton6);
-        ImageButton imageButton7 = findViewById(R.id.imageButton7);
-        ImageButton imageButton8 = findViewById(R.id.imageButton8);
-        ImageButton imageButton9 = findViewById(R.id.imageButton9);
-        imageButton9.setVisibility(View.VISIBLE);
-
-        imageButton1.setOnClickListener(this);
-        imageButton2.setOnClickListener(this);
-        imageButton3.setOnClickListener(this);
-        imageButton4.setOnClickListener(this);
-        imageButton5.setOnClickListener(this);
-        imageButton6.setOnClickListener(this);
-        imageButton7.setOnClickListener(this);
-        imageButton8.setOnClickListener(this);
-        imageButton9.setOnClickListener(this);
     }
     public void updateCountdown(){
         countdownText.setText("2");
@@ -106,6 +96,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
         countdownFinished=true;
+        randomMole();
     }
     @SuppressLint("SetTextI18n")
     public void missToast(){
@@ -146,5 +137,56 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             hitToast();
             hitSound.start();
         }
+    }
+    public int randomMole(){
+        while(lives>=1){
+            randMole = new Random();
+            int iMole;
+            try {
+                Thread.sleep(2000);
+                iMole = randMole.nextInt(0-8);
+                enableButton(iMole);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return -1;
+    }
+    public void createButtons(){
+        imageButton1 = findViewById(R.id.imageButton1);
+        imageButton2 = findViewById(R.id.imageButton2);
+        imageButton3 = findViewById(R.id.imageButton3);
+        imageButton4 = findViewById(R.id.imageButton4);
+        imageButton5 = findViewById(R.id.imageButton5);
+        imageButton6 = findViewById(R.id.imageButton6);
+        imageButton7 = findViewById(R.id.imageButton7);
+        imageButton8 = findViewById(R.id.imageButton8);
+        imageButton9 = findViewById(R.id.imageButton9);
+
+        imageButton1.setOnClickListener(this);
+        imageButton2.setOnClickListener(this);
+        imageButton3.setOnClickListener(this);
+        imageButton4.setOnClickListener(this);
+        imageButton5.setOnClickListener(this);
+        imageButton6.setOnClickListener(this);
+        imageButton7.setOnClickListener(this);
+        imageButton8.setOnClickListener(this);
+        imageButton9.setOnClickListener(this);
+
+        arrayOfButtons = new ImageButton[9];
+        arrayOfButtons[0] = imageButton1;
+        arrayOfButtons[1] = imageButton2;
+        arrayOfButtons[2] = imageButton3;
+        arrayOfButtons[3] = imageButton4;
+        arrayOfButtons[4] = imageButton5;
+        arrayOfButtons[5] = imageButton6;
+        arrayOfButtons[6] = imageButton7;
+        arrayOfButtons[7] = imageButton8;
+        arrayOfButtons[8] = imageButton9;
+    }
+
+    public void enableButton(int i){
+        arrayOfButtons[i].setVisibility(ImageButton.VISIBLE);
     }
 }
