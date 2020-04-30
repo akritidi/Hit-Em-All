@@ -69,14 +69,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         ImageButton imageButton1 = findViewById(R.id.imageButton1);
+        imageButton1.setVisibility(View.VISIBLE);
         ImageButton imageButton2 = findViewById(R.id.imageButton2);
         ImageButton imageButton3 = findViewById(R.id.imageButton3);
         ImageButton imageButton4 = findViewById(R.id.imageButton4);
         ImageButton imageButton5 = findViewById(R.id.imageButton5);
+        imageButton5.setVisibility(View.VISIBLE);
         ImageButton imageButton6 = findViewById(R.id.imageButton6);
         ImageButton imageButton7 = findViewById(R.id.imageButton7);
         ImageButton imageButton8 = findViewById(R.id.imageButton8);
         ImageButton imageButton9 = findViewById(R.id.imageButton9);
+        imageButton9.setVisibility(View.VISIBLE);
 
         imageButton1.setOnClickListener(this);
         imageButton2.setOnClickListener(this);
