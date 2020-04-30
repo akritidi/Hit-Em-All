@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.app.Activity;
 import android.app.Application;
+
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -9,10 +10,11 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 
 import java.lang.ref.WeakReference;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -20,8 +22,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class MyApplication extends Application   implements Application.ActivityLifecycleCallbacks {
     private static MyService myService;
 
-   static int state = 0;
-   static int forground=0;
+     static int times = 0;
+
     boolean isBound = false;
 
     private static WeakReference<Activity>
@@ -55,7 +57,6 @@ public class MyApplication extends Application   implements Application.Activity
 
     @Override
     public void onCreate() {
-
         super.onCreate();
 
 
@@ -64,16 +65,14 @@ public class MyApplication extends Application   implements Application.Activity
         bindService(intent,conect, (Context.BIND_ALLOW_OOM_MANAGEMENT));
     }
 
-
     public static void onEnterForeground() {
-
-      //  myService.setPlayer();
-         }
-        //This is where you'll handle logic you want to execute when your application enters the foreground
-
-    public static void onEnterBackground() {
-        //This is where you'll handle logic you want to execute when your application enters the background
-      myService.pause();
+        if (times != 0) {
+            myService.setPlayer();
+        }
+    }
+    public static void onEnterBackground()  {
+     times ++;
+        myService.pause();
     }
 
     private ServiceConnection conect = new ServiceConnection() {
@@ -107,7 +106,7 @@ public class MyApplication extends Application   implements Application.Activity
         MyApplication.currentActivityReference =
                 new WeakReference<>(activity);
         determineForegroundStatus();
-
+      //myService.setPlayer();
     }
 
 
