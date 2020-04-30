@@ -25,7 +25,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
-    private MediaPlayer countdownSound;
+    private MediaPlayer countdownSound,hitSound,missSound;
     private TextView countdownText;
     private boolean countdownFinished;
     private Toast hitToast;
@@ -49,6 +49,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         },1000);
 
+        hitSound = MediaPlayer.create(this,R.raw.hit);
+        missSound = MediaPlayer.create(this,R.raw.miss);
+
         ConstraintLayout hitLayout = (ConstraintLayout) findViewById(R.id.conLayout);
         hitLayout.setOnTouchListener(new View.OnTouchListener() {
             @SuppressLint("SetTextI18n")
@@ -57,6 +60,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 if (countdownFinished){
                     if (event.getAction() == MotionEvent.ACTION_DOWN){
                         missToast();
+                        missSound.start();
                         return true;
                     }
                 }
@@ -137,6 +141,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if(countdownFinished){
             hitToast();
+            hitSound.start();
         }
     }
 }
