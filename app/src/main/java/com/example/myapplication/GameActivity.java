@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -8,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.ImageDecoder;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -45,7 +47,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton imageButton9;
     private int mInterval;
     private Handler mHandler;
-
+    private int score,sumOfMoles;
+    private TextView scoreText,livesText;
 
 
     @SuppressLint({"ClickableViewAccessibility", "WrongViewCast"})
@@ -55,8 +58,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_game);
         createButtons();
 
+        score=0;
+        sumOfMoles=0;
+        scoreText = findViewById(R.id.textScore);
         countdownFinished = false;
         lives=3;
+        livesText = findViewById(R.id.textLives);
         countdownSound = MediaPlayer.create(this, R.raw.countdown_sound);
         countdownText = findViewById(R.id.textCountdown);
         Timer countdown = new Timer();
@@ -92,7 +99,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         });
 
     }
-
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public int randomMole(){
+        int iMole;
+        iMole = new Random().ints(0,8).limit(1).findFirst().getAsInt();
+        return iMole; }
     public void startRepeatingTask() {
         Handler mHandler=new Handler();
         mHandler.postDelayed(runnableCode, 3000);
@@ -111,11 +122,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private Runnable runnableCode=new Runnable() {
+        @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void run() {
             Log.d("Handlers","Called on Main Thread");
            r =  randomMole();
             arrayOfButtons[r].setVisibility(View.VISIBLE);
+            sumOfMoles++;
             hideMole(r);
         }
     };
@@ -125,6 +138,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         public void run() {
             Log.d("Handlers","Called on Main Thread");
             arrayOfButtons[r].setVisibility(View.GONE);
+            if(score<sumOfMoles){                                //elegxos lives
+                updateLives();
+                sumOfMoles=score;
+            }
             nextMole();
         }
     };
@@ -186,13 +203,24 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         if(countdownFinished){
             hitToast();
             hitSound.start();
+            ImageButton btn = (ImageButton) findViewById(v.getId());
+            btn.setVisibility(View.GONE);
+            updateScore();
         }
     }
-    public int randomMole(){
-        int iMole;
-        iMole = new Random().ints(0,8).limit(1).findFirst().getAsInt();
-   return iMole; }
-
+    @SuppressLint("SetTextI18n")
+    public void updateScore(){
+        score++;
+        scoreText.setText(Integer.toString(score));
+    }
+    @SuppressLint("SetTextI18n")
+    public void updateLives(){
+        lives--;
+        if(lives==0){
+            //telos paixnidiou
+        }
+        livesText.setText(Integer.toString(lives));
+    }
     public void createButtons(){
         imageButton1 = (ImageButton) findViewById(R.id.imageButton1);
         imageButton2 = (ImageButton) findViewById(R.id.imageButton2);
