@@ -69,7 +69,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         },1000);
 
-//        mInterval=5000; //Initializing the "delay" time period
+
          startRepeatingTask();
 
         hitSound = MediaPlayer.create(this,R.raw.hit);
@@ -95,9 +95,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     public void startRepeatingTask() {
         Handler mHandler=new Handler();
-
-
-        r = randomMole();
         mHandler.postDelayed(runnableCode, 3000);
 
     }
@@ -105,13 +102,19 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void hideMole(int r){
         Handler mHandler2=new Handler();
         mHandler2.postDelayed(runnableCode2,1500);
-//        startRepeatingTask();
+
+    }
+
+    public void nextMole(){
+        Handler mHandler3=new Handler();
+        mHandler3.postDelayed(runnableCode, 2000);
     }
 
     private Runnable runnableCode=new Runnable() {
         @Override
         public void run() {
             Log.d("Handlers","Called on Main Thread");
+           r =  randomMole();
             arrayOfButtons[r].setVisibility(View.VISIBLE);
             hideMole(r);
         }
@@ -122,7 +125,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         public void run() {
             Log.d("Handlers","Called on Main Thread");
             arrayOfButtons[r].setVisibility(View.GONE);
-            startRepeatingTask();
+            nextMole();
         }
     };
 
