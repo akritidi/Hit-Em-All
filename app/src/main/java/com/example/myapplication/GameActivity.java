@@ -28,7 +28,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
-    private MediaPlayer countdownSound,hitSound,missSound;
+    private MediaPlayer countdownSound,hitSound,missSound,popSound,jumpSound;
     private TextView countdownText;
     private boolean countdownFinished;
     private Toast hitToast;
@@ -47,7 +47,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton imageButton9;
     private int mInterval;
     private Handler mHandler;
-    private int score,sumOfMoles,arrivalTime;
+    private int score,sumOfMoles,arrivalTime,hideTime;
     private TextView scoreText,livesText;
 
 
@@ -59,6 +59,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         createButtons();
 
         arrivalTime=1500;
+        hideTime=1000;
         score=0;
         sumOfMoles=0;
         scoreText = findViewById(R.id.textScore);
@@ -84,6 +85,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         hitSound = MediaPlayer.create(this,R.raw.hit);
         missSound = MediaPlayer.create(this,R.raw.miss);
+        popSound = MediaPlayer.create(this,R.raw.pop);
+        jumpSound = MediaPlayer.create(this,R.raw.jump);
 
         ConstraintLayout hitLayout = (ConstraintLayout) findViewById(R.id.conLayout);
         hitLayout.setOnTouchListener(new View.OnTouchListener() {
@@ -114,7 +117,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     public void hideMole(int r){
         Handler mHandler2=new Handler();
-        mHandler2.postDelayed(runnableCode2,1500);
+        mHandler2.postDelayed(runnableCode2,hideTime);
     }
 
     public void nextMole(){
@@ -129,6 +132,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             Log.d("Handlers","Called on Main Thread");
            r =  randomMole();
             arrayOfButtons[r].setVisibility(View.VISIBLE);
+            popSound.start();
             sumOfMoles++;
             hideMole(r);
         }
@@ -140,6 +144,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             Log.d("Handlers","Called on Main Thread");
             arrayOfButtons[r].setVisibility(View.GONE);
             if(score<sumOfMoles){                                //elegxos lives
+                jumpSound.start();
                 updateLives();
                 sumOfMoles=score;
             }
@@ -211,8 +216,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @SuppressLint("SetTextI18n")
     public void updateScore(){
         score++;
-        if(score%10==0 && arrivalTime>800){
-            arrivalTime=-200;
+        if(score%5==0 && arrivalTime>1000){
+            arrivalTime=-100;
         }
         scoreText.setText(Integer.toString(score));
     }
