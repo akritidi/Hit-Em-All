@@ -47,7 +47,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton imageButton9;
     private int mInterval;
     private Handler mHandler;
-    private int score,sumOfMoles;
+    private int score,sumOfMoles,arrivalTime;
     private TextView scoreText,livesText;
 
 
@@ -58,12 +58,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_game);
         createButtons();
 
+        arrivalTime=1500;
         score=0;
         sumOfMoles=0;
         scoreText = findViewById(R.id.textScore);
-        countdownFinished = false;
+
         lives=3;
         livesText = findViewById(R.id.textLives);
+
+        countdownFinished = false;
         countdownSound = MediaPlayer.create(this, R.raw.countdown_sound);
         countdownText = findViewById(R.id.textCountdown);
         Timer countdown = new Timer();
@@ -106,19 +109,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         return iMole; }
     public void startRepeatingTask() {
         Handler mHandler=new Handler();
-        mHandler.postDelayed(runnableCode, 3000);
-
+        mHandler.postDelayed(runnableCode, 4000);
     }
 
     public void hideMole(int r){
         Handler mHandler2=new Handler();
         mHandler2.postDelayed(runnableCode2,1500);
-
     }
 
     public void nextMole(){
         Handler mHandler3=new Handler();
-        mHandler3.postDelayed(runnableCode, 2000);
+        mHandler3.postDelayed(runnableCode, arrivalTime);
     }
 
     private Runnable runnableCode=new Runnable() {
@@ -145,7 +146,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             nextMole();
         }
     };
-
 
     public void updateCountdown(){
         countdownText.setText("2");
@@ -211,6 +211,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @SuppressLint("SetTextI18n")
     public void updateScore(){
         score++;
+        if(score%10==0 && arrivalTime>800){
+            arrivalTime=-200;
+        }
         scoreText.setText(Integer.toString(score));
     }
     @SuppressLint("SetTextI18n")
