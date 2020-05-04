@@ -9,10 +9,42 @@
     tools:context=".GameActivity">
 
     <TextView
+        android:id="@+id/textLives3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/heart"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.01999998" />
+
+    <TextView
+        android:id="@+id/textLives2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/heart"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.01999998" />
+
+    <TextView
         android:id="@+id/textLives"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:text="@string/n3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/heart"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="36sp"
@@ -60,14 +92,13 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:background="@drawable/pause1"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintVertical_bias="0.029999971"
-        tools:ignore="ContentDescription"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.01999998"
+        tools:ignore="ContentDescription" />
 
 
     <ImageButton

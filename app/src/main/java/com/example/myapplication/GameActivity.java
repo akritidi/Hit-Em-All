@@ -5,14 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.ImageDecoder;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -21,8 +20,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,7 +27,7 @@ import java.util.TimerTask;
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     private MediaPlayer countdownSound,hitSound,missSound,popSound,jumpSound;
     private TextView countdownText;
-    private boolean countdownFinished;
+    private boolean countdownFinished,gameFinished;
     private Toast hitToast;
     private Toast missToast;
     private int lives;
@@ -45,10 +42,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton imageButton7;
     private ImageButton imageButton8;
     private ImageButton imageButton9;
-    private int mInterval;
-    private Handler mHandler;
     private int score,sumOfMoles,arrivalTime,hideTime;
-    private TextView scoreText,livesText;
+    private TextView scoreText,livesText,livesText2,livesText3;
+
 
 
     @SuppressLint({"ClickableViewAccessibility", "WrongViewCast"})
@@ -66,7 +62,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         lives=3;
         livesText = findViewById(R.id.textLives);
+        livesText2 = findViewById(R.id.textLives2);
+        livesText3 = findViewById(R.id.textLives3);
 
+        gameFinished = false;
         countdownFinished = false;
         countdownSound = MediaPlayer.create(this, R.raw.countdown_sound);
         countdownText = findViewById(R.id.textCountdown);
@@ -79,7 +78,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 updateCountdown();
             }
         },1000);
-
 
          startRepeatingTask();
 
@@ -130,7 +128,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void run() {
             Log.d("Handlers","Called on Main Thread");
-           r =  randomMole();
+            r =  randomMole();
             arrayOfButtons[r].setVisibility(View.VISIBLE);
             popSound.start();
             sumOfMoles++;
@@ -148,7 +146,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 updateLives();
                 sumOfMoles=score;
             }
-            nextMole();
+            if (!gameFinished){
+                nextMole();
+            }
         }
     };
 
@@ -224,10 +224,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @SuppressLint("SetTextI18n")
     public void updateLives(){
         lives--;
-        if(lives==0){
-            //telos paixnidiou
+        if(lives==2){
+            livesText3.setVisibility(View.GONE);
         }
-        livesText.setText(Integer.toString(lives));
+        else if(lives==1){
+            livesText2.setVisibility(View.GONE);
+        }
+        else if(lives==0){
+            livesText.setVisibility(View.GONE);
+            gameFinished=true;
+            openGameOverActivity();                      //telos paixnidiou
+        }
     }
     public void createButtons(){
         imageButton1 = (ImageButton) findViewById(R.id.imageButton1);
@@ -261,6 +268,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         arrayOfButtons[7] = imageButton8;
         arrayOfButtons[8] = imageButton9;
     }
-
+    public void openGameOverActivity(){
+        Intent i = new Intent(this,GameOverActivity.class);
+        startActivity(i);
+        finish();
+    }
 
 }
