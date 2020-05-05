@@ -26,12 +26,9 @@ import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     private MediaPlayer countdownSound,hitSound,missSound,popSound,jumpSound;
-    private TextView countdownText;
     private boolean countdownFinished,gameFinished;
     private Toast hitToast;
     private Toast missToast;
-    private int lives;
-    private int r;
     private ImageButton[] arrayOfButtons;
     private ImageButton imageButton1;
     private ImageButton imageButton2;
@@ -42,8 +39,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton imageButton7;
     private ImageButton imageButton8;
     private ImageButton imageButton9;
-    private int score,sumOfMoles,arrivalTime,hideTime;
-    private TextView scoreText,livesText,livesText2,livesText3;
+    private int lives,r,score,sumOfMoles,arrivalTime,hideTime;
+    private TextView countdownText,scoreText,livesText,livesText2,livesText3;
 
 
 
@@ -101,7 +98,38 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 return false;
             }
         });
+    }
+    public void createButtons(){
+        imageButton1 = (ImageButton) findViewById(R.id.imageButton1);
+        imageButton2 = (ImageButton) findViewById(R.id.imageButton2);
+        imageButton3 = (ImageButton) findViewById(R.id.imageButton3);
+        imageButton4 = (ImageButton) findViewById(R.id.imageButton4);
+        imageButton5 = (ImageButton) findViewById(R.id.imageButton5);
+        imageButton6 = (ImageButton) findViewById(R.id.imageButton6);
+        imageButton7 = (ImageButton)findViewById(R.id.imageButton7);
+        imageButton8 = (ImageButton)findViewById(R.id.imageButton8);
+        imageButton9 = (ImageButton)findViewById(R.id.imageButton9);
 
+        imageButton1.setOnClickListener(this);
+        imageButton2.setOnClickListener(this);
+        imageButton3.setOnClickListener(this);
+        imageButton4.setOnClickListener(this);
+        imageButton5.setOnClickListener(this);
+        imageButton6.setOnClickListener(this);
+        imageButton7.setOnClickListener(this);
+        imageButton8.setOnClickListener(this);
+        imageButton9.setOnClickListener(this);
+
+        arrayOfButtons = new ImageButton[9];
+        arrayOfButtons[0] = imageButton1;
+        arrayOfButtons[1] = imageButton2;
+        arrayOfButtons[2] = imageButton3;
+        arrayOfButtons[3] = imageButton4;
+        arrayOfButtons[4] = imageButton5;
+        arrayOfButtons[5] = imageButton6;
+        arrayOfButtons[6] = imageButton7;
+        arrayOfButtons[7] = imageButton8;
+        arrayOfButtons[8] = imageButton9;
     }
     @RequiresApi(api = Build.VERSION_CODES.N)
     public int randomMole(){
@@ -236,40 +264,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             openGameOverActivity();                      //telos paixnidiou
         }
     }
-    public void createButtons(){
-        imageButton1 = (ImageButton) findViewById(R.id.imageButton1);
-        imageButton2 = (ImageButton) findViewById(R.id.imageButton2);
-        imageButton3 = (ImageButton) findViewById(R.id.imageButton3);
-        imageButton4 = (ImageButton) findViewById(R.id.imageButton4);
-        imageButton5 = (ImageButton) findViewById(R.id.imageButton5);
-        imageButton6 = (ImageButton) findViewById(R.id.imageButton6);
-        imageButton7 = (ImageButton)findViewById(R.id.imageButton7);
-        imageButton8 = (ImageButton)findViewById(R.id.imageButton8);
-        imageButton9 = (ImageButton)findViewById(R.id.imageButton9);
-
-        imageButton1.setOnClickListener(this);
-        imageButton2.setOnClickListener(this);
-        imageButton3.setOnClickListener(this);
-        imageButton4.setOnClickListener(this);
-        imageButton5.setOnClickListener(this);
-        imageButton6.setOnClickListener(this);
-        imageButton7.setOnClickListener(this);
-        imageButton8.setOnClickListener(this);
-        imageButton9.setOnClickListener(this);
-
-        arrayOfButtons = new ImageButton[9];
-        arrayOfButtons[0] = imageButton1;
-        arrayOfButtons[1] = imageButton2;
-        arrayOfButtons[2] = imageButton3;
-        arrayOfButtons[3] = imageButton4;
-        arrayOfButtons[4] = imageButton5;
-        arrayOfButtons[5] = imageButton6;
-        arrayOfButtons[6] = imageButton7;
-        arrayOfButtons[7] = imageButton8;
-        arrayOfButtons[8] = imageButton9;
-    }
     public void openGameOverActivity(){
         Intent i = new Intent(this,GameOverActivity.class);
+        missToast.cancel();
+        hitToast.cancel();
         startActivity(i);
         finish();
     }
