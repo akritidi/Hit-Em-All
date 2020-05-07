@@ -140,17 +140,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         Handler mHandler=new Handler();
         mHandler.postDelayed(runnableCode, 4000);
     }
-
     public void hideMole(int r){
         Handler mHandler2=new Handler();
         mHandler2.postDelayed(runnableCode2,hideTime);
     }
-
     public void nextMole(){
         Handler mHandler3=new Handler();
         mHandler3.postDelayed(runnableCode, arrivalTime);
     }
-
     private Runnable runnableCode=new Runnable() {
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
@@ -160,10 +157,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             arrayOfButtons[r].setVisibility(View.VISIBLE);
             popSound.start();
             sumOfMoles++;
-            hideMole(r);
+            if(sumOfMoles==score){
+                if (!gameFinished){
+                    nextMole();
+                }
+            }else{
+                hideMole(r);
+            }
+
         }
     };
-
     private Runnable runnableCode2= new Runnable() {
         @Override
         public void run() {
@@ -179,7 +182,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     };
-
+    @SuppressLint("SetTextI18n")
+    public void updateScore(){
+        score++;
+        if(score%5==0 && arrivalTime>200){
+            arrivalTime=arrivalTime-250;
+        }
+        if(score%5==0 && hideTime>500){
+            hideTime=hideTime-250;
+        }
+        scoreText.setText(Integer.toString(score));
+    }
     public void updateCountdown(){
         countdownText.setText("2");
         try {
@@ -195,8 +208,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
         countdownFinished=true;
-
-
     }
     @SuppressLint("SetTextI18n")
     public void missToast(){
@@ -240,14 +251,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             btn.setVisibility(View.GONE);
             updateScore();
         }
-    }
-    @SuppressLint("SetTextI18n")
-    public void updateScore(){
-        score++;
-        if(score%5==0 && arrivalTime>1000){
-            arrivalTime=-100;
-        }
-        scoreText.setText(Integer.toString(score));
     }
     @SuppressLint("SetTextI18n")
     public void updateLives(){
