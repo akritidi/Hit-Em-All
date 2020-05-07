@@ -51,7 +51,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_game);
         createButtons();
 
-        arrivalTime=1500;
+        arrivalTime=1000;
         hideTime=1000;
         score=0;
         sumOfMoles=0;
@@ -157,14 +157,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             arrayOfButtons[r].setVisibility(View.VISIBLE);
             popSound.start();
             sumOfMoles++;
+            hideMole(r);
+            /*
             if(sumOfMoles==score){
                 if (!gameFinished){
                     nextMole();
                 }
             }else{
                 hideMole(r);
-            }
-
+            }*/
         }
     };
     private Runnable runnableCode2= new Runnable() {
@@ -185,11 +186,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @SuppressLint("SetTextI18n")
     public void updateScore(){
         score++;
-        if(score%5==0 && arrivalTime>200){
-            arrivalTime=arrivalTime-250;
+        if(score%5==0 && arrivalTime>0){
+            arrivalTime=arrivalTime-125;
         }
-        if(score%5==0 && hideTime>500){
-            hideTime=hideTime-250;
+        if(score%10==0 && hideTime>500){
+            hideTime=hideTime-125;
         }
         scoreText.setText(Integer.toString(score));
     }
@@ -269,10 +270,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
     public void openGameOverActivity(){
         Intent i = new Intent(this,GameOverActivity.class);
-        missToast.cancel();
-        hitToast.cancel();
+        if(score>0){                                      //gia na mhn uparxei bug an xaseis me 0 score
+            missToast.cancel();
+            hitToast.cancel();
+        }
         startActivity(i);
         finish();
     }
-
 }
