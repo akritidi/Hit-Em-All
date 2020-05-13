@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +27,7 @@ import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     private MediaPlayer countdownSound,hitSound,missSound,popSound,jumpSound;
-    private boolean countdownFinished,gameFinished;
+    private boolean countdownFinished,gameFinished,hitToastShown,missToastShown;
     private Toast hitToast;
     private Toast missToast;
     private ImageButton[] arrayOfButtons;
@@ -55,6 +56,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         hideTime=1000;
         score=0;
         sumOfMoles=0;
+        hitToastShown=false;
+        missToastShown=false;
         scoreText = findViewById(R.id.textScore);
 
         lives=3;
@@ -225,6 +228,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         missTextView.setTypeface(missTypeface);
         missToast.setView(missTextView);
         missToast.show();
+        missToastShown = true;
+
     }
     @SuppressLint("SetTextI18n")
     public void hitToast(){
@@ -241,6 +246,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         hitTextView.setTypeface(hitTypeface);
         hitToast.setView(hitTextView);
         hitToast.show();
+        hitToastShown = true;
     }
     @SuppressLint("SetTextI18n")
     @Override
@@ -269,11 +275,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
     public void openGameOverActivity(){
-        Intent i = new Intent(this,GameOverActivity.class);
-        if(score>0){                                      //gia na mhn uparxei bug an xaseis me 0 score
+
+        if(missToastShown){                           //gia na mhn uparxei bug an xaseis xwris na arxikopoih8oun ta toasts
             missToast.cancel();
+        }
+        if(hitToastShown){
             hitToast.cancel();
         }
+        Intent i = new Intent(this,GameOverActivity.class);
+        i.putExtra("SCORE",score);
         startActivity(i);
         finish();
     }
