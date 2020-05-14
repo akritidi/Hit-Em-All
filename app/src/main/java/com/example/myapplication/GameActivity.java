@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -16,18 +17,21 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
+import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     private MediaPlayer countdownSound,hitSound,missSound,popSound,jumpSound;
-    private boolean countdownFinished,gameFinished,hitToastShown,missToastShown;
+    private boolean countdownFinished,gameFinished,hitToastShown,missToastShown,run,nextMolebool,hideMoleBool;
     private Toast hitToast;
     private Toast missToast;
     private ImageButton[] arrayOfButtons;
@@ -40,8 +44,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton imageButton7;
     private ImageButton imageButton8;
     private ImageButton imageButton9;
-    private int lives,r,score,sumOfMoles,arrivalTime,hideTime;
+    private int lives,r,score,sumOfMoles,arrivalTime,hideTime,pauseCounter;
     private TextView countdownText,scoreText,livesText,livesText2,livesText3;
+  private Handler mHandler3;
+   protected   ToggleButton pauseButton;
+    long startTime;
+
 
 
 
@@ -51,6 +59,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         createButtons();
+
+        pauseCounter=0;
+        run = true;
 
         arrivalTime=1000;
         hideTime=1000;
@@ -101,6 +112,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 return false;
             }
         });
+         mHandler3=new Handler();
+        pauseButton=findViewById(R.id.toggleButton);
     }
     public void createButtons(){
         imageButton1 = (ImageButton) findViewById(R.id.imageButton1);
@@ -133,6 +146,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         arrayOfButtons[6] = imageButton7;
         arrayOfButtons[7] = imageButton8;
         arrayOfButtons[8] = imageButton9;
+
+
+
     }
     @RequiresApi(api = Build.VERSION_CODES.N)
     public int randomMole(){
@@ -144,31 +160,29 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mHandler.postDelayed(runnableCode, 4000);
     }
     public void hideMole(int r){
+        hideMoleBool=true;
         Handler mHandler2=new Handler();
         mHandler2.postDelayed(runnableCode2,hideTime);
     }
     public void nextMole(){
-        Handler mHandler3=new Handler();
-        mHandler3.postDelayed(runnableCode, arrivalTime);
+        nextMolebool =true;
+               mHandler3.postDelayed(runnableCode, arrivalTime);
+
     }
     private Runnable runnableCode=new Runnable() {
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void run() {
             Log.d("Handlers","Called on Main Thread");
-            r =  randomMole();
-            arrayOfButtons[r].setVisibility(View.VISIBLE);
-            popSound.start();
-            sumOfMoles++;
-            hideMole(r);
-            /*
-            if(sumOfMoles==score){
-                if (!gameFinished){
-                    nextMole();
-                }
-            }else{
-                hideMole(r);
-            }*/
+            nextMolebool=false;
+          if (run) {
+              r = randomMole();
+              arrayOfButtons[r].setVisibility(View.VISIBLE);
+              popSound.start();
+              sumOfMoles++;
+              hideMole(r);
+          }
+
         }
     };
     private Runnable runnableCode2= new Runnable() {
@@ -176,12 +190,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         public void run() {
             Log.d("Handlers","Called on Main Thread");
             arrayOfButtons[r].setVisibility(View.GONE);
-            if(score<sumOfMoles){                                //elegxos lives
+            hideMoleBool=false;
+            if(score<sumOfMoles && run){
+
                 jumpSound.start();
                 updateLives();
                 sumOfMoles=score;
             }
-            if (!gameFinished){
+            if (!gameFinished && run){
                 nextMole();
             }
         }
@@ -251,7 +267,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View v) {
-        if(countdownFinished){
+        if(countdownFinished && run){
             hitToast();
             hitSound.start();
             ImageButton btn = (ImageButton) findViewById(v.getId());
@@ -286,5 +302,104 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         i.putExtra("SCORE",score);
         startActivity(i);
         finish();
+    }
+   @Override
+   protected void onResume() {
+       super.onResume();
+       pauseButton.setChecked(false);
+       if (pauseCounter!=0){
+
+           run=true;
+           sumOfMoles =score;
+           mHandler3.post(runnableCode);
+
+       }
+   }
+    @Override
+    protected void onPause() {
+        pauseCounter++;
+        super.onPause();
+        run=false;
+        missSound.stop();
+        hitSound.stop();
+        popSound.stop();
+        jumpSound.stop();
+        try {
+            missSound.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            hitSound.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            popSound.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            jumpSound.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void pauseClicked(View view) {
+
+
+
+
+        boolean checked = ((ToggleButton)view).isChecked();
+        if (checked){
+
+            run=false;
+            missSound.stop();
+            hitSound.stop();
+            popSound.stop();
+            jumpSound.stop();
+            try {
+                missSound.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                hitSound.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                popSound.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                jumpSound.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }else {
+            {
+
+
+                  if (( nextMolebool && !hideMoleBool )|| (!nextMolebool && hideMoleBool)){
+                      Toast.makeText(this,"diference"+"arival"+hideTime,Toast.LENGTH_LONG).show();
+                      run=true;
+                      sumOfMoles=score;
+                  }else {
+
+                      run = true;
+                      sumOfMoles = score;
+                      mHandler3.post(runnableCode);
+                  }
+
+
+            }
+        }
     }
 }
