@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="play">Παίξε</string>
+    <string name="settings">Ρυθμίσεις</string>
+    <string name="scores">Σκορ</string>
+    <string name="exit">Έξοδος</string>
+    <string name="best_scores">Καλύτερα Σκορ</string>
+    <string name="play_again">Παίξε Ξανά</string>
+    <string name="submit">Υποβολή</string>
+    <string name="game_over">Τέλος Παιχνιδιού</string>
+    <string name="your_score">Το σκορ σου :</string>
+    <string name="enter_your_name_to_save_your_score">Γράψε το όνομά σου για να σώσεις το σκορ σου!</string>
+    <string name="name">Όνομα</string>
+    <string name="sounds">Ήχοι</string>
+    <string name="music">Μουσική</string>
+    <string name="hit_toast">Χτύπημα!</string>
+    <string name="miss_toast">Αστοχία!</string>
+    <string name="exit_dialog">Θέλετε σίγουρα να αποχωρήσετε;</string>
+    <string name="yes">Ναι</string>
+    <string name="no">Όχι</string>
+</resources>

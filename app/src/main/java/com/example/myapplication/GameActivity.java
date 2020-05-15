@@ -237,8 +237,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         TextView missTextView = new TextView(GameActivity.this);
         missTextView.setBackgroundColor(Color.TRANSPARENT);
         missTextView.setTextColor(Color.WHITE);
-        missTextView.setTextSize(40);
-        missTextView.setText("Miss!");
+        missTextView.setTextSize(35);
+        missTextView.setText(R.string.miss_toast);
         Typeface missTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
 
         missTextView.setTypeface(missTypeface);
@@ -255,8 +255,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         TextView hitTextView = new TextView(GameActivity.this);
         hitTextView.setBackgroundColor(Color.TRANSPARENT);
         hitTextView.setTextColor(Color.WHITE);
-        hitTextView.setTextSize(40);
-        hitTextView.setText("Hit!");
+        hitTextView.setTextSize(35);
+        hitTextView.setText(R.string.hit_toast);
         Typeface hitTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
 
         hitTextView.setTypeface(hitTypeface);

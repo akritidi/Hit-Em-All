@@ -9,10 +9,10 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="95dp"
+        android:layout_width="100dp"
         android:layout_height="60dp"
         android:backgroundTint="#7CB342"
-        android:text="Play"
+        android:text="@string/play"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,10 +22,10 @@
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="95dp"
+        android:layout_width="100dp"
         android:layout_height="60dp"
         android:backgroundTint="#7CB342"
-        android:text="Settings"
+        android:text="@string/settings"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,10 +35,10 @@
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="95dp"
+        android:layout_width="100dp"
         android:layout_height="60dp"
         android:backgroundTint="#7CB342"
-        android:text="Scores"
+        android:text="@string/scores"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,10 +48,10 @@
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="95dp"
+        android:layout_width="100dp"
         android:layout_height="60dp"
         android:backgroundTint="#7CB342"
-        android:text="Exit"
+        android:text="@string/exit"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
