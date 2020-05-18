@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import android.text.Editable;
+
 public class PlayerScore {
     private int _id;
     private String _playerName;
@@ -7,8 +9,8 @@ public class PlayerScore {
 
     public PlayerScore(){}
 
-    public PlayerScore(String playerName, int playerScore){
-        this._playerName=playerName;
+    public PlayerScore(Editable playerName, int playerScore){
+        this._playerName=playerName.toString();
         this._playerScore=playerScore;
 
     }
