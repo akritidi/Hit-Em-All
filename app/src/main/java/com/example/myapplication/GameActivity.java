@@ -48,7 +48,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private TextView countdownText,scoreText,livesText,livesText2,livesText3;
   private Handler mHandler3;
    protected   ToggleButton pauseButton;
-    long startTime;
+    static boolean soundsPlaying=true;
 
 
 
@@ -76,13 +76,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         livesText2 = findViewById(R.id.textLives2);
         livesText3 = findViewById(R.id.textLives3);
 
+        //soundsPlaying=true;
         gameFinished = false;
         countdownFinished = false;
         countdownSound = MediaPlayer.create(this, R.raw.countdown_sound);
         countdownText = findViewById(R.id.textCountdown);
         Timer countdown = new Timer();
         final Timer moles=new Timer();
-        countdownSound.start();
+//        countdownSound.start();
+        soundsMaker(countdownSound);
         countdown.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -105,7 +107,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 if (countdownFinished){
                     if (event.getAction() == MotionEvent.ACTION_DOWN){
                         missToast();
-                        missSound.start();
+//                        missSound.start();
+                        soundsMaker(missSound);
                         return true;
                     }
                 }
@@ -178,7 +181,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
           if (run) {
               r = randomMole();
               arrayOfButtons[r].setVisibility(View.VISIBLE);
-              popSound.start();
+//              popSound.start();
+              soundsMaker(popSound);
               sumOfMoles++;
               hideMole(r);
           }
@@ -193,7 +197,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             hideMoleBool=false;
             if(score<sumOfMoles && run){
 
-                jumpSound.start();
+                //jumpSound.start();
+                soundsMaker(jumpSound);
                 updateLives();
                 sumOfMoles=score;
             }
@@ -269,7 +274,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if(countdownFinished && run){
             hitToast();
-            hitSound.start();
+//            hitSound.start();
+            soundsMaker(hitSound);
+
             ImageButton btn = (ImageButton) findViewById(v.getId());
             btn.setVisibility(View.GONE);
             updateScore();
@@ -324,6 +331,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         hitSound.stop();
         popSound.stop();
         jumpSound.stop();
+        countdownSound.stop();
+        try {
+            countdownSound.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         try {
             missSound.prepare();
         } catch (IOException e) {
@@ -347,13 +360,20 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 
     }
+     public static void setMediaBool(boolean x){
+        soundsPlaying=x;
+     }
+     public static boolean getMediaBool(){
+        return soundsPlaying;
+     }
+    public  static  void soundsMaker(MediaPlayer player){
+        if (getMediaBool()){ player.start();}
+
+
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void pauseClicked(View view) {
-
-
-
-
         boolean checked = ((ToggleButton)view).isChecked();
         if (checked){
 
@@ -362,6 +382,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             hitSound.stop();
             popSound.stop();
             jumpSound.stop();
+            countdownSound.stop();
+            try {
+                countdownSound.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             try {
                 missSound.prepare();
             } catch (IOException e) {
@@ -388,7 +414,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 
                   if (( nextMolebool && !hideMoleBool )|| (!nextMolebool && hideMoleBool)){
-                      Toast.makeText(this,"diference"+"arival"+hideTime,Toast.LENGTH_LONG).show();
                       run=true;
                       sumOfMoles=score;
                   }else {
@@ -402,4 +427,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
+
+
+
 }
