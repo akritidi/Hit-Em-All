@@ -331,6 +331,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         hitSound.stop();
         popSound.stop();
         jumpSound.stop();
+        countdownSound.stop();
+        try {
+            countdownSound.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         try {
             missSound.prepare();
         } catch (IOException e) {
@@ -376,6 +382,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             hitSound.stop();
             popSound.stop();
             jumpSound.stop();
+            countdownSound.stop();
+            try {
+                countdownSound.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             try {
                 missSound.prepare();
             } catch (IOException e) {
@@ -415,4 +427,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
+
+
+
 }
