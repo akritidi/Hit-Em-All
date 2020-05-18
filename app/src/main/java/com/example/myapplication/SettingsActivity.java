@@ -37,10 +37,12 @@ public class SettingsActivity extends AppCompatActivity  {
                  myService.pause();
                     swict = Toast.makeText(getBaseContext(), "The music has turned off ", Toast.LENGTH_SHORT);
                     swict.show();
+                    music.setChecked(false);
                 }else if (isChecked){
                     myService.setPlayer();
                     swict = Toast.makeText(getBaseContext(), "The music has turned on ", Toast.LENGTH_SHORT);
                     swict.show();
+
                 }
 
 
@@ -51,6 +53,11 @@ public class SettingsActivity extends AppCompatActivity  {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(!isChecked){
+                    GameActivity.setMediaBool(false);
+                }else if (isChecked){
+
+
+                    GameActivity.setMediaBool(true);
 
                 }
             }
