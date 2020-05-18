@@ -39,7 +39,7 @@ public class GameOverActivity extends AppCompatActivity {
                 }
                 else {
                     addScore(yourName, yourScore);
-                    showBestScores();
+//                    showBestScores();
                 }
             }
         });
