@@ -15,6 +15,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String COLUMN_ID="_id";
     public static final String COLUMN_NAME="playerName";
     public static final String COLUMN_SCORE="playerScore";
+    private static final String[] COLUMNS={COLUMN_ID, COLUMN_NAME, COLUMN_SCORE};
 
 
     public DatabaseHandler(Context context , String name, SQLiteDatabase.CursorFactory factory , int version){
@@ -44,7 +45,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public void bestScores(){
-        String query= "SELECT * FROM"+TABLE_SCORES;
+        String query= "SELECT * FROM" + TABLE_SCORES + "ORDER BY" + COLUMN_SCORE + "DESC";
+        SQLiteDatabase db=this.getWritableDatabase();
+        Cursor cursor=db.rawQuery(query, null);
 
 
     }

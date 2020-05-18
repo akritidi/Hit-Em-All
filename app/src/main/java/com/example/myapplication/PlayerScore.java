@@ -12,6 +12,7 @@ public class PlayerScore {
         this._playerScore=playerScore;
 
     }
+    //methods that set and return the players name and score. Used for accessing database.
 
     public void set_playerName(String playerName){
         this._playerName=playerName;
