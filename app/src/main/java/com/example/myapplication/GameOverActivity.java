@@ -4,15 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class GameOverActivity extends AppCompatActivity {
-
+    private Editable yourName;
+    boolean wrongNameToastShown;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,21 +30,21 @@ public class GameOverActivity extends AppCompatActivity {
         TextView scoreTextView = findViewById(R.id.textView3);
         scoreTextView.setText(String.valueOf(yourScore));
 
-        final TextView nameMessage=findViewById(R.id.textView4);
+        wrongNameToastShown=false;
 
         EditText nameEditText=findViewById(R.id.editText);
-        final Editable yourName=nameEditText.getText();
+        yourName=nameEditText.getText();
 
         Button submitScore= findViewById(R.id.gameOverSubmit);
         submitScore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(yourName.equals("")){
-                    nameMessage.setText("Δεν αναγνωρίζω το όνομα. Παρακαλώ γράψε το όνομα σου για να σώσεις το σκορ σου!");
+                if(yourName==null){
+                    wrongNameToast();
                 }
                 else {
                     addScore(yourName, yourScore);
-//                    showBestScores();
+                    showBestScores();
                 }
             }
         });
@@ -61,18 +66,34 @@ public class GameOverActivity extends AppCompatActivity {
         });
     }
 
-    private void showBestScores() {
+    public void showBestScores() {
         DatabaseHandler myDBHandler=new DatabaseHandler(this, null, null, 1);
         myDBHandler.bestScores();
     }
 
-    private void addScore(Editable yourName, int yourScore) {
+    public void addScore(Editable yourName, int yourScore) {
         DatabaseHandler myDBHandler=new DatabaseHandler(this, null, null, 1);
         PlayerScore playerScore=new PlayerScore(yourName,yourScore);
         myDBHandler.addScore(playerScore);
 
     }
+    public void wrongNameToast(){
+        Toast wrongNameToast = new Toast(getApplicationContext());
+        wrongNameToast.setGravity(Gravity.CENTER|Gravity.TOP, 0, 550);
 
+        TextView wrongTextView = new TextView(GameOverActivity.this);
+        wrongTextView.setBackgroundColor(Color.TRANSPARENT);
+        wrongTextView.setTextColor(Color.WHITE);
+        wrongTextView.setTextSize(35);
+        wrongTextView.setText(R.string.wrong_name_toast);
+        Typeface missTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
+
+        wrongTextView.setTypeface(missTypeface);
+        wrongNameToast.setView(wrongTextView);
+        wrongNameToast.show();
+        wrongNameToastShown = true;
+
+    }
     public void openGameActivity(){
         Intent i = new Intent(this,GameActivity.class);
         startActivity(i);

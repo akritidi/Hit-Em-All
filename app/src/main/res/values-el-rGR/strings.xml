@@ -16,6 +16,7 @@
     <string name="music">Μουσική</string>
     <string name="hit_toast">Χτύπημα!</string>
     <string name="miss_toast">Αστοχία!</string>
+    <string name="wrong_name_toast">Λάθος όνομα!</string>
     <string name="exit_dialog">Θέλετε σίγουρα να αποχωρήσετε;</string>
     <string name="yes">Ναι</string>
     <string name="no">Όχι</string>
