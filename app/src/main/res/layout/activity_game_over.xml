@@ -18,22 +18,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.79" />
+        app:layout_constraintTop_toBottomOf="@+id/gameOverPlayAgain"
+        app:layout_constraintVertical_bias="0.06999999" />
 
     <Button
         android:id="@+id/gameOverPlayAgain"
         android:layout_width="95dp"
         android:layout_height="60dp"
-        android:layout_marginTop="88dp"
         android:backgroundTint="#7CB342"
         android:text="@string/play_again"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.638" />
+        app:layout_constraintTop_toBottomOf="@+id/gameOverSubmit"
+        app:layout_constraintVertical_bias="0.06999999" />
 
     <Button
         android:id="@+id/gameOverSubmit"
@@ -46,8 +46,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.58000004" />
+        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:layout_constraintVertical_bias="0.06999999" />
 
     <TextView
         android:id="@+id/textView"
