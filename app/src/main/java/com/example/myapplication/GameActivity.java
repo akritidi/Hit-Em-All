@@ -444,6 +444,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             finish();
         }
         else{
+           // pauseButton.setChecked(true);
+           // onPause();
             backToast = Toast.makeText(getBaseContext(),R.string.exit_game_toast,Toast.LENGTH_SHORT);
             backToast.show();
         }
