@@ -31,7 +31,7 @@ import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     private MediaPlayer countdownSound,hitSound,missSound,popSound,jumpSound;
-    private boolean countdownFinished,gameFinished,hitToastShown,missToastShown,run,nextMolebool,hideMoleBool;
+    private boolean countdownFinished,gameFinished,hitToastShown,missToastShown,run,nextMolebool,hideMoleBool,backPressed ;
     private Toast hitToast;
     private Toast missToast;
     private long backPressedTime;
@@ -71,6 +71,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         sumOfMoles=0;
         hitToastShown=false;
         missToastShown=false;
+        backPressed=false;
         scoreText = findViewById(R.id.textScore);
 
         lives=3;
@@ -171,7 +172,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
     public void nextMole(){
         nextMolebool =true;
-               mHandler3.postDelayed(runnableCode, arrivalTime);
+        backPressed = false;
+        mHandler3.postDelayed(runnableCode, arrivalTime);
 
     }
     private Runnable runnableCode=new Runnable() {
@@ -431,6 +433,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
     @Override
     public void onBackPressed(){
+
         if (backPressedTime + 2000 > System.currentTimeMillis()){
             backToast.cancel();
 
@@ -444,8 +447,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             finish();
         }
         else{
-           // pauseButton.setChecked(true);
-           // onPause();
+            if(!backPressed){
+                pauseButton.performClick();
+                backPressed = true;
+            }
             backToast = Toast.makeText(getBaseContext(),R.string.exit_game_toast,Toast.LENGTH_SHORT);
             backToast.show();
         }
