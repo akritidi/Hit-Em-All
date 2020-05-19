@@ -34,6 +34,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private boolean countdownFinished,gameFinished,hitToastShown,missToastShown,run,nextMolebool,hideMoleBool;
     private Toast hitToast;
     private Toast missToast;
+    private long backPressedTime;
+    private Toast backToast;
     private ImageButton[] arrayOfButtons;
     private ImageButton imageButton1;
     private ImageButton imageButton2;
@@ -46,8 +48,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton imageButton9;
     private int lives,r,score,sumOfMoles,arrivalTime,hideTime,pauseCounter;
     private TextView countdownText,scoreText,livesText,livesText2,livesText3;
-  private Handler mHandler3;
-   protected   ToggleButton pauseButton;
+    private Handler mHandler3;
+    protected   ToggleButton pauseButton;
     static boolean soundsPlaying=true;
 
 
@@ -427,7 +429,25 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
+    @Override
+    public void onBackPressed(){
+        if (backPressedTime + 2000 > System.currentTimeMillis()){
+            backToast.cancel();
 
-
+            gameFinished=true;
+            if(missToastShown){
+                missToast.cancel();
+            }
+            if(hitToastShown){
+                hitToast.cancel();
+            }
+            finish();
+        }
+        else{
+            backToast = Toast.makeText(getBaseContext(),R.string.exit_game_toast,Toast.LENGTH_SHORT);
+            backToast.show();
+        }
+        backPressedTime=System.currentTimeMillis();
+    }
 
 }

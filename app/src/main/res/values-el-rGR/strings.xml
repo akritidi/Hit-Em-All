@@ -20,4 +20,6 @@
     <string name="exit_dialog">Θέλετε σίγουρα να αποχωρήσετε;</string>
     <string name="yes">Ναι</string>
     <string name="no">Όχι</string>
+    <string name="exit_toast">Πιέστε ξανά για έξοδο</string>
+    <string name="exit_game_toast">Έγινε παύση παιχνιδιου πιέστε ξανά για έξοδο</string>
 </resources>

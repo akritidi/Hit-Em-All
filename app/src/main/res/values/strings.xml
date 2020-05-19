@@ -20,4 +20,6 @@
     <string name="exit_dialog">Are you sure you want to exit?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="exit_toast">Press again to exit</string>
+    <string name="exit_game_toast">Game paused press again to exit</string>
 </resources>

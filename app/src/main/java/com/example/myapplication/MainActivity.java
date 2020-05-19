@@ -82,7 +82,7 @@ private Intent intent;
             exitMainActivity();
         }
         else{
-            backToast = Toast.makeText(getBaseContext(),"Press again to exit",Toast.LENGTH_SHORT);
+            backToast = Toast.makeText(getBaseContext(),R.string.exit_toast,Toast.LENGTH_SHORT);
             backToast.show();
         }
         backPressedTime=System.currentTimeMillis();
