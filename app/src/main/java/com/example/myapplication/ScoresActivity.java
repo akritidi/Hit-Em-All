@@ -15,15 +15,15 @@ public class ScoresActivity extends AppCompatActivity {
         TextView[][] data=matchTextViews();
         DatabaseHandler db=new DatabaseHandler(this, null,null,1);
         PlayerScore[] top10highScores=db.highScores();
-//        int i;
-//        for(i=0;i<10;i++){
-//            if(top10highScores[i]!=null){
-//                data[i][0].setText(top10highScores[i].get_playerName());
-//                data[i][1].setText(top10highScores[i].get_playerScore());
-//
-//            }
-//
-//        }
+        int i;
+        for(i=0;i<10;i++){
+            if(top10highScores[i]!=null){
+                data[i][0].setText(top10highScores[i].get_playerName());
+                data[i][1].setText(top10highScores[i].get_playerScore());
+
+            }
+
+        }
 
 
     }

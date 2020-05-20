@@ -26,8 +26,6 @@ public class PlayerScore {
         this._playerScore=playerScore;
     }
 
-    public int get_playerScore(){
-        return this._playerScore;
-    }
+    public int get_playerScore(){ return this._playerScore;  }
 }
 
