@@ -44,24 +44,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
-    public String[][] showBestScores() {
+    public PlayerScore[] highScores(){
         String query = "SELECT COLUMN_NAME, COLUMN_SCORE FROM " + TABLE_SCORES + "ORDER BY" + COLUMN_SCORE + "DESC" + "GROUP BY" + COLUMNS + "LIMIT 10";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
-
+        PlayerScore[] highScoresTable= new PlayerScore[10];
         int i=0;
-        String[][] bestScores = new String[10][2];
-        while(cursor.moveToNext())
-        {
-            cursor.moveToNext();
-            bestScores[i][0]=cursor.getString(0);
-            bestScores[i][1]=cursor.getString(1);
-            i++;
-            cursor.close();
+        if(cursor!=null){
+            cursor.moveToFirst();
+            for (i=0;i<cursor.getCount();i++){
+                highScoresTable[i].set_playerName(cursor.getString(0));
+                highScoresTable[i].set_playerScore(cursor.getInt(1));
+                i++;
+                cursor.moveToNext();
+            }
+
         }
-
-
+        cursor.close();
         db.close();
-        return bestScores;
+        return highScoresTable;
     }
+
+
 }

@@ -5,29 +5,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+
 public class ScoresActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scores);
-
-        TextView[][] highscores;
-        highscores=matchTextViews();
-
-        DatabaseHandler db= new DatabaseHandler(this, null, null, 1);
-        String[][] dbHighScores=db.showBestScores();
-        int i;
-       for(i=0;i<10;i++){
-           if(dbHighScores[i][0]!=null || dbHighScores[i][1]!=null){
-               highscores[i][0].setText(dbHighScores[i][0]);
-               highscores[i][1].setText(dbHighScores[i][1]);
-               i++;
-
-           }
-
-       }
-
+        TextView[][] data=matchTextViews();
+        DatabaseHandler db=new DatabaseHandler(this, null,null,1);
+        PlayerScore[] top10highScores=db.highScores();
+//        int i;
+//        for(i=0;i<10;i++){
+//            if(top10highScores[i]!=null){
+//                data[i][0].setText(top10highScores[i].get_playerName());
+//                data[i][1].setText(top10highScores[i].get_playerScore());
+//
+//            }
+//
+//        }
 
 
     }
@@ -58,3 +54,4 @@ public class ScoresActivity extends AppCompatActivity {
 
     }
 }
+
