@@ -31,9 +31,11 @@ import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     private MediaPlayer countdownSound,hitSound,missSound,popSound,jumpSound;
-    private boolean countdownFinished,gameFinished,hitToastShown,missToastShown,run,nextMolebool,hideMoleBool;
+    private boolean countdownFinished,gameFinished,hitToastShown,missToastShown,run,nextMolebool,hideMoleBool,backPressed ;
     private Toast hitToast;
     private Toast missToast;
+    private long backPressedTime;
+    private Toast backToast;
     private ImageButton[] arrayOfButtons;
     private ImageButton imageButton1;
     private ImageButton imageButton2;
@@ -46,8 +48,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton imageButton9;
     private int lives,r,score,sumOfMoles,arrivalTime,hideTime,pauseCounter;
     private TextView countdownText,scoreText,livesText,livesText2,livesText3;
-  private Handler mHandler3;
-   protected   ToggleButton pauseButton;
+    private Handler mHandler3;
+    protected   ToggleButton pauseButton;
     static boolean soundsPlaying=true;
 
 
@@ -69,6 +71,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         sumOfMoles=0;
         hitToastShown=false;
         missToastShown=false;
+        backPressed=false;
         scoreText = findViewById(R.id.textScore);
 
         lives=3;
@@ -169,7 +172,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
     public void nextMole(){
         nextMolebool =true;
-               mHandler3.postDelayed(runnableCode, arrivalTime);
+        backPressed = false;
+        mHandler3.postDelayed(runnableCode, arrivalTime);
 
     }
     private Runnable runnableCode=new Runnable() {
@@ -427,7 +431,30 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
+    @Override
+    public void onBackPressed(){
 
+        if (backPressedTime + 2000 > System.currentTimeMillis()){
+            backToast.cancel();
 
+            gameFinished=true;
+            if(missToastShown){
+                missToast.cancel();
+            }
+            if(hitToastShown){
+                hitToast.cancel();
+            }
+            finish();
+        }
+        else{
+            if(!backPressed){
+                pauseButton.performClick();
+                backPressed = true;
+            }
+            backToast = Toast.makeText(getBaseContext(),R.string.exit_game_toast,Toast.LENGTH_SHORT);
+            backToast.show();
+        }
+        backPressedTime=System.currentTimeMillis();
+    }
 
 }
