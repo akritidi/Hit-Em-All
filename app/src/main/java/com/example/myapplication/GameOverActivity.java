@@ -71,11 +71,6 @@ public class GameOverActivity extends AppCompatActivity {
 
 
 
-    public void showBestScores() {
-        DatabaseHandler myDBHandler=new DatabaseHandler(this, null, null, 1);
-        myDBHandler.bestScores();
-    }
-
     public void addScore(Editable yourName, int yourScore) {
         DatabaseHandler myDBHandler=new DatabaseHandler(this, null, null, 1);
         PlayerScore playerScore=new PlayerScore(yourName,yourScore);

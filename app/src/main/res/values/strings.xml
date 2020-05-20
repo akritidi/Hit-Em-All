@@ -22,4 +22,14 @@
     <string name="no">No</string>
     <string name="exit_toast">Press again to exit</string>
     <string name="exit_game_toast">Game paused press again to exit</string>
+    <string name="n1">1</string>
+    <string name="nada">-</string>
+    <string name="n2">2</string>
+    <string name="n4">4</string>
+    <string name="n5">5</string>
+    <string name="n6">6</string>
+    <string name="n7">7</string>
+    <string name="n8">8</string>
+    <string name="n9">9</string>
+    <string name="n10">10</string>
 </resources>

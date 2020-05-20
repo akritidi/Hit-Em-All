@@ -3,6 +3,7 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 public class ScoresActivity extends AppCompatActivity {
 
@@ -11,6 +12,49 @@ public class ScoresActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scores);
 
+        TextView[][] highscores;
+        highscores=matchTextViews();
+
+        DatabaseHandler db= new DatabaseHandler(this, null, null, 1);
+        String[][] dbHighScores=db.showBestScores();
+        int i;
+       for(i=0;i<10;i++){
+           if(dbHighScores[i][0]!=null || dbHighScores[i][1]!=null){
+               highscores[i][0].setText(dbHighScores[i][0]);
+               highscores[i][1].setText(dbHighScores[i][1]);
+               i++;
+
+           }
+
+       }
+
+
+
+    }
+
+    private TextView[][] matchTextViews() {
+        TextView[][] data=new TextView[10][2];
+        data[0][0]=findViewById(R.id.textView5);
+        data[0][1]=findViewById(R.id.textView6);
+        data[1][0]=findViewById(R.id.textView8);
+        data[1][1]=findViewById(R.id.textView9);
+        data[2][0]=findViewById(R.id.textView11);
+        data[2][1]=findViewById(R.id.textView12);
+        data[3][0]=findViewById(R.id.textView14);
+        data[3][1]=findViewById(R.id.textView15);
+        data[4][0]=findViewById(R.id.textView17);
+        data[4][1]=findViewById(R.id.textView18);
+        data[5][0]=findViewById(R.id.textView20);
+        data[5][1]=findViewById(R.id.textView21);
+        data[6][0]=findViewById(R.id.textView23);
+        data[6][1]=findViewById(R.id.textView24);
+        data[7][0]=findViewById(R.id.textView26);
+        data[7][1]=findViewById(R.id.textView27);
+        data[8][0]=findViewById(R.id.textView29);
+        data[8][1]=findViewById(R.id.textView30);
+        data[9][0]=findViewById(R.id.textView32);
+        data[9][1]=findViewById(R.id.textView33);
+        return data;
 
     }
 }

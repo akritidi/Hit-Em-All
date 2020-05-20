@@ -23,7 +23,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_SCORES_TABLE = "CREATE TABLE " + TABLE_SCORES + "(" + COLUMN_ID + "INTEGER PRIMARY KEY," + COLUMN_NAME + "TEXT" + COLUMN_SCORE + "INTEGER" + ")";
+        String CREATE_SCORES_TABLE = "CREATE TABLE " + TABLE_SCORES + "(" + COLUMN_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_NAME + "TEXT" + COLUMN_SCORE + "INTEGER" + ")";
         db.execSQL(CREATE_SCORES_TABLE);
 
     }
@@ -44,19 +44,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
-    public String[] bestScores() {
+    public String[][] showBestScores() {
         String query = "SELECT COLUMN_NAME, COLUMN_SCORE FROM " + TABLE_SCORES + "ORDER BY" + COLUMN_SCORE + "DESC" + "GROUP BY" + COLUMNS + "LIMIT 10";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
-        int i = 0;
-        String[] data = new String[cursor.getCount()];
-        while (cursor.moveToNext()) {
-            data[i]=cursor.getString(1);
+        int i=0;
+        String[][] bestScores = new String[10][2];
+        while(cursor.moveToNext())
+        {
+            cursor.moveToNext();
+            bestScores[i][0]=cursor.getString(0);
+            bestScores[i][1]=cursor.getString(1);
             i++;
+            cursor.close();
         }
-        cursor.close();
+
+
         db.close();
-        return data;
+        return bestScores;
     }
 }
