@@ -3,11 +3,8 @@ package com.example.myapplication;
 import android.text.Editable;
 
 public class PlayerScore {
-    private int _id;
     private String _playerName;
     private int _playerScore;
-
-    public PlayerScore(){}
 
     public PlayerScore(Editable playerName, int playerScore){
         this._playerName=playerName.toString();

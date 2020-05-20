@@ -5,17 +5,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.text.Editable;
 
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "scoresDB.db";
-    public static final String TABLE_SCORES = "scores";
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_NAME = "playerName";
-    public static final String COLUMN_SCORE = "playerScore";
+    private static final String TABLE_SCORES = "scores";
+    private static final String COLUMN_ID = "_id";
+    private static final String COLUMN_NAME = "playerName";
+    private static final String COLUMN_SCORE = "playerScore";
     private static final String[] COLUMNS = {COLUMN_ID, COLUMN_NAME, COLUMN_SCORE};
 
 

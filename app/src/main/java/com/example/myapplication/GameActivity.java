@@ -119,15 +119,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         pauseButton=findViewById(R.id.toggleButton);
     }
     public void createButtons(){
-        imageButton1 = (ImageButton) findViewById(R.id.imageButton1);
-        imageButton2 = (ImageButton) findViewById(R.id.imageButton2);
-        imageButton3 = (ImageButton) findViewById(R.id.imageButton3);
-        imageButton4 = (ImageButton) findViewById(R.id.imageButton4);
-        imageButton5 = (ImageButton) findViewById(R.id.imageButton5);
-        imageButton6 = (ImageButton) findViewById(R.id.imageButton6);
-        imageButton7 = (ImageButton)findViewById(R.id.imageButton7);
-        imageButton8 = (ImageButton)findViewById(R.id.imageButton8);
-        imageButton9 = (ImageButton)findViewById(R.id.imageButton9);
+        imageButton1 = findViewById(R.id.imageButton1);
+        imageButton2 = findViewById(R.id.imageButton2);
+        imageButton3 = findViewById(R.id.imageButton3);
+        imageButton4 = findViewById(R.id.imageButton4);
+        imageButton5 = findViewById(R.id.imageButton5);
+        imageButton6 = findViewById(R.id.imageButton6);
+        imageButton7 = findViewById(R.id.imageButton7);
+        imageButton8 = findViewById(R.id.imageButton8);
+        imageButton9 = findViewById(R.id.imageButton9);
 
         imageButton1.setOnClickListener(this);
         imageButton2.setOnClickListener(this);
