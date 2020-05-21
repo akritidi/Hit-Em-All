@@ -23,6 +23,7 @@ public class GameOverActivity extends AppCompatActivity {
     private Editable yourName;
     private int yourScore;
     boolean wrongNameToastShown;
+    boolean longNameToastShown;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class GameOverActivity extends AppCompatActivity {
         final TextView enterTextView=findViewById(R.id.textView4);
 
         wrongNameToastShown=false;
+        longNameToastShown=false;
 
         EditText nameEditText=findViewById(R.id.editText);
         yourName=nameEditText.getText();
@@ -48,6 +50,9 @@ public class GameOverActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(yourName.toString().contentEquals("")){
                     wrongNameToast();
+                }
+                else if(yourName.toString().length()>15){
+                    longNameToast();
                 }
                 else {
                     addScore(yourName,yourScore);
@@ -76,13 +81,29 @@ public class GameOverActivity extends AppCompatActivity {
 
 
 
+
     public void addScore(Editable yourName, int yourScore) {
         DatabaseHandler myDBHandler=new DatabaseHandler(this, null, null, 1);
         PlayerScore playerScore=new PlayerScore(yourName,yourScore);
         myDBHandler.addScore(playerScore);
+    }
 
 
+    private void longNameToast() {
+        Toast longNameToast = new Toast(getApplicationContext());
+        longNameToast.setGravity(Gravity.CENTER|Gravity.BOTTOM,0,500);
 
+        TextView longNameTextView = new TextView(GameOverActivity.this);
+        longNameTextView.setBackgroundColor(Color.GRAY);
+        longNameTextView.setTextColor(Color.WHITE);
+        longNameTextView.setTextSize(20);
+        longNameTextView.setText(R.string.longname);
+        Typeface missTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
+        longNameTextView.setTypeface(missTypeface);
+
+        longNameToast.setView(longNameTextView);
+        longNameToast.show();
+        longNameToastShown = true;
     }
 
     public void wrongNameToast(){
