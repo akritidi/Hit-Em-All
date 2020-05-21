@@ -49,18 +49,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query,null);
         PlayerScore[] highScoresTable= new PlayerScore[10];
-        int i=0;
-        if(cursor!=null){
+        try {
+
             cursor.moveToFirst();
-            for (i=0;i<cursor.getCount();i++){
-                highScoresTable[i].set_playerName(cursor.getString(0));
-                highScoresTable[i].set_playerScore(cursor.getInt(1));
-                i++;
-                cursor.moveToNext();
-            }
+            int i=0;
+            while(cursor.moveToNext()){
+                    highScoresTable[i].set_playerName(cursor.getString(1));
+                    highScoresTable[i].set_playerScore(cursor.getInt(2));
+                    i++;
+                    cursor.moveToNext();
+                }
+
+        }
+        finally {
             cursor.close();
         }
-
         db.close();
         return highScoresTable;
     }

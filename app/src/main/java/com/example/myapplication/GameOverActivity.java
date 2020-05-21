@@ -46,6 +46,7 @@ public class GameOverActivity extends AppCompatActivity {
                 }
                 else {
                     addScore(yourName,yourScore);
+
                     openScoresActivity();
                 }
             }
@@ -74,9 +75,6 @@ public class GameOverActivity extends AppCompatActivity {
     public void addScore(Editable yourName, int yourScore) {
         DatabaseHandler myDBHandler=new DatabaseHandler(this, null, null, 1);
         PlayerScore playerScore=new PlayerScore(yourName,yourScore);
-        playerScore.set_playerName(yourName.toString());
-        playerScore.set_playerScore(yourScore);
-
         myDBHandler.addScore(playerScore);
 
     }

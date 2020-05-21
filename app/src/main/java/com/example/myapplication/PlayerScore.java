@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.text.Editable;
 
 public class PlayerScore {
+
     private String _playerName;
     private int _playerScore;
 
