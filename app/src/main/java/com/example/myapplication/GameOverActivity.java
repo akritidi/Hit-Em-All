@@ -1,7 +1,7 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -10,14 +10,13 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.Gravity;
-import android.view.MotionEvent;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.CollationElementIterator;
 
 public class GameOverActivity extends AppCompatActivity {
     private Editable yourName;
@@ -36,7 +35,7 @@ public class GameOverActivity extends AppCompatActivity {
         TextView scoreTextView = findViewById(R.id.textView3);
         scoreTextView.setText(String.valueOf(yourScore));
 
-        final TextView enterTextView=findViewById(R.id.textView4);
+
 
         wrongNameToastShown=false;
         longNameToastShown=false;

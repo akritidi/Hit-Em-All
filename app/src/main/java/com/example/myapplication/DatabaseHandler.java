@@ -54,8 +54,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         nor=cursor.getCount();
 
         return nor;
-
-
     }
 
 

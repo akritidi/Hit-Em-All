@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -21,10 +20,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
 import java.io.IOException;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -37,15 +33,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private long backPressedTime;
     private Toast backToast;
     private ImageButton[] arrayOfButtons;
-    private ImageButton imageButton1;
-    private ImageButton imageButton2;
-    private ImageButton imageButton3;
-    private ImageButton imageButton4;
-    private ImageButton imageButton5;
-    private ImageButton imageButton6;
-    private ImageButton imageButton7;
-    private ImageButton imageButton8;
-    private ImageButton imageButton9;
     private int lives,r,score,sumOfMoles,arrivalTime,hideTime,pauseCounter;
     private TextView countdownText,scoreText,livesText,livesText2,livesText3;
     private Handler mHandler3;
@@ -79,14 +66,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         livesText2 = findViewById(R.id.textLives2);
         livesText3 = findViewById(R.id.textLives3);
 
-        //soundsPlaying=true;
         gameFinished = false;
         countdownFinished = false;
         countdownSound = MediaPlayer.create(this, R.raw.countdown_sound);
         countdownText = findViewById(R.id.textCountdown);
         Timer countdown = new Timer();
-        final Timer moles=new Timer();
-//        countdownSound.start();
         soundsMaker(countdownSound);
         countdown.schedule(new TimerTask() {
             @Override
@@ -102,7 +86,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         popSound = MediaPlayer.create(this,R.raw.pop);
         jumpSound = MediaPlayer.create(this,R.raw.jump);
 
-        ConstraintLayout hitLayout = (ConstraintLayout) findViewById(R.id.conLayout);
+        ConstraintLayout hitLayout = findViewById(R.id.conLayout);
         hitLayout.setOnTouchListener(new View.OnTouchListener() {
             @SuppressLint("SetTextI18n")
             @Override                                               //Εμφάνιση μηνύματος Miss! αφού έχει τελειώσει το countdown όταν γίνεται ταπ σε σημείο που δεν υπάρχει κουμπί
@@ -110,7 +94,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 if (countdownFinished){
                     if (event.getAction() == MotionEvent.ACTION_DOWN){
                         missToast();
-//                        missSound.start();
                         soundsMaker(missSound);
                         return true;
                     }
@@ -122,15 +105,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         pauseButton=findViewById(R.id.toggleButton);
     }
     public void createButtons(){
-        imageButton1 = findViewById(R.id.imageButton1);
-        imageButton2 = findViewById(R.id.imageButton2);
-        imageButton3 = findViewById(R.id.imageButton3);
-        imageButton4 = findViewById(R.id.imageButton4);
-        imageButton5 = findViewById(R.id.imageButton5);
-        imageButton6 = findViewById(R.id.imageButton6);
-        imageButton7 = findViewById(R.id.imageButton7);
-        imageButton8 = findViewById(R.id.imageButton8);
-        imageButton9 = findViewById(R.id.imageButton9);
+        ImageButton imageButton1 = findViewById(R.id.imageButton1);
+        ImageButton imageButton2 = findViewById(R.id.imageButton2);
+        ImageButton imageButton3 = findViewById(R.id.imageButton3);
+        ImageButton imageButton4 = findViewById(R.id.imageButton4);
+        ImageButton imageButton5 = findViewById(R.id.imageButton5);
+        ImageButton imageButton6 = findViewById(R.id.imageButton6);
+        ImageButton imageButton7 = findViewById(R.id.imageButton7);
+        ImageButton imageButton8 = findViewById(R.id.imageButton8);
+        ImageButton imageButton9 = findViewById(R.id.imageButton9);
 
         imageButton1.setOnClickListener(this);
         imageButton2.setOnClickListener(this);
@@ -281,7 +264,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 //            hitSound.start();
             soundsMaker(hitSound);
 
-            ImageButton btn = (ImageButton) findViewById(v.getId());
+            ImageButton btn = findViewById(v.getId());
             btn.setVisibility(View.GONE);
             updateScore();
         }
