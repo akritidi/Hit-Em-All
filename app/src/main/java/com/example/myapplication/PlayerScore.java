@@ -7,6 +7,8 @@ public class PlayerScore {
     private String _playerName;
     private int _playerScore;
 
+    public PlayerScore(){}
+
     public PlayerScore(Editable playerName, int playerScore){
         this._playerName=playerName.toString();
         this._playerScore=playerScore;

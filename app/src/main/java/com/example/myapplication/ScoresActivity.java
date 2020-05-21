@@ -2,28 +2,29 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+
 import android.os.Bundle;
 import android.widget.TextView;
 
 
 public class ScoresActivity extends AppCompatActivity {
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scores);
+
         TextView[][] data=matchTextViews();
         DatabaseHandler db=new DatabaseHandler(this, null,null,1);
-        PlayerScore[] top10highScores=db.highScores();
-        int i;
-        for(i=0;i<10;i++){
-            if(top10highScores[i]!=null){
-                data[i][0].setText(top10highScores[i].get_playerName());
-                data[i][1].setText(top10highScores[i].get_playerScore());
-
-            }
-
+        int k;
+        for(k=0;k<db.getNumberOfDBRows();k++){
+            PlayerScore playerScore=db.highScores(k);
+            data[k][0].setText(playerScore.get_playerName());
+            data[k][1].setText(Integer.toString(playerScore.get_playerScore()));
         }
+
 
 
     }

@@ -17,8 +17,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.CollationElementIterator;
+
 public class GameOverActivity extends AppCompatActivity {
     private Editable yourName;
+    private int yourScore;
     boolean wrongNameToastShown;
     @SuppressLint("SetTextI18n")
     @Override
@@ -27,10 +30,12 @@ public class GameOverActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_over);
 
         Intent intent = getIntent();
-        final int yourScore = intent.getIntExtra("SCORE",0);
+        yourScore = intent.getIntExtra("SCORE",0);
 
         TextView scoreTextView = findViewById(R.id.textView3);
         scoreTextView.setText(String.valueOf(yourScore));
+
+        final TextView enterTextView=findViewById(R.id.textView4);
 
         wrongNameToastShown=false;
 
@@ -46,7 +51,6 @@ public class GameOverActivity extends AppCompatActivity {
                 }
                 else {
                     addScore(yourName,yourScore);
-
                     openScoresActivity();
                 }
             }
@@ -77,6 +81,8 @@ public class GameOverActivity extends AppCompatActivity {
         PlayerScore playerScore=new PlayerScore(yourName,yourScore);
         myDBHandler.addScore(playerScore);
 
+
+
     }
 
     public void wrongNameToast(){
@@ -106,5 +112,6 @@ public class GameOverActivity extends AppCompatActivity {
         Intent i = new Intent(this,ScoresActivity.class);
         startActivity(i);
         finish();
+
     }
 }

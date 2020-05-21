@@ -382,6 +382,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         if (checked){
 
             run=false;
+            backPressed=true;
             missSound.stop();
             hitSound.stop();
             popSound.stop();
