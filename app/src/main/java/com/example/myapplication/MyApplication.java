@@ -72,7 +72,7 @@ public class MyApplication extends Application   implements Application.Activity
     }
     public static void onEnterBackground()  {
      times ++;
-        myService.pause();
+        myService.stop();
     }
 
     private ServiceConnection conect = new ServiceConnection() {

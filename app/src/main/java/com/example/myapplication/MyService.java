@@ -8,6 +8,7 @@ import android.os.Binder;
 import android.os.IBinder;
 
 
+import java.io.IOException;
 import java.text.Collator;
 
 
@@ -37,6 +38,7 @@ public class MyService extends Service {
         }
     }
 
+
     @Override
     public IBinder onBind(Intent intent) {
         return binder;
@@ -58,18 +60,24 @@ public class MyService extends Service {
 
         }
   // just  in case,dont delete thise!
-//     public void stop(){
-//         if(player.isPlaying()){
-//             player.pause();
-//
-//             player.release();
-//         }
-//
-//     }
+     public void stop(){
+         if(player.isPlaying()){
+             player.pause();
+
+             player.stop();
+             try {
+                 player.prepare();
+             } catch (IOException e) {
+                 e.printStackTrace();
+             }
+         }
+
+     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+
         player.stop();
     }
 
