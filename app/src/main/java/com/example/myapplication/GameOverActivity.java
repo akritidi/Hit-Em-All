@@ -1,8 +1,6 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,7 +8,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.Gravity;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +20,7 @@ public class GameOverActivity extends AppCompatActivity {
     private int yourScore;
     boolean wrongNameToastShown;
     boolean longNameToastShown;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +32,6 @@ public class GameOverActivity extends AppCompatActivity {
 
         TextView scoreTextView = findViewById(R.id.textView3);
         scoreTextView.setText(String.valueOf(yourScore));
-
-
 
         wrongNameToastShown=false;
         longNameToastShown=false;

@@ -1,9 +1,7 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
-
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -16,19 +14,27 @@ public class ScoresActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scores);
 
+
         TextView[][] data=matchTextViews();
         DatabaseHandler db=new DatabaseHandler(this, null,null,1);
         int k;
+
+        // Εξήγηση της λογικής του παρακάτω κώδικα. Ξεκινάει η λούπα. Το σημείο λήξης της λούπας, καθορίζεται από το πλήθος των εγγραφών στον πίνακα (έχει τεθεί στην μέθοδο getNumberOFDBRows της DatabaseHandler
+        // ως μάξιμουμ το 10 - καθώς θέλουμε na εμφανίζουμε μόνο τα πρώτα 10 High Scores. Η λούπα λοιπόν θα εκτελεστεί από 1 έως το πολύ 10 φορές
+        // Λογική λούπας: Σε κάθε επανάληψη
+        // 1. Καλείται η highScores με όρισμα το εκάστοτε k. Στην πρώτη επανάληψη θα επιστραφεί το πρώτο αντικείμενο του αντίστοιχου query, στην δεύτερη το δεύτερο κ.ο.κ.
+        // αυτό το φροντίζει η μέθοδος highScores λόγω της λούπας που κάνει moveToNext() όσες φορές είναι το k.
+        //2. Αφού επιστραφεί το αντικείμενο μέσω του δισδιάσταστου πίνακα data αλλάζουμε τα TextViews που εμφανίζονται στον χρήστη με βάση τα playerName και playerScore, του αντικειμένου που επιστάφηκε.
         for(k=0;k<db.getNumberOfDBRows();k++){
             PlayerScore playerScore=db.highScores(k);
             data[k][0].setText(playerScore.get_playerName());
             data[k][1].setText(Integer.toString(playerScore.get_playerScore()));
         }
 
-
-
     }
 
+
+    //μια μέθοδος που αρχικοποιεί τον πίνακα data αναθέτοντας του τα xml πεδία, τα οποία μετά ο κώδικας θα τροποποιήσει
     private TextView[][] matchTextViews() {
         TextView[][] data=new TextView[10][2];
         data[0][0]=findViewById(R.id.textView5);
@@ -52,7 +58,6 @@ public class ScoresActivity extends AppCompatActivity {
         data[9][0]=findViewById(R.id.textView32);
         data[9][1]=findViewById(R.id.textView33);
         return data;
-
     }
 }
 
