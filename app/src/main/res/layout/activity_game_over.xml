@@ -118,7 +118,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="textNoSuggestions"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
