@@ -27,9 +27,8 @@ public class MyService extends Service {
         super.onCreate();
         player = MediaPlayer.create(this, R.raw.song);
         player.setLooping(true);
+
         player.start();
-
-
     }
 
     public class LocalBinder extends Binder {

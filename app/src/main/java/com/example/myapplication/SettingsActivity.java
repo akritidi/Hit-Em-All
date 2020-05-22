@@ -68,7 +68,7 @@ public class SettingsActivity extends AppCompatActivity  {
                 if(!isChecked){
 
                     SharedPreferences.Editor editor = sharedPrefs.edit();
-                    editor.putBoolean("sht", true);
+                    editor.putBoolean("sht", false);
                     editor.apply();
                     sounds.setChecked(false);
 

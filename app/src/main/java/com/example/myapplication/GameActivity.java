@@ -36,7 +36,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private int lives,r,score,sumOfMoles,arrivalTime,hideTime,pauseCounter;
     private TextView countdownText,scoreText,livesText,livesText2,livesText3;
     private Handler mHandler3;
-    protected   ToggleButton pauseButton;
+    private ToggleButton pauseButton;
     static boolean soundsPlaying=true;
 
 
@@ -103,6 +103,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         });
          mHandler3=new Handler();
         pauseButton=findViewById(R.id.toggleButton);
+        pauseButton.setVisibility(View.INVISIBLE);
     }
     public void createButtons(){
         ImageButton imageButton1 = findViewById(R.id.imageButton1);
@@ -114,7 +115,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         ImageButton imageButton7 = findViewById(R.id.imageButton7);
         ImageButton imageButton8 = findViewById(R.id.imageButton8);
         ImageButton imageButton9 = findViewById(R.id.imageButton9);
-
         imageButton1.setOnClickListener(this);
         imageButton2.setOnClickListener(this);
         imageButton3.setOnClickListener(this);
@@ -147,6 +147,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void startRepeatingTask() {
         Handler mHandler=new Handler();
         mHandler.postDelayed(runnableCode, 4000);
+
     }
     public void hideMole(int r){
         hideMoleBool=true;
@@ -163,12 +164,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void run() {
+            pauseButton.setVisibility(View.VISIBLE);
             Log.d("Handlers","Called on Main Thread");
             nextMolebool=false;
           if (run) {
               r = randomMole();
               arrayOfButtons[r].setVisibility(View.VISIBLE);
-//              popSound.start();
               soundsMaker(popSound);
               sumOfMoles++;
               hideMole(r);
@@ -182,9 +183,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             Log.d("Handlers","Called on Main Thread");
             arrayOfButtons[r].setVisibility(View.GONE);
             hideMoleBool=false;
-            if(score<sumOfMoles && run){
 
-                //jumpSound.start();
+            if(score<sumOfMoles && run){
                 soundsMaker(jumpSound);
                 updateLives();
                 sumOfMoles=score;
@@ -300,12 +300,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
    @Override
    protected void onResume() {
        super.onResume();
-       pauseButton.setChecked(false);
        if (pauseCounter!=0){
-
+        pauseButton.setChecked(true);
            run=true;
            sumOfMoles =score;
-           mHandler3.post(runnableCode);
+           backPressed=true;
+
 
        }
    }
@@ -317,13 +317,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         missSound.stop();
         hitSound.stop();
         popSound.stop();
-        jumpSound.stop();
         countdownSound.stop();
-        try {
-            countdownSound.prepare();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         try {
             missSound.prepare();
         } catch (IOException e) {
@@ -339,11 +334,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         } catch (IOException e) {
             e.printStackTrace();
         }
-        try {
-            jumpSound.prepare();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
 
 
     }
@@ -366,36 +357,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             run=false;
             backPressed=true;
-            missSound.stop();
-            hitSound.stop();
-            popSound.stop();
-            jumpSound.stop();
-            countdownSound.stop();
-            try {
-                countdownSound.prepare();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                missSound.prepare();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                hitSound.prepare();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                popSound.prepare();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                jumpSound.prepare();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
         }else {
             {
