@@ -7,9 +7,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -21,9 +23,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MyApplication extends Application   implements Application.ActivityLifecycleCallbacks {
     private static MyService myService;
-
+    private static Toast boolToast;
      static int times = 0;
-
+    private static boolean musicState=true;
     boolean isBound = false;
 
     private static WeakReference<Activity>
@@ -35,6 +37,8 @@ public class MyApplication extends Application   implements Application.Activity
 
     private void determineForegroundStatus() {
         if(applicationBackgrounded.get()){
+            SharedPreferences sharedPrefs  = getSharedPreferences("state", MODE_PRIVATE);
+            musicState=sharedPrefs.getBoolean("music",true);
             MyApplication.onEnterForeground();
             applicationBackgrounded.set(false);
         }
@@ -59,14 +63,14 @@ public class MyApplication extends Application   implements Application.Activity
     public void onCreate() {
         super.onCreate();
 
-
         this.registerActivityLifecycleCallbacks(this);
         Intent intent = new Intent(this,MyService.class);
         bindService(intent,conect, (Context.BIND_ALLOW_OOM_MANAGEMENT));
     }
 
     public static void onEnterForeground() {
-        if (times != 0) {
+       System.out.println("einai to toast bool"+musicState+"anamesaa" );
+        if (times != 0 && musicState) {
             myService.setPlayer();
         }
     }

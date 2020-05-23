@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
@@ -136,8 +137,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         arrayOfButtons[7] = imageButton8;
         arrayOfButtons[8] = imageButton9;
 
-
-
+        SharedPreferences sharedPrefs  = getSharedPreferences("state", MODE_PRIVATE);
+        boolean musicState = sharedPrefs.getBoolean("sht", true);
+      setMediaBool(musicState);
     }
     @RequiresApi(api = Build.VERSION_CODES.N)
     public int randomMole(){

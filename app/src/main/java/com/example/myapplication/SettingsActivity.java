@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 public class SettingsActivity extends AppCompatActivity  {
   Switch music,sounds;
-   Toast swict;
+   Toast swict,s;
    MyService myService;
    boolean isBound = false;
     SharedPreferences sharedPrefs;
@@ -43,13 +43,11 @@ public class SettingsActivity extends AppCompatActivity  {
                  myService.stop();
                     swict = Toast.makeText(getBaseContext(), "The music has turned off ", Toast.LENGTH_SHORT);
                     swict.show();
-
-
-
                     SharedPreferences.Editor editor = sharedPrefs.edit();
                     editor.putBoolean("music", false);
                     editor.apply();
                     music.setChecked(false);
+
                 }else if (isChecked){
                     myService.setPlayer();
                     swict = Toast.makeText(getBaseContext(), "The music has turned on ", Toast.LENGTH_SHORT);
@@ -71,8 +69,9 @@ public class SettingsActivity extends AppCompatActivity  {
                     editor.putBoolean("sht", false);
                     editor.apply();
                     sounds.setChecked(false);
-
                     GameActivity.setMediaBool(false);
+                    s=Toast.makeText(getBaseContext(),"The sounds has turned of ",Toast.LENGTH_SHORT);
+                    s.show();
 
                 }else if (isChecked){
 
@@ -81,7 +80,8 @@ public class SettingsActivity extends AppCompatActivity  {
                     editor.apply();
                     sounds.setChecked(true);
                     GameActivity.setMediaBool(true);
-
+                    s=Toast.makeText(getBaseContext(),"The sounds has turned on ",Toast.LENGTH_SHORT);
+                    s.show();
                 }
             }
         });
