@@ -321,6 +321,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         popSound.stop();
         countdownSound.stop();
 
+        if(missToastShown){
+            missToast.cancel();
+        }
+        if(hitToastShown){
+            hitToast.cancel();
+        }
+
         try {
             missSound.prepare();
         } catch (IOException e) {
