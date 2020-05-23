@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.app.Service;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
@@ -20,15 +21,26 @@ public class MyService extends Service {
 
     }
   MediaPlayer player ;
+
     private final IBinder binder=new LocalBinder();
 
     @Override
     public void onCreate() {
         super.onCreate();
+        boolean mState;
+   createPLayer();
+        SharedPreferences sharedPrefs  = getSharedPreferences("state", MODE_PRIVATE);
+        mState=sharedPrefs.getBoolean("music",true);
+        if (!mState){
+            stop();
+        }
+    }
+    public void createPLayer(){
         player = MediaPlayer.create(this, R.raw.song);
         player.setLooping(true);
 
         player.start();
+
     }
 
     public class LocalBinder extends Binder {
