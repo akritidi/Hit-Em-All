@@ -22,20 +22,17 @@ public class MainActivity extends AppCompatActivity {
 MyService myService;
 
 boolean isBound = false;
-private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-         intent = new Intent(this,MyService.class);// εδω αρχιζει το service
+        Intent intent = new Intent(this, MyService.class);// εδω αρχιζει το service
         startService(intent);
 
-
-        Button playButton = (Button) findViewById(R.id.button);
+        Button playButton = findViewById(R.id.button);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,7 +40,7 @@ private Intent intent;
             }
         });
 
-        Button settingsButton = (Button) findViewById(R.id.button2);
+        Button settingsButton = findViewById(R.id.button2);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +48,7 @@ private Intent intent;
             }
         });
 
-        Button scoresButton = (Button) findViewById(R.id.button3);
+        Button scoresButton = findViewById(R.id.button3);
         scoresButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,7 +56,7 @@ private Intent intent;
             }
         });
 
-        Button exitButton = (Button) findViewById(R.id.button4);
+        Button exitButton = findViewById(R.id.button4);
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,6 +113,4 @@ private Intent intent;
             isBound = false;
         }
     };
-
-
 }

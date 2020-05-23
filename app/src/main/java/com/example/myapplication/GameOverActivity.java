@@ -56,7 +56,6 @@ public class GameOverActivity extends AppCompatActivity {
             }
         });
 
-
         Button playAgain = findViewById(R.id.gameOverPlayAgain);
         playAgain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,15 +73,11 @@ public class GameOverActivity extends AppCompatActivity {
         });
     }
 
-
-
-
     public void addScore(Editable yourName, int yourScore) {
         DatabaseHandler myDBHandler=new DatabaseHandler(this, null, null, 1);
         PlayerScore playerScore=new PlayerScore(yourName,yourScore);
         myDBHandler.addScore(playerScore);
     }
-
 
     private void longNameToast() {
         Toast longNameToast = new Toast(getApplicationContext());
@@ -92,7 +87,7 @@ public class GameOverActivity extends AppCompatActivity {
         longNameTextView.setBackgroundColor(Color.GRAY);
         longNameTextView.setTextColor(Color.WHITE);
         longNameTextView.setTextSize(20);
-        longNameTextView.setText(R.string.longname);
+        longNameTextView.setText(R.string.long_name);
         Typeface missTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
         longNameTextView.setTypeface(missTypeface);
 
@@ -128,6 +123,5 @@ public class GameOverActivity extends AppCompatActivity {
         Intent i = new Intent(this,ScoresActivity.class);
         startActivity(i);
         finish();
-
     }
 }

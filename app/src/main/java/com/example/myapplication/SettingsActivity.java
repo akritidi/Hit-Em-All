@@ -17,16 +17,15 @@ import android.widget.Toast;
 
 public class SettingsActivity extends AppCompatActivity  {
   Switch music,sounds;
-   Toast swict,s;
+   Toast switch1,s;
    MyService myService;
    boolean isBound = false;
     SharedPreferences sharedPrefs;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = new Intent(this,MyService.class);
-    bindService(intent,conect, (Context.BIND_ALLOW_OOM_MANAGEMENT));
+    bindService(intent, connect, (Context.BIND_ALLOW_OOM_MANAGEMENT));
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
@@ -41,17 +40,17 @@ public class SettingsActivity extends AppCompatActivity  {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(!isChecked) {
                  myService.stop();
-                    swict = Toast.makeText(getBaseContext(), "The music has turned off ", Toast.LENGTH_SHORT);
-                    swict.show();
+                    switch1 = Toast.makeText(getBaseContext(), R.string.mof, Toast.LENGTH_SHORT);
+                    switch1.show();
                     SharedPreferences.Editor editor = sharedPrefs.edit();
                     editor.putBoolean("music", false);
                     editor.apply();
                     music.setChecked(false);
 
-                }else if (isChecked){
+                }else {
                     myService.setPlayer();
-                    swict = Toast.makeText(getBaseContext(), "The music has turned on ", Toast.LENGTH_SHORT);
-                    swict.show();
+                    switch1 = Toast.makeText(getBaseContext(), R.string.mon, Toast.LENGTH_SHORT);
+                    switch1.show();
                     SharedPreferences.Editor editor = sharedPrefs.edit();
                     editor.putBoolean("music", true);
                     editor.apply();
@@ -70,17 +69,17 @@ public class SettingsActivity extends AppCompatActivity  {
                     editor.apply();
                     sounds.setChecked(false);
                     GameActivity.setMediaBool(false);
-                    s=Toast.makeText(getBaseContext(),"The sounds has turned of ",Toast.LENGTH_SHORT);
+                    s=Toast.makeText(getBaseContext(),R.string.sof,Toast.LENGTH_SHORT);
                     s.show();
 
-                }else if (isChecked){
+                }else {
 
                     SharedPreferences.Editor editor = sharedPrefs.edit();
                     editor.putBoolean("sht", true);
                     editor.apply();
                     sounds.setChecked(true);
                     GameActivity.setMediaBool(true);
-                    s=Toast.makeText(getBaseContext(),"The sounds has turned on ",Toast.LENGTH_SHORT);
+                    s=Toast.makeText(getBaseContext(),R.string.son,Toast.LENGTH_SHORT);
                     s.show();
                 }
             }
@@ -88,7 +87,7 @@ public class SettingsActivity extends AppCompatActivity  {
 
          }
       // εδω αποκταμε προσβαση στο ηδη υπαρχων-τρεχον service
-    private ServiceConnection conect = new ServiceConnection() {
+    private ServiceConnection connect = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             MyService.LocalBinder binder = (MyService.LocalBinder)service;
@@ -105,6 +104,6 @@ public class SettingsActivity extends AppCompatActivity  {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(conect);
+        unbindService(connect);
     }
 }

@@ -14,7 +14,6 @@ public class ScoresActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scores);
 
-
         TextView[][] data=matchTextViews();
         DatabaseHandler db=new DatabaseHandler(this, null,null,1);
         int k;
@@ -30,9 +29,7 @@ public class ScoresActivity extends AppCompatActivity {
             data[k][0].setText(playerScore.get_playerName());
             data[k][1].setText(Integer.toString(playerScore.get_playerScore()));
         }
-
     }
-
 
     //μια μέθοδος που αρχικοποιεί τον πίνακα data αναθέτοντας του τα xml πεδία, τα οποία μετά ο κώδικας θα τροποποιήσει
     private TextView[][] matchTextViews() {

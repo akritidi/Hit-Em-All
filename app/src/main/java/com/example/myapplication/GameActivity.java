@@ -80,7 +80,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         },1000);
 
-         startRepeatingTask();
+        startRepeatingTask();
 
         hitSound = MediaPlayer.create(this,R.raw.hit);
         missSound = MediaPlayer.create(this,R.raw.miss);
@@ -176,7 +176,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
               sumOfMoles++;
               hideMole(r);
           }
-
         }
     };
     private Runnable runnableCode2= new Runnable() {
@@ -263,7 +262,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if(countdownFinished && run){
             hitToast();
-//            hitSound.start();
             soundsMaker(hitSound);
 
             ImageButton btn = findViewById(v.getId());
@@ -307,8 +305,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
            run=true;
            sumOfMoles =score;
            backPressed=true;
-
-
        }
    }
     @Override
@@ -343,9 +339,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
     }
      public static void setMediaBool(boolean x){
         soundsPlaying=x;
@@ -355,22 +348,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      }
     public  static  void soundsMaker(MediaPlayer player){
         if (getMediaBool()){ player.start();}
-
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void pauseClicked(View view) {
         boolean checked = ((ToggleButton)view).isChecked();
         if (checked){
-
             run=false;
             backPressed=true;
 
         }else {
             {
-
-
                   if (( nextMolebool && !hideMoleBool )|| (!nextMolebool && hideMoleBool)){
                       run=true;
                       sumOfMoles=score;
@@ -380,8 +368,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                       sumOfMoles = score;
                       mHandler3.post(runnableCode);
                   }
-
-
             }
         }
     }
@@ -410,5 +396,4 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
         backPressedTime=System.currentTimeMillis();
     }
-
 }

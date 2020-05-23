@@ -23,12 +23,9 @@
     <string name="exit_toast">Πιέστε ξανά για έξοδο</string>
     <string name="exit_game_toast">Έγινε παύση παιχνιδιου πιέστε ξανά για έξοδο</string>
     <string name="nada">-</string>
-    <string name="n4">4</string>
-    <string name="n5">5</string>
-    <string name="n6">6</string>
-    <string name="n7">7</string>
-    <string name="n8">8</string>
-    <string name="n9">9</string>
-    <string name="n10">10</string>
-    <string name="longname">Πολύ μεγάλο όνομα!</string>
+    <string name="long_name">Πολύ μεγάλο όνομα!</string>
+    <string name="mof">Η μουσική απενεργοποιήθηκε</string>
+    <string name="mon">Η μουσική ενεργοποιήθηκε</string>
+    <string name="sof">Οι ήχοι απενεργοποιήθηκαν</string>
+    <string name="son">Οι ήχοι ενεργοποιήθηκαν</string>
 </resources>

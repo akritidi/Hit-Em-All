@@ -22,16 +22,21 @@
     <string name="no">No</string>
     <string name="exit_toast">Press again to exit</string>
     <string name="exit_game_toast">Game paused press again to exit</string>
-    <string name="n1">1</string>
+    <string name="n1" translatable="false">1</string>
     <string name="nada">-</string>
-    <string name="n2">2</string>
-    <string name="n4">4</string>
-    <string name="n5">5</string>
-    <string name="n6">6</string>
-    <string name="n7">7</string>
-    <string name="n8">8</string>
-    <string name="n9">9</string>
-    <string name="n10">10</string>
-    <string name="longname">Very long Name!</string>
-    <string name="sound">sht</string>
+    <string name="n2" translatable="false">2</string>
+    <string name="n4" translatable="false">4</string>
+    <string name="n5" translatable="false">5</string>
+    <string name="n6" translatable="false">6</string>
+    <string name="n7" translatable="false">7</string>
+    <string name="n8" translatable="false">8</string>
+    <string name="n9" translatable="false">9</string>
+    <string name="n10" translatable="false">10</string>
+    <string name="long_name">Very long Name!</string>
+    <string name="sound" translatable="false">sht</string>
+    <string name="mof">The music has turned off</string>
+    <string name="mon">The music has turned on</string>
+    <string name="sof">The sounds has turned off</string>
+    <string name="son">The sounds has turned on</string>
+
 </resources>
