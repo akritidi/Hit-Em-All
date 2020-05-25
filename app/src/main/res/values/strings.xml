@@ -38,6 +38,6 @@
     <string name="mon">The music has turned on</string>
     <string name="sof">The sounds has turned off</string>
     <string name="son">The sounds has turned on</string>
-    <string name="notTopTen">Δυστυχώς το σκορ σου δεν πέρασε στα 10 καλύτερα σκορ!</string>
+    <string name="notTopTen">Sorry, your score was not high enough to get in the top 10!</string>
 
 </resources>
