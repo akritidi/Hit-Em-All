@@ -2,14 +2,9 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.Gravity;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 
 public class ScoresActivity extends AppCompatActivity {
@@ -19,11 +14,6 @@ public class ScoresActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scores);
-
-        Intent i=getIntent();
-        int yourScore=i.getIntExtra("SCORE",0);
-
-
 
         TextView[][] data=matchTextViews();
         DatabaseHandler db=new DatabaseHandler(this, null,null,1);

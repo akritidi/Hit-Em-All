@@ -127,6 +127,7 @@ public class GameOverActivity extends AppCompatActivity {
         wrongNameToastShown = true;
 
     }
+
     public void notTopTenToast(){
         Toast notTopTenToast = new Toast(getApplicationContext());
         notTopTenToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL,0,500);
