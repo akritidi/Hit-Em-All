@@ -2,8 +2,14 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.Gravity;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class ScoresActivity extends AppCompatActivity {
@@ -14,8 +20,14 @@ public class ScoresActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scores);
 
+        Intent i=getIntent();
+        int yourScore=i.getIntExtra("SCORE",0);
+
+
+
         TextView[][] data=matchTextViews();
         DatabaseHandler db=new DatabaseHandler(this, null,null,1);
+
         int k;
 
         // Εξήγηση της λογικής του παρακάτω κώδικα. Ξεκινάει η λούπα. Το σημείο λήξης της λούπας, καθορίζεται από το πλήθος των εγγραφών στον πίνακα (έχει τεθεί στην μέθοδο getNumberOFDBRows της DatabaseHandler
@@ -30,6 +42,8 @@ public class ScoresActivity extends AppCompatActivity {
             data[k][1].setText(Integer.toString(playerScore.get_playerScore()));
         }
     }
+
+
 
     //μια μέθοδος που αρχικοποιεί τον πίνακα data αναθέτοντας του τα xml πεδία, τα οποία μετά ο κώδικας θα τροποποιήσει
     private TextView[][] matchTextViews() {

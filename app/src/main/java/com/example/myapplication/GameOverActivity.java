@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.view.Gravity;
 import android.view.View;
@@ -20,7 +21,7 @@ public class GameOverActivity extends AppCompatActivity {
     private int yourScore;
     boolean wrongNameToastShown;
     boolean longNameToastShown;
-
+    DatabaseHandler db=new DatabaseHandler(this, null,null,1);
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +40,11 @@ public class GameOverActivity extends AppCompatActivity {
         EditText nameEditText=findViewById(R.id.editText);
         yourName=nameEditText.getText();
 
-        Button submitScore= findViewById(R.id.gameOverSubmit);
+        final Button submitScore= findViewById(R.id.gameOverSubmit);
         submitScore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(yourName.toString().contentEquals("")){
                     wrongNameToast();
                 }
@@ -51,7 +53,19 @@ public class GameOverActivity extends AppCompatActivity {
                 }
                 else {
                     addScore(yourName,yourScore);
-                    openScoresActivity();
+                    submitScore.setEnabled(false);
+                    if(db.getNumberOfDBRows()==10){
+                        PlayerScore lastPlayerScore=db.highScores(9);
+                        if(yourScore<=lastPlayerScore.get_playerScore()){
+                            notTopTenToast();
+                            Handler myH=new Handler();
+                            myH.postDelayed(r,1000);
+                        }
+                        else {openScoresActivity();}
+                    }
+
+
+
                 }
             }
         });
@@ -113,6 +127,31 @@ public class GameOverActivity extends AppCompatActivity {
         wrongNameToastShown = true;
 
     }
+    public void notTopTenToast(){
+        Toast notTopTenToast = new Toast(getApplicationContext());
+        notTopTenToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL,0,500);
+
+        TextView notTopTenView = new TextView(GameOverActivity.this);
+        notTopTenView.setBackgroundColor(Color.GRAY);
+        notTopTenView.setTextColor(Color.WHITE);
+        notTopTenView.setTextSize(20);
+        notTopTenView.setText(R.string.notTopTen);
+        notTopTenView.setGravity(Gravity.CENTER);
+        Typeface missTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
+
+        notTopTenView.setTypeface(missTypeface);
+        notTopTenToast.setView(notTopTenView);
+        notTopTenToast.show();
+
+
+    }
+    private Runnable r=new Runnable() {
+        @Override
+        public void run() {
+            openScoresActivity();
+        }
+    };
+
     public void openGameActivity(){
         Intent i = new Intent(this,GameActivity.class);
         startActivity(i);
@@ -121,6 +160,7 @@ public class GameOverActivity extends AppCompatActivity {
 
     private void openScoresActivity() {
         Intent i = new Intent(this,ScoresActivity.class);
+
         startActivity(i);
         finish();
     }
