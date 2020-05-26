@@ -19,8 +19,6 @@ import android.widget.Toast;
 public class GameOverActivity extends AppCompatActivity {
     private Editable yourName;
     private int yourScore;
-    boolean wrongNameToastShown;
-    boolean longNameToastShown;
     DatabaseHandler db=new DatabaseHandler(this, null,null,1);
     @SuppressLint("SetTextI18n")
     @Override
@@ -34,8 +32,6 @@ public class GameOverActivity extends AppCompatActivity {
         TextView scoreTextView = findViewById(R.id.textView3);
         scoreTextView.setText(String.valueOf(yourScore));
 
-        wrongNameToastShown=false;
-        longNameToastShown=false;
 
         EditText nameEditText=findViewById(R.id.editText);
         yourName=nameEditText.getText();
@@ -110,10 +106,10 @@ public class GameOverActivity extends AppCompatActivity {
 
     private void longNameToast() {
         Toast longNameToast = new Toast(getApplicationContext());
-        longNameToast.setGravity(Gravity.CENTER|Gravity.BOTTOM,0,500);
+        longNameToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
 
         TextView longNameTextView = new TextView(GameOverActivity.this);
-        longNameTextView.setBackgroundColor(Color.GRAY);
+        longNameTextView.setBackgroundColor(Color.BLACK);
         longNameTextView.setTextColor(Color.WHITE);
         longNameTextView.setTextSize(20);
         longNameTextView.setText(R.string.long_name);
@@ -122,15 +118,14 @@ public class GameOverActivity extends AppCompatActivity {
 
         longNameToast.setView(longNameTextView);
         longNameToast.show();
-        longNameToastShown = true;
     }
 
     public void wrongNameToast(){
         Toast wrongNameToast = new Toast(getApplicationContext());
-        wrongNameToast.setGravity(Gravity.CENTER|Gravity.BOTTOM,0,500);
+        wrongNameToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
 
         TextView wrongTextView = new TextView(GameOverActivity.this);
-        wrongTextView.setBackgroundColor(Color.GRAY);
+        wrongTextView.setBackgroundColor(Color.BLACK);
         wrongTextView.setTextColor(Color.WHITE);
         wrongTextView.setTextSize(20);
         wrongTextView.setText(R.string.wrong_name_toast);
@@ -139,16 +134,13 @@ public class GameOverActivity extends AppCompatActivity {
         wrongTextView.setTypeface(missTypeface);
         wrongNameToast.setView(wrongTextView);
         wrongNameToast.show();
-        wrongNameToastShown = true;
-
     }
 
     public void notTopTenToast(){
         Toast notTopTenToast = new Toast(getApplicationContext());
-        notTopTenToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL,0,500);
-
+        notTopTenToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
         TextView notTopTenView = new TextView(GameOverActivity.this);
-        notTopTenView.setBackgroundColor(Color.GRAY);
+        notTopTenView.setBackgroundColor(Color.BLACK);
         notTopTenView.setTextColor(Color.WHITE);
         notTopTenView.setTextSize(20);
         notTopTenView.setText(R.string.notTopTen);
@@ -158,16 +150,14 @@ public class GameOverActivity extends AppCompatActivity {
         notTopTenView.setTypeface(missTypeface);
         notTopTenToast.setView(notTopTenView);
         notTopTenToast.show();
-
-
     }
 
     public void topTenToast(){
         Toast topTenToast = new Toast(getApplicationContext());
-        topTenToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL,0,500);
+        topTenToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
 
         TextView topTenView = new TextView(GameOverActivity.this);
-        topTenView.setBackgroundColor(Color.GRAY);
+        topTenView.setBackgroundColor(Color.BLACK);
         topTenView.setTextColor(Color.WHITE);
         topTenView.setTextSize(20);
         topTenView.setText(R.string.topTen);
@@ -183,10 +173,10 @@ public class GameOverActivity extends AppCompatActivity {
 
     public void bestScoreToast(){
         Toast bestScoreToast = new Toast(getApplicationContext());
-        bestScoreToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL,0,500);
+        bestScoreToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
 
         TextView bestScoreView = new TextView(GameOverActivity.this);
-        bestScoreView.setBackgroundColor(Color.GRAY);
+        bestScoreView.setBackgroundColor(Color.BLACK);
         bestScoreView.setTextColor(Color.WHITE);
         bestScoreView.setTextSize(20);
         bestScoreView.setText(R.string.bestScore);
@@ -196,8 +186,6 @@ public class GameOverActivity extends AppCompatActivity {
         bestScoreView.setTypeface(missTypeface);
         bestScoreToast.setView(bestScoreView);
         bestScoreToast.show();
-
-
     }
 
 
@@ -210,14 +198,16 @@ public class GameOverActivity extends AppCompatActivity {
 
     public void openGameActivity(){
         Intent i = new Intent(this,GameActivity.class);
+        db.close();
         startActivity(i);
         finish();
     }
 
     private void openScoresActivity() {
         Intent i = new Intent(this,ScoresActivity.class);
-
+        db.close();
         startActivity(i);
         finish();
     }
+
 }
