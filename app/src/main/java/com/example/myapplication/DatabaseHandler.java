@@ -42,7 +42,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     //Δουλεύει άρτια και για λιγότερες από 10 εγγραφές.
     public int getNumberOfDBRows() {
         int nor;
-        String query = "SELECT * FROM " + TABLE_SCORES + " order by " + COLUMN_SCORE + " DESC " + " limit " + 10;
+        String query = "SELECT * FROM " + TABLE_SCORES + " order by " + COLUMN_SCORE + " DESC ";
         SQLiteDatabase db = this.getWritableDatabase();
         @SuppressLint("Recycle")
         Cursor cursor = db.rawQuery(query, null);
@@ -93,4 +93,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
-}
+    public void deleteScores(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_SCORES + " order by " + COLUMN_SCORE + " ASC," + COLUMN_ID + " DESC "+ " limit "+10;
+        @SuppressLint("Recycle")
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+        PlayerScore playerScore=new PlayerScore();
+        playerScore.set_id(Integer.parseInt(cursor.getString(0)));
+        db.delete(TABLE_SCORES, COLUMN_ID + " = ? ", new String[]{String.valueOf(playerScore.get_id())});
+
+
+            cursor.close();
+        db.close();
+        }
+
+
+    }

@@ -53,14 +53,14 @@ public class GameOverActivity extends AppCompatActivity {
                     if(db.getNumberOfDBRows()==1){
                         bestScoreToast();
                     }
-                    else if(db.getNumberOfDBRows()>1 && db.getNumberOfDBRows()<10){
+                    else if(db.getNumberOfDBRows()>1 && db.getNumberOfDBRows()<=10){
                         PlayerScore firstPlayerScore=db.highScores(1);
                         if(yourScore>firstPlayerScore.get_playerScore()) {
                             bestScoreToast();
                         }
                         else{topTenToast();}
                     }
-                    else if(db.getNumberOfDBRows()==10){
+                    else if(db.getNumberOfDBRows()>10){
                         PlayerScore firstPlayerScore=db.highScores(1);
                         PlayerScore lastPlayerScore=db.highScores(9);
                         if(yourScore>firstPlayerScore.get_playerScore()) {
@@ -69,9 +69,11 @@ public class GameOverActivity extends AppCompatActivity {
                         else if(yourScore<=lastPlayerScore.get_playerScore()){
                             notTopTenToast();
                         }
+
                         else{topTenToast();}
 
                     }
+
 
                     Handler myHandler= new Handler();
                     myHandler.postDelayed(r, 1000);

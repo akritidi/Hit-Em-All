@@ -3,7 +3,7 @@ package com.example.myapplication;
 import android.text.Editable;
 
 public class PlayerScore {
-
+    private int _id;
     private String _playerName;
     private int _playerScore;
 
@@ -15,6 +15,11 @@ public class PlayerScore {
 
     }
     //methods that set and return the players name and score. Used for accessing database.
+    public void set_id(int id){ this._id=id; }
+
+    public int get_id(){
+        return this._id;
+    }
 
     public void set_playerName(String playerName){
         this._playerName=playerName;
