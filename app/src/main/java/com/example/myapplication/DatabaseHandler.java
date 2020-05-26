@@ -49,7 +49,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         nor = cursor.getCount();
 
         return nor;
-    }
+
+            }
 
 
     //μέθοδος για προσθήκη στην ΒΔ, νέου σκορ. Δέχεται ένα αντικείμενο PlayerScore και βάζει στην βάση δεδομένων

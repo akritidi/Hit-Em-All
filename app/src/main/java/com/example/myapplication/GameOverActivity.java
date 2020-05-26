@@ -54,16 +54,31 @@ public class GameOverActivity extends AppCompatActivity {
                 else {
                     addScore(yourName,yourScore);
                     submitScore.setEnabled(false);
-                    if(db.getNumberOfDBRows()==10){
-                        PlayerScore lastPlayerScore=db.highScores(9);
-                        if(yourScore<=lastPlayerScore.get_playerScore()){
-                            notTopTenToast();
-                            Handler myH=new Handler();
-                            myH.postDelayed(r,1000);
+                    if(db.getNumberOfDBRows()==1){
+                        bestScoreToast();
+                    }
+                    else if(db.getNumberOfDBRows()>1 && db.getNumberOfDBRows()<10){
+                        PlayerScore firstPlayerScore=db.highScores(1);
+                        if(yourScore>firstPlayerScore.get_playerScore()) {
+                            bestScoreToast();
                         }
-                        else {openScoresActivity();}
+                        else{topTenToast();}
+                    }
+                    else if(db.getNumberOfDBRows()==10){
+                        PlayerScore firstPlayerScore=db.highScores(1);
+                        PlayerScore lastPlayerScore=db.highScores(9);
+                        if(yourScore>firstPlayerScore.get_playerScore()) {
+                            bestScoreToast();
+                        }
+                        else if(yourScore<=lastPlayerScore.get_playerScore()){
+                            notTopTenToast();
+                        }
+                        else{topTenToast();}
+
                     }
 
+                    Handler myHandler= new Handler();
+                    myHandler.postDelayed(r, 1000);
 
 
                 }
@@ -146,6 +161,46 @@ public class GameOverActivity extends AppCompatActivity {
 
 
     }
+
+    public void topTenToast(){
+        Toast topTenToast = new Toast(getApplicationContext());
+        topTenToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL,0,500);
+
+        TextView topTenView = new TextView(GameOverActivity.this);
+        topTenView.setBackgroundColor(Color.GRAY);
+        topTenView.setTextColor(Color.WHITE);
+        topTenView.setTextSize(20);
+        topTenView.setText(R.string.topTen);
+        topTenView.setGravity(Gravity.CENTER);
+        Typeface missTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
+
+        topTenView.setTypeface(missTypeface);
+        topTenToast.setView(topTenView);
+        topTenToast.show();
+
+
+    }
+
+    public void bestScoreToast(){
+        Toast bestScoreToast = new Toast(getApplicationContext());
+        bestScoreToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL,0,500);
+
+        TextView bestScoreView = new TextView(GameOverActivity.this);
+        bestScoreView.setBackgroundColor(Color.GRAY);
+        bestScoreView.setTextColor(Color.WHITE);
+        bestScoreView.setTextSize(20);
+        bestScoreView.setText(R.string.bestScore);
+        bestScoreView.setGravity(Gravity.CENTER);
+        Typeface missTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
+
+        bestScoreView.setTypeface(missTypeface);
+        bestScoreToast.setView(bestScoreView);
+        bestScoreToast.show();
+
+
+    }
+
+
     private Runnable r=new Runnable() {
         @Override
         public void run() {
