@@ -38,5 +38,8 @@
     <string name="mon">The music has turned on</string>
     <string name="sof">The sounds has turned off</string>
     <string name="son">The sounds has turned on</string>
+    <string name="notTopTen">Sorry, your score was not high enough to get in the top 10!</string>
+    <string name="topTen">Congratulations!!! You got into the top 10 high scores!</string>
+    <string name="bestScore">Congratulations! You got the new best high score!</string>
 
 </resources>

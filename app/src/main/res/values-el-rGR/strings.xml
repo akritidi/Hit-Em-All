@@ -28,4 +28,7 @@
     <string name="mon">Η μουσική ενεργοποιήθηκε</string>
     <string name="sof">Οι ήχοι απενεργοποιήθηκαν</string>
     <string name="son">Οι ήχοι ενεργοποιήθηκαν</string>
+    <string name="notTopTen">Δυστυχώς το σκορ σου δεν πέρασε στα 10 καλύτερα σκορ!</string>
+    <string name="topTen">Συγχαρητήρια!!! Είσαι στα 10 καλύτερα σκόρ! </string>
+    <string name="bestScore">Συγχαρητήρια!!! Έκανες νέο καλύτερο υψηλό σκόρ!</string>
 </resources>

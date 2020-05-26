@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 
+
 public class ScoresActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
@@ -16,6 +17,7 @@ public class ScoresActivity extends AppCompatActivity {
 
         TextView[][] data=matchTextViews();
         DatabaseHandler db=new DatabaseHandler(this, null,null,1);
+
         int k;
 
         // Εξήγηση της λογικής του παρακάτω κώδικα. Ξεκινάει η λούπα. Το σημείο λήξης της λούπας, καθορίζεται από το πλήθος των εγγραφών στον πίνακα (έχει τεθεί στην μέθοδο getNumberOFDBRows της DatabaseHandler
@@ -30,6 +32,8 @@ public class ScoresActivity extends AppCompatActivity {
             data[k][1].setText(Integer.toString(playerScore.get_playerScore()));
         }
     }
+
+
 
     //μια μέθοδος που αρχικοποιεί τον πίνακα data αναθέτοντας του τα xml πεδία, τα οποία μετά ο κώδικας θα τροποποιήσει
     private TextView[][] matchTextViews() {

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.view.Gravity;
 import android.view.View;
@@ -20,7 +21,7 @@ public class GameOverActivity extends AppCompatActivity {
     private int yourScore;
     boolean wrongNameToastShown;
     boolean longNameToastShown;
-
+    DatabaseHandler db=new DatabaseHandler(this, null,null,1);
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +40,11 @@ public class GameOverActivity extends AppCompatActivity {
         EditText nameEditText=findViewById(R.id.editText);
         yourName=nameEditText.getText();
 
-        Button submitScore= findViewById(R.id.gameOverSubmit);
+        final Button submitScore= findViewById(R.id.gameOverSubmit);
         submitScore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(yourName.toString().contentEquals("")){
                     wrongNameToast();
                 }
@@ -51,7 +53,34 @@ public class GameOverActivity extends AppCompatActivity {
                 }
                 else {
                     addScore(yourName,yourScore);
-                    openScoresActivity();
+                    submitScore.setEnabled(false);
+                    if(db.getNumberOfDBRows()==1){
+                        bestScoreToast();
+                    }
+                    else if(db.getNumberOfDBRows()>1 && db.getNumberOfDBRows()<10){
+                        PlayerScore firstPlayerScore=db.highScores(1);
+                        if(yourScore>firstPlayerScore.get_playerScore()) {
+                            bestScoreToast();
+                        }
+                        else{topTenToast();}
+                    }
+                    else if(db.getNumberOfDBRows()==10){
+                        PlayerScore firstPlayerScore=db.highScores(1);
+                        PlayerScore lastPlayerScore=db.highScores(9);
+                        if(yourScore>firstPlayerScore.get_playerScore()) {
+                            bestScoreToast();
+                        }
+                        else if(yourScore<=lastPlayerScore.get_playerScore()){
+                            notTopTenToast();
+                        }
+                        else{topTenToast();}
+
+                    }
+
+                    Handler myHandler= new Handler();
+                    myHandler.postDelayed(r, 1000);
+
+
                 }
             }
         });
@@ -113,6 +142,72 @@ public class GameOverActivity extends AppCompatActivity {
         wrongNameToastShown = true;
 
     }
+
+    public void notTopTenToast(){
+        Toast notTopTenToast = new Toast(getApplicationContext());
+        notTopTenToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL,0,500);
+
+        TextView notTopTenView = new TextView(GameOverActivity.this);
+        notTopTenView.setBackgroundColor(Color.GRAY);
+        notTopTenView.setTextColor(Color.WHITE);
+        notTopTenView.setTextSize(20);
+        notTopTenView.setText(R.string.notTopTen);
+        notTopTenView.setGravity(Gravity.CENTER);
+        Typeface missTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
+
+        notTopTenView.setTypeface(missTypeface);
+        notTopTenToast.setView(notTopTenView);
+        notTopTenToast.show();
+
+
+    }
+
+    public void topTenToast(){
+        Toast topTenToast = new Toast(getApplicationContext());
+        topTenToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL,0,500);
+
+        TextView topTenView = new TextView(GameOverActivity.this);
+        topTenView.setBackgroundColor(Color.GRAY);
+        topTenView.setTextColor(Color.WHITE);
+        topTenView.setTextSize(20);
+        topTenView.setText(R.string.topTen);
+        topTenView.setGravity(Gravity.CENTER);
+        Typeface missTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
+
+        topTenView.setTypeface(missTypeface);
+        topTenToast.setView(topTenView);
+        topTenToast.show();
+
+
+    }
+
+    public void bestScoreToast(){
+        Toast bestScoreToast = new Toast(getApplicationContext());
+        bestScoreToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL,0,500);
+
+        TextView bestScoreView = new TextView(GameOverActivity.this);
+        bestScoreView.setBackgroundColor(Color.GRAY);
+        bestScoreView.setTextColor(Color.WHITE);
+        bestScoreView.setTextSize(20);
+        bestScoreView.setText(R.string.bestScore);
+        bestScoreView.setGravity(Gravity.CENTER);
+        Typeface missTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
+
+        bestScoreView.setTypeface(missTypeface);
+        bestScoreToast.setView(bestScoreView);
+        bestScoreToast.show();
+
+
+    }
+
+
+    private Runnable r=new Runnable() {
+        @Override
+        public void run() {
+            openScoresActivity();
+        }
+    };
+
     public void openGameActivity(){
         Intent i = new Intent(this,GameActivity.class);
         startActivity(i);
@@ -121,6 +216,7 @@ public class GameOverActivity extends AppCompatActivity {
 
     private void openScoresActivity() {
         Intent i = new Intent(this,ScoresActivity.class);
+
         startActivity(i);
         finish();
     }
