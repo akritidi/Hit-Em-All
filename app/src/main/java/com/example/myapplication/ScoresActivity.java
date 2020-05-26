@@ -31,6 +31,7 @@ public class ScoresActivity extends AppCompatActivity {
             data[k][0].setText(playerScore.get_playerName());
             data[k][1].setText(Integer.toString(playerScore.get_playerScore()));
         }
+        db.close();
     }
 
 
