@@ -40,14 +40,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     //Μέθοδος που επιστρέφει τον αριθμό των εγγραφών που υπάρχουν στην ΒΔ.
     int getNumberOfDBRows() {
-        int nor;
         String query = "SELECT * FROM " + TABLE_SCORES;
         SQLiteDatabase db = this.getWritableDatabase();
 
+        int nor;
         @SuppressLint("Recycle")
         Cursor cursor = db.rawQuery(query, null);
         nor = cursor.getCount();
 
+        db.close();
         return nor;
 
             }
@@ -68,6 +69,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     * Πχ αν δεχτεί k=3 θα επιστρέψει την 3η εγγραφή του πίνακα
     * */
     PlayerScore highScores(int k) {
+
         String query = "SELECT * FROM " + TABLE_SCORES + " order by " + COLUMN_SCORE + " DESC," + COLUMN_ID + " ASC "; // query string: επιλέγει όλες τις εγγραφές του πίνακα και τις ταξινομεί με φθίνουσα
         SQLiteDatabase db = this.getWritableDatabase();                                                                 // σειρά - βάσει του σκορ (σε περίπτωση ισοβαθμίας, βάσει του αυξανόμενου id)
         Cursor cursor = db.rawQuery(query, null);                                                           // αναζήτηση μέσω cursor
@@ -83,7 +85,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             }
             playerScore.set_playerName(cursor.getString(1));                                                // Αφού έχει φτάσει στην σωστή εγγραφή, θέτει τα playerName και playerScore με βάση τα
             playerScore.set_playerScore(cursor.getInt(2));                                                  // αποθηκευμένα δεδομένα της κατάλληλης στήλης της εγγραφής
-
         }
 
         cursor.close();
@@ -96,6 +97,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     void deleteScores(){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_SCORES + " order by " + COLUMN_SCORE + " ASC," + COLUMN_ID + " DESC ";  // query string: επιλέγει όλες τις εγγραφές του πίνακα και τις ταξινομεί με αύξουσα
+
         @SuppressLint("Recycle")                                                                                        // σειρά - βάσει του σκορ (σε περίπτωση ισοβαθμίας, βάσει του id, με φθίνουσα σειρά)
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()){                                                                                       // Αν to query δεν είναι άδειο
@@ -104,11 +106,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             playerScore.set_id(Integer.parseInt(cursor.getString(0)));
             db.delete(TABLE_SCORES, COLUMN_ID + " = ? ", new String[]{String.valueOf(playerScore.get_id())});  // Διαγράφει την εγγραφή με το μικρότερο σκορ (σε περίπτωση ισοβαθμίας,
         }                                                                                                                  // διαγράφει την πιο πρόσφατη εγγραφή (id - descendant)
-
-
-            cursor.close();
+        cursor.close();
         db.close();
         }
-
-
     }
