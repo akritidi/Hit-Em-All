@@ -38,7 +38,7 @@ public class GameOverActivity extends AppCompatActivity {
         yourName=nameEditText.getText();
 
         final Button submitScore= findViewById(R.id.gameOverSubmit);
-        submitScore.setOnClickListener(new View.OnClickListener() {
+        submitScore.setOnClickListener(new View.OnClickListener() {                                 //On Click Listener για το κουμπί υποβολής
             @Override
             public void onClick(View v) {
 
@@ -63,7 +63,7 @@ public class GameOverActivity extends AppCompatActivity {
                         }
                         else{topTenToast();}
                     }
-                    else if(db.getNumberOfDBRows()>10){
+                    else if(db.getNumberOfDBRows()>10){                                             //Περίπτωση που η βάση είναι πάνω από 10 εγγραφές
                         PlayerScore firstPlayerScore=db.highScores(1);
                         PlayerScore lastPlayerScore=db.highScores(9);
                         if(yourScore>firstPlayerScore.get_playerScore()) {
@@ -79,7 +79,7 @@ public class GameOverActivity extends AppCompatActivity {
 
 
                     Handler myHandler= new Handler();
-                    myHandler.postDelayed(r, 1000);
+                    myHandler.postDelayed(r, 1000);                                       //καλεί μέσω handler το Runnable Code r
 
 
                 }
@@ -87,14 +87,14 @@ public class GameOverActivity extends AppCompatActivity {
         });
 
         Button playAgain = findViewById(R.id.gameOverPlayAgain);
-        playAgain.setOnClickListener(new View.OnClickListener() {
+        playAgain.setOnClickListener(new View.OnClickListener() {                                    //On Click Listener για το κουμπί "Παίξε Ξανά"
             @Override
             public void onClick(View v) {
                 openGameActivity();
             }
         });
 
-        Button gameOverExit = findViewById(R.id.gameOverExit);
+        Button gameOverExit = findViewById(R.id.gameOverExit);                                       //On Click Listener για το κουμπί εξόδου από το παιχνίδι. Επιστρέφει στην αρχική οθόνη
         gameOverExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,28 +103,18 @@ public class GameOverActivity extends AppCompatActivity {
         });
     }
 
+    /*
+    * Μέθοδος για την προσθήκη νέου σκορ στην ΒΔ
+    * */
     public void addScore(Editable yourName, int yourScore) {
-        DatabaseHandler myDBHandler=new DatabaseHandler(this, null);
+        DatabaseHandler db=new DatabaseHandler(this, null);
         PlayerScore playerScore=new PlayerScore(yourName,yourScore);
-        myDBHandler.addScore(playerScore);
+        db.addScore(playerScore);
     }
 
-    private void longNameToast() {
-        Toast longNameToast = new Toast(getApplicationContext());
-        longNameToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
-
-        TextView longNameTextView = new TextView(GameOverActivity.this);
-        longNameTextView.setBackgroundColor(Color.BLACK);
-        longNameTextView.setTextColor(Color.WHITE);
-        longNameTextView.setTextSize(20);
-        longNameTextView.setText(R.string.long_name);
-        Typeface missTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
-        longNameTextView.setTypeface(missTypeface);
-
-        longNameToast.setView(longNameTextView);
-        longNameToast.show();
-    }
-
+    /*
+     * Toast για την περίπτωση που ο χρήστης δεν πληκτρολογήσει τίποτα
+     * */
     public void wrongNameToast(){
         Toast wrongNameToast = new Toast(getApplicationContext());
         wrongNameToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
@@ -141,41 +131,28 @@ public class GameOverActivity extends AppCompatActivity {
         wrongNameToast.show();
     }
 
-    public void notTopTenToast(){
-        Toast notTopTenToast = new Toast(getApplicationContext());
-        notTopTenToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
-        TextView notTopTenView = new TextView(GameOverActivity.this);
-        notTopTenView.setBackgroundColor(Color.BLACK);
-        notTopTenView.setTextColor(Color.WHITE);
-        notTopTenView.setTextSize(20);
-        notTopTenView.setText(R.string.notTopTen);
-        notTopTenView.setGravity(Gravity.CENTER);
-        Typeface missTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
+    /*
+     * Toast για την περίπτωση που το όνομα που πληκτρολογεί ο χρήστης είναι πολύ μεγάλο (πάνω από 15 χαρακτήρες)
+     * */
+    private void longNameToast() {
+        Toast longNameToast = new Toast(getApplicationContext());
+        longNameToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
 
-        notTopTenView.setTypeface(missTypeface);
-        notTopTenToast.setView(notTopTenView);
-        notTopTenToast.show();
+        TextView longNameTextView = new TextView(GameOverActivity.this);
+        longNameTextView.setBackgroundColor(Color.BLACK);
+        longNameTextView.setTextColor(Color.WHITE);
+        longNameTextView.setTextSize(20);
+        longNameTextView.setText(R.string.long_name);
+        Typeface missTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
+        longNameTextView.setTypeface(missTypeface);
+
+        longNameToast.setView(longNameTextView);
+        longNameToast.show();
     }
 
-    public void topTenToast(){
-        Toast topTenToast = new Toast(getApplicationContext());
-        topTenToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
-
-        TextView topTenView = new TextView(GameOverActivity.this);
-        topTenView.setBackgroundColor(Color.BLACK);
-        topTenView.setTextColor(Color.WHITE);
-        topTenView.setTextSize(20);
-        topTenView.setText(R.string.topTen);
-        topTenView.setGravity(Gravity.CENTER);
-        Typeface missTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
-
-        topTenView.setTypeface(missTypeface);
-        topTenToast.setView(topTenView);
-        topTenToast.show();
-
-
-    }
-
+    /*
+     * Toast για την περίπτωση που γίνει νέο Best High Score
+     * */
     public void bestScoreToast(){
         Toast bestScoreToast = new Toast(getApplicationContext());
         bestScoreToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
@@ -193,13 +170,60 @@ public class GameOverActivity extends AppCompatActivity {
         bestScoreToast.show();
     }
 
+    /*
+     * Toast για την περίπτωση που το σκορ του χρήστη μπαίνει στα Top 10 Best Scores (εκτός της πρώτης θέσης)
+     * */
+    public void topTenToast(){
+        Toast topTenToast = new Toast(getApplicationContext());
+        topTenToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
 
+        TextView topTenView = new TextView(GameOverActivity.this);
+        topTenView.setBackgroundColor(Color.BLACK);
+        topTenView.setTextColor(Color.WHITE);
+        topTenView.setTextSize(20);
+        topTenView.setText(R.string.topTen);
+        topTenView.setGravity(Gravity.CENTER);
+        Typeface missTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
+
+        topTenView.setTypeface(missTypeface);
+        topTenToast.setView(topTenView);
+        topTenToast.show();
+    }
+
+    /*
+     * Toast για την περίπτωση που το σκορ του χρήστη δεν μπει στο Top 10
+     * */
+    public void notTopTenToast(){
+        Toast notTopTenToast = new Toast(getApplicationContext());
+        notTopTenToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
+        TextView notTopTenView = new TextView(GameOverActivity.this);
+        notTopTenView.setBackgroundColor(Color.BLACK);
+        notTopTenView.setTextColor(Color.WHITE);
+        notTopTenView.setTextSize(20);
+        notTopTenView.setText(R.string.notTopTen);
+        notTopTenView.setGravity(Gravity.CENTER);
+        Typeface missTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
+
+        notTopTenView.setTypeface(missTypeface);
+        notTopTenToast.setView(notTopTenView);
+        notTopTenToast.show();
+    }
+
+
+    /*
+    * Runnable Code που ανακατευθύνει στην Scores Activity
+    * */
     private Runnable r=new Runnable() {
         @Override
         public void run() {
             openScoresActivity();
         }
     };
+
+
+    /*
+    * Μέθοδοι που ανακατευθύνουν τον χρήστη στην Game Activity και Scores Activity, αντίστοιχα.
+    * */
 
     public void openGameActivity(){
         Intent i = new Intent(this,GameActivity.class);
