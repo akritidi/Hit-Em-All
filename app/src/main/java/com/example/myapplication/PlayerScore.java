@@ -2,38 +2,39 @@ package com.example.myapplication;
 
 import android.text.Editable;
 
-public class PlayerScore {
+class PlayerScore {
     private int _id;
     private String _playerName;
     private int _playerScore;
 
-    public PlayerScore(){}
+    /*Constructors αντικειμένων. Ένας άδειος-default και ένας που δέχεται ως ορίσματα το όνομα και το σκορ του παίκτη*/
+    PlayerScore(){}
 
-    public PlayerScore(Editable playerName, int playerScore){
+    PlayerScore(Editable playerName, int playerScore){
         this._playerName=playerName.toString();
         this._playerScore=playerScore;
 
     }
-    //methods that set and return the players name and score. Used for accessing database.
-    public void set_id(int id){ this._id=id; }
+    //methods that set and return the players, id, name and score. Used for accessing database.
+    void set_id(int id){ this._id=id; }
 
-    public int get_id(){
+    int get_id(){
         return this._id;
     }
 
-    public void set_playerName(String playerName){
+    void set_playerName(String playerName){
         this._playerName=playerName;
     }
 
-    public String get_playerName(){
+    String get_playerName(){
         return this._playerName;
     }
 
 
-    public void set_playerScore(int playerScore){
+    void set_playerScore(int playerScore){
         this._playerScore=playerScore;
     }
 
-    public int get_playerScore(){ return this._playerScore;  }
+    int get_playerScore(){ return this._playerScore;  }
 }
 

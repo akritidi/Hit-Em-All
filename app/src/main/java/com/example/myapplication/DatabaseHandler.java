@@ -13,14 +13,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     //Οι απαραίτητες σταθερές για την Βάση Δεδομένων (version, όνομα, πίνακας, στήλες)
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "scoresDB.db";
-    public static final String TABLE_SCORES = "scores";
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_NAME = "playerName";
-    public static final String COLUMN_SCORE = "playerScore";
+    private static final String TABLE_SCORES = "scores";
+    private static final String COLUMN_ID = "_id";
+    private static final String COLUMN_NAME = "playerName";
+    private static final String COLUMN_SCORE = "playerScore";
+
 
     //ο Constructor της ΒΔ
-    public DatabaseHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
+    DatabaseHandler(Context context, SQLiteDatabase.CursorFactory factory) {
+        super(context, DATABASE_NAME , factory, DATABASE_VERSION);
     }
 
     //Δημιουργία του σχήματος της ΒΔ -> πίνακας scores
@@ -37,13 +38,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
-    //Μέθοδος που επιστρέφει τον αριθμό των γραμμών που είναι στο query από την βαση δεδομένων.
-    //Έχει σημασία το query να έχει limit 10, ώστε να μην κρασάρει η Scores Activity, όταν στην βάση αποθηκευτούν πάνω από 10 εγγραφές
-    //Δουλεύει άρτια και για λιγότερες από 10 εγγραφές.
-    public int getNumberOfDBRows() {
+    //Μέθοδος που επιστρέφει τον αριθμό των εγγραφών που υπάρχουν στην ΒΔ.
+    int getNumberOfDBRows() {
         int nor;
-        String query = "SELECT * FROM " + TABLE_SCORES + " order by " + COLUMN_SCORE + " DESC ";
+        String query = "SELECT * FROM " + TABLE_SCORES;
         SQLiteDatabase db = this.getWritableDatabase();
+
         @SuppressLint("Recycle")
         Cursor cursor = db.rawQuery(query, null);
         nor = cursor.getCount();
@@ -53,10 +53,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             }
 
 
-    //μέθοδος για προσθήκη στην ΒΔ, νέου σκορ. Δέχεται ένα αντικείμενο PlayerScore και βάζει στην βάση δεδομένων
-    // μια νέα εγγραφή, βάζοντας στις στήλες COLUMN_NAME και COLUMN_SCORE, τα playerName και playerScore αντίστοιχα.
-    //Με την στήλη COLUMN_ID, δεν ασχολούμαστε. Έχει μπει από την OnCreate ως στήλη AUTOINCREMENT (παράγει ID μόνο του)
-    public void addScore(PlayerScore playerScore) {
+    //*Μέθοδος για την προσθήκη νέας εγγραφής στην ΒΔ
+        void addScore(PlayerScore playerScore) {
         ContentValues values = new ContentValues();
         SQLiteDatabase db = this.getWritableDatabase();
         values.put(COLUMN_NAME, playerScore.get_playerName());
@@ -66,43 +64,46 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
-    // Μέθοδος που δέχεται ως όρισμα έναν ακέραιο επιστρέφει μετά από query στον χρήστη το κατάλληλο αντικείμενο.
-    public PlayerScore highScores(int k) {
-        String query = "SELECT * FROM " + TABLE_SCORES + " order by " + COLUMN_SCORE + " DESC " + " limit " + 10; //query string για χρήση μέσω cursor. Επιλέγει μάξιμουμ τις 10 πρώτες εγγραφές του πίνακα, οι οποίες έχουν μπει με φθινουσα σειρά
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(query, null); //κάνει την αναζήτηση μέσω cursor
+    /* Μέθοδος που δέχεται ως όρισμα έναν ακέραιο επιστρέφει μετά από query στον χρήστη το κατάλληλο αντικείμενο.
+    * Πχ αν δεχτεί k=3 θα επιστρέψει την 3η εγγραφή του πίνακα
+    * */
+    PlayerScore highScores(int k) {
+        String query = "SELECT * FROM " + TABLE_SCORES + " order by " + COLUMN_SCORE + " DESC," + COLUMN_ID + " DESC "; // query string: επιλέγει όλες τις εγγραφές του πίνακα και τις ταξινομεί με φθίνουσα
+        SQLiteDatabase db = this.getWritableDatabase();                                                                 // σειρά - βάσει του σκορ (σε περίπτωση ισοβαθμίας, βάσει του id)
+        Cursor cursor = db.rawQuery(query, null);                                                           // αναζήτηση μέσω cursor
 
-        PlayerScore playerScore = new PlayerScore(); //δημιουργεί το αντικείμενο PlayerScore
+        PlayerScore playerScore = new PlayerScore();
 
-        if (cursor.moveToFirst()) {                                               //Αν υπάρχει κάποιο αποτέλεσμα στο query
+        if (cursor.moveToFirst()) {                                                                                     // Αν to query δεν είναι άδειο
             int i;
-            cursor.moveToFirst();                                               //Πηγαίνει στην πρώτη εγγραφή
-            for (i = 0; i < k; i++) {                                                   // Ανοίγει λούπα με σημείο λήξης τον ακέραιο που δώσαμε ως όρισμα (η λογική εξηγείται στο Scores Activity)
+            cursor.moveToFirst();                                                                                       // Πηγαίνει στην πρώτη εγγραφή
+            for (i = 0; i < k; i++) {
 
-                cursor.moveToNext();                                            //Μεταφέρεται σειρά σειρά στην εγγραφή που θέλουμε
+                cursor.moveToNext();                                                                                    // Μεταφέρεται σειρά σειρά στην εγγραφή που θέλουμε
             }
-            //αφού έχει φτάσει στην σωστή εγγραφή θέτει τα playerName και playerScore με βάση τα αποθηκευμένα δεδομένα κάθε στήλης της εγγραφής
-            playerScore.set_playerName(cursor.getString(1));
-            playerScore.set_playerScore(cursor.getInt(2));
+            playerScore.set_playerName(cursor.getString(1));                                                // Αφού έχει φτάσει στην σωστή εγγραφή, θέτει τα playerName και playerScore με βάση τα
+            playerScore.set_playerScore(cursor.getInt(2));                                                  // αποθηκευμένα δεδομένα της κατάλληλης στήλης της εγγραφής
 
         }
 
         cursor.close();
         db.close();
-        return playerScore;                                                 // επιστρέφει το αντικείμενο playerScore
+        return playerScore;                                                                                             // επιστρέφει το αντικείμενο playerScore
 
     }
 
-    public void deleteScores(){
+    //Μέθοδος για την διαγραφή εγγραφής του πίνακα
+    void deleteScores(){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_SCORES + " order by " + COLUMN_SCORE + " ASC," + COLUMN_ID + " DESC "+ " limit "+10;
-        @SuppressLint("Recycle")
+        String query = "SELECT * FROM " + TABLE_SCORES + " order by " + COLUMN_SCORE + " ASC," + COLUMN_ID + " DESC ";  // query string: επιλέγει όλες τις εγγραφές του πίνακα και τις ταξινομεί με αύξουσα
+        @SuppressLint("Recycle")                                                                                        // σειρά - βάσει του σκορ (σε περίπτωση ισοβαθμίας, βάσει του id, με φθίνουσα σειρά)
         Cursor cursor = db.rawQuery(query, null);
-        cursor.moveToFirst();
-
-        PlayerScore playerScore=new PlayerScore();
-        playerScore.set_id(Integer.parseInt(cursor.getString(0)));
-        db.delete(TABLE_SCORES, COLUMN_ID + " = ? ", new String[]{String.valueOf(playerScore.get_id())});
+        if(cursor.moveToFirst()){                                                                                       // Αν to query δεν είναι άδειο
+            cursor.moveToFirst();                                                                                       // Πηγαίνει στην πρώτη εγγραφή
+            PlayerScore playerScore=new PlayerScore();
+            playerScore.set_id(Integer.parseInt(cursor.getString(0)));
+            db.delete(TABLE_SCORES, COLUMN_ID + " = ? ", new String[]{String.valueOf(playerScore.get_id())});  // Διαγράφει την εγγραφή με το μικρότερο σκορ (σε περίπτωση ισοβαθμίας,
+        }                                                                                                                  // διαγράφει την πιο πρόσφατη εγγραφή (id - descendant)
 
 
             cursor.close();

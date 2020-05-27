@@ -16,37 +16,26 @@ public class ScoresActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scores);
 
         TextView[][] data=matchTextViews();
-        DatabaseHandler db=new DatabaseHandler(this, null,null,1);
+        DatabaseHandler db=new DatabaseHandler(this, null);
 
         int k;
 
+        //Όταν το μέγεθος της βάσης γίνει 11, διαγράφει την 11η - μικρότερη -βάσει του σκορ- εγγραφή. Κρατάει σταθερό το μέγεθος της βάσης στα 10 - memory efficient
         if(db.getNumberOfDBRows()>10){
             db.deleteScores();
         }
 
-        // Εξήγηση της λογικής του παρακάτω κώδικα. Ξεκινάει η λούπα. Το σημείο λήξης της λούπας, καθορίζεται από το πλήθος των εγγραφών στον πίνακα (έχει τεθεί στην μέθοδο getNumberOFDBRows της DatabaseHandler
-        // ως μάξιμουμ το 10 - καθώς θέλουμε na εμφανίζουμε μόνο τα πρώτα 10 High Scores. Η λούπα λοιπόν θα εκτελεστεί από καμία έως το πολύ 10 φορές
-        // Λογική λούπας: Σε κάθε επανάληψη
-        // 1. Καλείται η highScores με όρισμα το εκάστοτε k. Στην πρώτη επανάληψη θα επιστραφεί το πρώτο αντικείμενο του αντίστοιχου query, στην δεύτερη το δεύτερο κ.ο.κ.
-        // αυτό το φροντίζει η μέθοδος highScores λόγω της λούπας που κάνει moveToNext() όσες φορές είναι το k.
-        //2. Αφού επιστραφεί το αντικείμενο μέσω του δισδιάσταστου πίνακα data αλλάζουμε τα TextViews που εμφανίζονται στον χρήστη με βάση τα playerName και playerScore, του αντικειμένου που επιστάφηκε.
-        if(db.getNumberOfDBRows()<10){
+        /*Λούπα για την εμφάνιση των εγγραφών στα text views. Η λούπα θα εκτελεστεί από 0 (άδεια βάση) έως 10 φορές (γεμάτη βάση - σταθερό μέγεθος μετά τις 10 εγγραφές).
+        Σε κάθε επανάληψη ανατίθεται στο αντικειμενο η κατάλληλη εγγραφή από την βάση (βλ. highScores), και εμφανίζει στα κατάλληλα text views την τιμή του ονοματος
+        και του σκορ της εγγραφής.
+        */
+
             for(k=0;k<db.getNumberOfDBRows();k++){
                 PlayerScore playerScore=db.highScores(k);
                 data[k][0].setText(playerScore.get_playerName());
                 data[k][1].setText(Integer.toString(playerScore.get_playerScore()));
             }
-        }
-        else{
-            for(k=0;k<10;k++){
-                PlayerScore playerScore=db.highScores(k);
-                data[k][0].setText(playerScore.get_playerName());
-                data[k][1].setText(Integer.toString(playerScore.get_playerScore()));
 
-            }
-
-
-        }
         db.close();
     }
 

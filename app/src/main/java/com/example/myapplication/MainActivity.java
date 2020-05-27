@@ -18,7 +18,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     private long backPressedTime;
     private Toast backToast;
-
+    Button playButton, settingsButton, scoresButton, exitButton;
 MyService myService;
 
 boolean isBound = false;
@@ -32,39 +32,51 @@ boolean isBound = false;
         Intent intent = new Intent(this, MyService.class);// εδω αρχιζει το service
         startService(intent);
 
-        Button playButton = findViewById(R.id.button);
+        playButton = findViewById(R.id.button);
+        settingsButton = findViewById(R.id.button2);
+        scoresButton = findViewById(R.id.button3);
+        exitButton = findViewById(R.id.button4);
+
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                disableButtons();
                 openGameActivity();
             }
         });
 
-        Button settingsButton = findViewById(R.id.button2);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                disableButtons();
                 openSettingsActivity();
             }
         });
 
-        Button scoresButton = findViewById(R.id.button3);
         scoresButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                disableButtons();
                 openScoresActivity();
             }
         });
 
-        Button exitButton = findViewById(R.id.button4);
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                disableButtons();
                 exitMainActivity();
             }
         });
 
 
+    }
+
+    private void disableButtons() {
+        playButton.setEnabled(false);
+        settingsButton.setEnabled(false);
+        scoresButton.setEnabled(false);
+        exitButton.setEnabled(false);
     }
 
     @Override                       //Άνοιγμα διαλόγου για έξοδο απο την εφαρμογή όταν πατηθεί το "πίσω" 2 φορές

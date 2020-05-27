@@ -19,7 +19,7 @@ import android.widget.Toast;
 public class GameOverActivity extends AppCompatActivity {
     private Editable yourName;
     private int yourScore;
-    DatabaseHandler db=new DatabaseHandler(this, null,null,1);
+    DatabaseHandler db=new DatabaseHandler(this, null);
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +101,7 @@ public class GameOverActivity extends AppCompatActivity {
     }
 
     public void addScore(Editable yourName, int yourScore) {
-        DatabaseHandler myDBHandler=new DatabaseHandler(this, null, null, 1);
+        DatabaseHandler myDBHandler=new DatabaseHandler(this, null);
         PlayerScore playerScore=new PlayerScore(yourName,yourScore);
         myDBHandler.addScore(playerScore);
     }
