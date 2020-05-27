@@ -15,7 +15,8 @@ class PlayerScore {
         this._playerScore=playerScore;
 
     }
-    //methods that set and return the players, id, name and score. Used for accessing database.
+
+    //Μέθοδοι για set and get του id, του ονόματος και του σκορ του παίκτη / εγγραφής
     void set_id(int id){ this._id=id; }
 
     int get_id(){

@@ -41,7 +41,7 @@ public class ScoresActivity extends AppCompatActivity {
 
 
 
-    //μια μέθοδος που αρχικοποιεί τον πίνακα data αναθέτοντας του τα xml πεδία, τα οποία μετά ο κώδικας θα τροποποιήσει
+    // Μέθοδος που αρχικοποιεί τον πίνακα data, αναθέτοντας του τα xml πεδία, τα οποία μετά ο κώδικας θα τροποποιήσει
     private TextView[][] matchTextViews() {
         TextView[][] data=new TextView[10][2];
         data[0][0]=findViewById(R.id.textView5);

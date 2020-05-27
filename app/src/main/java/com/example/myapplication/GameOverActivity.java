@@ -20,6 +20,7 @@ public class GameOverActivity extends AppCompatActivity {
     private Editable yourName;
     private int yourScore;
     DatabaseHandler db=new DatabaseHandler(this, null);
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
