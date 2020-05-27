@@ -29,7 +29,7 @@ import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     private MediaPlayer countdownSound,hitSound,missSound,popSound,jumpSound;
-    private boolean countdownFinished,gameFinished,hitToastShown,missToastShown,run,nextMolebool,hideMoleBool,backPressed ;
+    private boolean countdownFinished,gameFinished,hitToastShown,missToastShown,run,nextMolebool,hideMoleBool,backPressed;
     private Toast hitToast;
     private Toast missToast;
     private long backPressedTime;
@@ -104,7 +104,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             @SuppressLint("SetTextI18n")
             @Override                                               //Εμφάνιση μηνύματος Miss! αφού έχει τελειώσει το countdown όταν γίνεται ταπ σε σημείο που δεν υπάρχει κουμπί
             public boolean onTouch(View v, MotionEvent event) {
-                if (countdownFinished){
+                if (countdownFinished && !gameFinished){
                     if (event.getAction() == MotionEvent.ACTION_DOWN){
                         missToast();
                         soundsMaker(missSound);
