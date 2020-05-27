@@ -22,7 +22,10 @@ public class MainActivity extends AppCompatActivity {
 MyService myService;
 
 boolean isBound = false;
-
+    /**Εδώ κατά την δημιουργια του activity αρχηκοποιουνται τα κουμπία και
+     * οι listener τους οπού οδηγούν στις βασικές δραστηριότητες τις εφαρμογης.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -75,9 +78,13 @@ boolean isBound = false;
 
 
 
+    /**
+     * Μεθοδος που ενεργοποιείται όταν ο χρηστης πατάει το backPress στην συσκευή του.
+     * Στο πρώτο πάτημα εμφανίζει ένα κείμενο της προειδοποιησης εξοδού απο την εφαρμογή.
+     * Στο δέυτερο γίνεται έξοδος.
+     */
 
-
-    @Override                       //Άνοιγμα διαλόγου για έξοδο απο την εφαρμογή όταν πατηθεί το "πίσω" 2 φορές
+    @Override
     public void onBackPressed(){
         if (backPressedTime + 2000 > System.currentTimeMillis()){
             backToast.cancel();
@@ -89,16 +96,19 @@ boolean isBound = false;
         }
         backPressedTime=System.currentTimeMillis();
     }
+    /** Εδώ αρχίζει βασική διαδραστική δραστηριότητα GameActivity. */
 
     public void openGameActivity(){
         Intent i = new Intent(this,GameActivity.class);
         startActivity(i);
     }
+    /** Εδώ αρχίζει η δραστηριότητα που αφορά τις ρυθμίσεις. */
 
     public void openSettingsActivity(){
         Intent i = new Intent(this,SettingsActivity.class);
         startActivity(i);
     }
+    /** Εδώ αρχίζει η δραστηριότητα με τα scores που έχουν καταγραφεί στην βάση */
 
     public void openScoresActivity(){
         Intent i = new Intent(this,ScoresActivity.class);

@@ -21,7 +21,11 @@ public class SettingsActivity extends AppCompatActivity  {
    MyService myService;
    boolean isBound = false;
     SharedPreferences sharedPrefs;
-
+    /**
+     * Εδώ  αρχεικοποιουνται οι listeners των δυο switch button που περιέχει αυη η δραστηριότητα,
+     * ακόμα αποκτάται πρόσβαση στο service της εφαρμογής.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = new Intent(this,MyService.class);
@@ -35,6 +39,10 @@ public class SettingsActivity extends AppCompatActivity  {
         music.setChecked(sharedPrefs.getBoolean("music", true));
         sounds.setChecked(sharedPrefs.getBoolean("sht", true));
 
+        /**
+         * listener tou music button οπού αποθηκέυει την κατάσταση του κουμπιού μόνιμα μέχρι την επόμενη αλλαγή.
+         * Καλέι τις αντοιστηχες μεθόδους απο την κλάσση myService για την ενεργοποείση η απενεργοποιείση τις μουσικής.
+         */
         music.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -58,7 +66,10 @@ public class SettingsActivity extends AppCompatActivity  {
                 }
             }
         });
-
+/**
+ *  listener tou sound button οπού αποθηκέυει την κατάσταση του κουμπιού μόνιμα μέχρι την επόμενη αλλαγή.
+ *    Καλέι τnν μεθόδο setMediaBool απο την κλάσση myService προκειμένου να είναι διαθέσιμοι η όχι οι ήχοι στο Game activity.
+ */
         sounds.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -86,7 +97,7 @@ public class SettingsActivity extends AppCompatActivity  {
         });
 
          }
-      // εδω αποκταμε προσβαση στο ηδη υπαρχων-τρεχον service
+    /**Εδω αποκταμε προσβαση στο ηδη υπαρχων-τρεχον service*/
     private ServiceConnection connect = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -100,7 +111,9 @@ public class SettingsActivity extends AppCompatActivity  {
             isBound = false;
         }
     };
-
+    /**
+     * ¨Οταν καταστρέφεται το activity αποσυνδεέται το service για να μην υπάρξει διαρροη σύνδεσης.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
