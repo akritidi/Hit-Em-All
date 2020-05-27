@@ -7,7 +7,7 @@ class PlayerScore {
     private String _playerName;
     private int _playerScore;
 
-    /*Constructors αντικειμένων. Ένας άδειος-default και ένας που δέχεται ως ορίσματα το όνομα και το σκορ του παίκτη*/
+    /**Constructors αντικειμένων. Ένας άδειος-default και ένας που δέχεται ως ορίσματα το όνομα και το σκορ του παίκτη*/
     PlayerScore(){}
 
     PlayerScore(Editable playerName, int playerScore){
@@ -16,7 +16,10 @@ class PlayerScore {
 
     }
 
-    //Μέθοδοι για set and get του id, του ονόματος και του σκορ του παίκτη / εγγραφής
+    /**
+     *    Μέθοδοι για set and get του id, του ονόματος και του σκορ του παίκτη / εγγραφής
+     * @param id
+     */
     void set_id(int id){ this._id=id; }
 
     int get_id(){

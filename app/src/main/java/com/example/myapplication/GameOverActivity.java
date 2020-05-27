@@ -103,7 +103,7 @@ public class GameOverActivity extends AppCompatActivity {
         });
     }
 
-    /*
+    /**
     * Μέθοδος για την προσθήκη νέου σκορ στην ΒΔ
     * */
     public void addScore(Editable yourName, int yourScore) {
@@ -112,7 +112,7 @@ public class GameOverActivity extends AppCompatActivity {
         db.addScore(playerScore);
     }
 
-    /*
+    /**
      * Toast για την περίπτωση που ο χρήστης δεν πληκτρολογήσει τίποτα
      * */
     public void wrongNameToast(){
@@ -131,7 +131,7 @@ public class GameOverActivity extends AppCompatActivity {
         wrongNameToast.show();
     }
 
-    /*
+    /**
      * Toast για την περίπτωση που το όνομα που πληκτρολογεί ο χρήστης είναι πολύ μεγάλο (πάνω από 15 χαρακτήρες)
      * */
     private void longNameToast() {
@@ -150,7 +150,7 @@ public class GameOverActivity extends AppCompatActivity {
         longNameToast.show();
     }
 
-    /*
+    /**
      * Toast για την περίπτωση που γίνει νέο Best High Score
      * */
     public void bestScoreToast(){
@@ -170,7 +170,7 @@ public class GameOverActivity extends AppCompatActivity {
         bestScoreToast.show();
     }
 
-    /*
+    /**
      * Toast για την περίπτωση που το σκορ του χρήστη μπαίνει στα Top 10 Best Scores (εκτός της πρώτης θέσης)
      * */
     public void topTenToast(){
@@ -190,7 +190,7 @@ public class GameOverActivity extends AppCompatActivity {
         topTenToast.show();
     }
 
-    /*
+    /**
      * Toast για την περίπτωση που το σκορ του χρήστη δεν μπει στο Top 10
      * */
     public void notTopTenToast(){
@@ -210,7 +210,7 @@ public class GameOverActivity extends AppCompatActivity {
     }
 
 
-    /*
+    /**
     * Runnable Code που ανακατευθύνει στην Scores Activity
     * */
     private Runnable r=new Runnable() {
@@ -221,7 +221,7 @@ public class GameOverActivity extends AppCompatActivity {
     };
 
 
-    /*
+    /**
     * Μέθοδοι που ανακατευθύνουν τον χρήστη στην Game Activity και Scores Activity, αντίστοιχα.
     * */
 

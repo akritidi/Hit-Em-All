@@ -10,7 +10,7 @@ import android.database.Cursor;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
-    //Οι απαραίτητες σταθερές για την Βάση Δεδομένων (version, όνομα, πίνακας, στήλες)
+    /**Οι απαραίτητες σταθερές για την Βάση Δεδομένων (version, όνομα, πίνακας, στήλες)*/
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "scoresDB.db";
     private static final String TABLE_SCORES = "scores";
@@ -19,26 +19,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String COLUMN_SCORE = "playerScore";
 
 
-    //ο Constructor της ΒΔ
+    /**ο Constructor της ΒΔ*/
     DatabaseHandler(Context context, SQLiteDatabase.CursorFactory factory) {
         super(context, DATABASE_NAME , factory, DATABASE_VERSION);
     }
 
-    //Δημιουργία του σχήματος της ΒΔ -> πίνακας scores
+    /**Δημιουργία του σχήματος της ΒΔ -> πίνακας scores*/
     public void onCreate(SQLiteDatabase db) {
         String CREATE_SCORES_TABLE = "CREATE TABLE " + TABLE_SCORES + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_NAME + " TEXT," + COLUMN_SCORE + " INTEGER" + ")";
         db.execSQL(CREATE_SCORES_TABLE);
 
     }
 
-    //Αναβάθμιση της ΒΔ. Η ΒΔ διαγράφεται και επαναδημιουργείται
+    /**Αναβάθμιση της ΒΔ. Η ΒΔ διαγράφεται και επαναδημιουργείται*/
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SCORES);
         onCreate(db);
 
     }
 
-    //Μέθοδος που επιστρέφει τον αριθμό των εγγραφών που υπάρχουν στην ΒΔ.
+    /**Μέθοδος που επιστρέφει τον αριθμό των εγγραφών που υπάρχουν στην ΒΔ.*/
     int getNumberOfDBRows() {
         String query = "SELECT * FROM " + TABLE_SCORES;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -54,7 +54,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             }
 
 
-    //*Μέθοδος για την προσθήκη νέας εγγραφής στην ΒΔ
+    /**Μέθοδος για την προσθήκη νέας εγγραφής στην ΒΔ
+     * @param playerScore
+     */
         void addScore(PlayerScore playerScore) {
         ContentValues values = new ContentValues();
         SQLiteDatabase db = this.getWritableDatabase();
@@ -65,7 +67,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
-    /* Μέθοδος που δέχεται ως όρισμα έναν ακέραιο επιστρέφει μετά από query στον χρήστη το κατάλληλο αντικείμενο.
+    /** Μέθοδος που δέχεται ως όρισμα έναν ακέραιο επιστρέφει μετά από query στον χρήστη το κατάλληλο αντικείμενο.
     * Πχ αν δεχτεί k=3 θα επιστρέψει την 3η εγγραφή του πίνακα
     * */
     PlayerScore highScores(int k) {
@@ -93,7 +95,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
-    //Μέθοδος για την διαγραφή εγγραφής του πίνακα
+    /**Μέθοδος για την διαγραφή εγγραφής του πίνακα*/
     void deleteScores(){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_SCORES + " order by " + COLUMN_SCORE + " ASC," + COLUMN_ID + " DESC ";  // query string: επιλέγει όλες τις εγγραφές του πίνακα και τις ταξινομεί με αύξουσα
