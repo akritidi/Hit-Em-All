@@ -29,6 +29,7 @@ boolean isBound = false;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         Intent intent = new Intent(this, MyService.class);// εδω αρχιζει το service
         startService(intent);
 
@@ -40,7 +41,7 @@ boolean isBound = false;
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                disableButtons();
+
                 openGameActivity();
             }
         });
@@ -48,7 +49,7 @@ boolean isBound = false;
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                disableButtons();
+
                 openSettingsActivity();
             }
         });
@@ -56,7 +57,7 @@ boolean isBound = false;
         scoresButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                disableButtons();
+
                 openScoresActivity();
             }
         });
@@ -64,7 +65,7 @@ boolean isBound = false;
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                disableButtons();
+
                 exitMainActivity();
             }
         });
@@ -72,12 +73,9 @@ boolean isBound = false;
 
     }
 
-    private void disableButtons() {
-        playButton.setEnabled(false);
-        settingsButton.setEnabled(false);
-        scoresButton.setEnabled(false);
-        exitButton.setEnabled(false);
-    }
+
+
+
 
     @Override                       //Άνοιγμα διαλόγου για έξοδο απο την εφαρμογή όταν πατηθεί το "πίσω" 2 φορές
     public void onBackPressed(){

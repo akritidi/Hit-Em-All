@@ -50,6 +50,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_game);
         createButtons();
 
+
+
         pauseCounter=0;
         run = true;
 

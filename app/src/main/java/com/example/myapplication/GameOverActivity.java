@@ -27,6 +27,7 @@ public class GameOverActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_over);
 
+        //μεταφέρεται το τελευταίο σκορ του χρ
         Intent intent = getIntent();
         yourScore = intent.getIntExtra("SCORE",0);
 
