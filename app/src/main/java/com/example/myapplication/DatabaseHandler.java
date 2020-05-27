@@ -68,8 +68,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     * Πχ αν δεχτεί k=3 θα επιστρέψει την 3η εγγραφή του πίνακα
     * */
     PlayerScore highScores(int k) {
-        String query = "SELECT * FROM " + TABLE_SCORES + " order by " + COLUMN_SCORE + " DESC," + COLUMN_ID + " DESC "; // query string: επιλέγει όλες τις εγγραφές του πίνακα και τις ταξινομεί με φθίνουσα
-        SQLiteDatabase db = this.getWritableDatabase();                                                                 // σειρά - βάσει του σκορ (σε περίπτωση ισοβαθμίας, βάσει του id)
+        String query = "SELECT * FROM " + TABLE_SCORES + " order by " + COLUMN_SCORE + " DESC," + COLUMN_ID + " ASC "; // query string: επιλέγει όλες τις εγγραφές του πίνακα και τις ταξινομεί με φθίνουσα
+        SQLiteDatabase db = this.getWritableDatabase();                                                                 // σειρά - βάσει του σκορ (σε περίπτωση ισοβαθμίας, βάσει του αυξανόμενου id)
         Cursor cursor = db.rawQuery(query, null);                                                           // αναζήτηση μέσω cursor
 
         PlayerScore playerScore = new PlayerScore();

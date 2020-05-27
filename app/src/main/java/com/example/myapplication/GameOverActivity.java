@@ -27,13 +27,12 @@ public class GameOverActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_over);
 
-        //μεταφέρεται το τελευταίο σκορ του χρ
+        //μεταφέρεται το τελευταίο σκορ του χρήστη από την GameActivity
         Intent intent = getIntent();
         yourScore = intent.getIntExtra("SCORE",0);
 
         TextView scoreTextView = findViewById(R.id.textView3);
         scoreTextView.setText(String.valueOf(yourScore));
-
 
         EditText nameEditText=findViewById(R.id.editText);
         yourName=nameEditText.getText();
@@ -43,19 +42,21 @@ public class GameOverActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(yourName.toString().contentEquals("")){
+                if(yourName.toString().contentEquals("")){                                      // περίπτωση που ο χρήστης δεν πληκτρολογήσει τίποτα
                     wrongNameToast();
                 }
-                else if(yourName.toString().length()>15){
+                else if(yourName.toString().length()>15){                                           // περίπτωση που το όνομα είναι πολύ μεγάλο
                     longNameToast();
                 }
-                else {
-                    addScore(yourName,yourScore);
-                    submitScore.setEnabled(false);
-                    if(db.getNumberOfDBRows()==1){
+                else {                                                                              // περίπτωση που ο χρήστης έχει δώσει όνομα μικρότερο ή ίσο των 15 χαρακτήρων
+                    addScore(yourName,yourScore);                                                   // προσθήκη στην ΒΔ μέσω της μεθόδου addScore()
+                    submitScore.setEnabled(false);                                                  // σε περίπτωση που ο χρήστης πατήσει πολλές φορές υποβολή, εξασφαλίζει ότι η εγγραφή θα αποθηκευτεί 1 φορά
+
+                    //περιπτώσεις μεγέθους ΒΔ. Εμφανίζονται τα κατάλληλα μυνήματα
+                    if(db.getNumberOfDBRows()==1){                                                  // Μύνημα για την 1η εγγραφή στην ΒΔ. -> Καλύτερο σκορ μέχρι τώρα
                         bestScoreToast();
                     }
-                    else if(db.getNumberOfDBRows()>1 && db.getNumberOfDBRows()<=10){
+                    else if(db.getNumberOfDBRows()>1 && db.getNumberOfDBRows()<=10){                //Περίπτωση που η βάση είναι από 2 εως και 10 σειρές
                         PlayerScore firstPlayerScore=db.highScores(1);
                         if(yourScore>firstPlayerScore.get_playerScore()) {
                             bestScoreToast();
