@@ -18,6 +18,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -35,7 +36,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Toast backToast;
     private ImageButton[] arrayOfButtons;
     private int lives,r,score,sumOfMoles,arrivalTime,hideTime,pauseCounter;
-    private TextView countdownText,scoreText,livesText,livesText2,livesText3;
+    private TextView countdownText,scoreText;
+    private ImageView lives1, lives2, lives3;
     private Handler mHandler3;
     private ToggleButton pauseButton;
     static boolean soundsPlaying=true;
@@ -64,10 +66,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         backPressed=false;
         scoreText = findViewById(R.id.textScore);
 
+        lives1=findViewById(R.id.imageView1);
+        lives2=findViewById(R.id.imageView2);
+        lives3=findViewById(R.id.imageView3);
+
+
         lives=3;
-        livesText = findViewById(R.id.textLives);
-        livesText2 = findViewById(R.id.textLives2);
-        livesText3 = findViewById(R.id.textLives3);
+
 
         gameFinished = false;
         countdownFinished = false;
@@ -275,13 +280,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void updateLives(){
         lives--;
         if(lives==2){
-            livesText3.setVisibility(View.GONE);
+            lives3.setVisibility(ImageView.GONE);
         }
         else if(lives==1){
-            livesText2.setVisibility(View.GONE);
+            lives2.setVisibility(ImageView.GONE);
         }
         else if(lives==0){
-            livesText.setVisibility(View.GONE);
+            lives1.setVisibility(ImageView.GONE);
             gameFinished=true;
             openGameOverActivity();                      //telos paixnidiou
         }
