@@ -1,13 +1,20 @@
 package com.example.myapplication;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
-public class ExitDialog extends AppCompatDialogFragment {
+/** Αυτή η κλάσση αντιπροσωπεύει έναν δίαλογο εξόδου με τον χρήστη.*/
 
+public class ExitDialog extends AppCompatDialogFragment {
+    /**Σε αυτή την μέθοδο κατασκευάζεται ο δίαλογος που δίνει την επολογή για έξοδο
+     * από την εφαρμογή.Καλείται από την πρώτη και βασική δραστηριότητα με το κουμπι
+     * έξοδος.Δημηουτργεί δύο dialogButtons ναι και όχι,δρά ανάλογα.
+     * @param savedInstanceState Bundle.
+     *Επιστρέφει
+     * @return builder αντικείμενο διλόγου.
+     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
