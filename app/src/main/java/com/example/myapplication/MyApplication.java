@@ -135,7 +135,7 @@ public class MyApplication extends Application   implements Application.Activity
 
     /**
      * Η μέθοδος αυτή καλείται όταν μία δραστηριότητα μπαίνει στο προσκήνιο,
-     * αποθηκέυουμε μία αναφορά  της τρέχων δραστηριότητα.
+     * αποθηκέυουμε μία αναφορά  της τρέχων δραστηριότητας.
      * @param activity η τρέχων δραστηριότητα.
      */
     @Override
