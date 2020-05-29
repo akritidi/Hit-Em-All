@@ -200,7 +200,7 @@ public class GameOverActivity extends AppCompatActivity {
      * */
     public void notTopTenToast(){
         Toast notTopTenToast; //= new Toast(getApplicationContext());
-        notTopTenToast = Toast.makeText(getBaseContext(), R.string.notTopTen, Toast.LENGTH_SHORT);
+        notTopTenToast = Toast.makeText(getBaseContext(), R.string.notTopTen, Toast.LENGTH_LONG);
         notTopTenToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
 
         /** TextView notTopTenView = new TextView(GameOverActivity.this);
