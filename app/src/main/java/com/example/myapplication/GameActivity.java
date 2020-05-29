@@ -45,7 +45,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * Σε αυτή την μέθοδο αρχικοποιούνται οι μεταβλητές που χρησημοποιεί αυτο το activity,αρχηκοποιουνταί οι listeners
      * των κουμπιών και οι mediaplayers.
-     * @param savedInstanceState
+     * @param savedInstanceState  Bundle .
      */
 
 
@@ -288,7 +288,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         missTextView.setTextColor(Color.WHITE);
         missTextView.setTextSize(35);
         missTextView.setText(R.string.miss_toast);
-        Typeface missTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
+        Typeface missTypeface = Typeface.create("serif",Typeface.BOLD);
 
         missTextView.setTypeface(missTypeface);
         missToast.setView(missTextView);
@@ -307,7 +307,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         hitTextView.setTextColor(Color.WHITE);
         hitTextView.setTextSize(35);
         hitTextView.setText(R.string.hit_toast);
-        Typeface hitTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
+        Typeface hitTypeface = Typeface.create("serif",Typeface.BOLD);
 
         hitTextView.setTypeface(hitTypeface);
         hitToast.setView(hitTextView);
@@ -347,7 +347,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         else if(lives==0){
             lives1.setVisibility(ImageView.GONE);
             gameFinished=true;
-            openGameOverActivity();                      //telos paixnidiou
+            openGameOverActivity();
         }
     }
     /**Καλείται όταν οι ζωές είναι 0,
@@ -355,7 +355,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      */
     public void openGameOverActivity(){
 
-        if(missToastShown){                           //gia na mhn uparxei bug an xaseis xwris na arxikopoih8oun ta toasts
+        if(missToastShown){
             missToast.cancel();
         }
         if(hitToastShown){
