@@ -116,10 +116,11 @@ public class GameOverActivity extends AppCompatActivity {
      * Toast για την περίπτωση που ο χρήστης δεν πληκτρολογήσει τίποτα
      * */
     public void wrongNameToast(){
-        Toast wrongNameToast = new Toast(getApplicationContext());
+        Toast wrongNameToast;  // = new Toast(getApplicationContext());
+        wrongNameToast = Toast.makeText(getBaseContext(), R.string.wrong_name_toast, Toast.LENGTH_SHORT);
         wrongNameToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
 
-        TextView wrongTextView = new TextView(GameOverActivity.this);
+       /** TextView wrongTextView = new TextView(GameOverActivity.this);
         wrongTextView.setBackgroundColor(Color.BLACK);
         wrongTextView.setTextColor(Color.WHITE);
         wrongTextView.setTextSize(20);
@@ -127,7 +128,7 @@ public class GameOverActivity extends AppCompatActivity {
         Typeface missTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
 
         wrongTextView.setTypeface(missTypeface);
-        wrongNameToast.setView(wrongTextView);
+        wrongNameToast.setView(wrongTextView); **/
         wrongNameToast.show();
     }
 
@@ -135,10 +136,12 @@ public class GameOverActivity extends AppCompatActivity {
      * Toast για την περίπτωση που το όνομα που πληκτρολογεί ο χρήστης είναι πολύ μεγάλο (πάνω από 15 χαρακτήρες)
      * */
     private void longNameToast() {
-        Toast longNameToast = new Toast(getApplicationContext());
+        Toast longNameToast; // = new Toast(getApplicationContext());
+        longNameToast = Toast.makeText(getBaseContext(), R.string.long_name, Toast.LENGTH_SHORT);
         longNameToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
 
-        TextView longNameTextView = new TextView(GameOverActivity.this);
+
+        /** TextView longNameTextView = new TextView(GameOverActivity.this);
         longNameTextView.setBackgroundColor(Color.BLACK);
         longNameTextView.setTextColor(Color.WHITE);
         longNameTextView.setTextSize(20);
@@ -146,7 +149,7 @@ public class GameOverActivity extends AppCompatActivity {
         Typeface missTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
         longNameTextView.setTypeface(missTypeface);
 
-        longNameToast.setView(longNameTextView);
+        longNameToast.setView(longNameTextView); **/
         longNameToast.show();
     }
 
@@ -154,10 +157,11 @@ public class GameOverActivity extends AppCompatActivity {
      * Toast για την περίπτωση που γίνει νέο Best High Score
      * */
     public void bestScoreToast(){
-        Toast bestScoreToast = new Toast(getApplicationContext());
+        Toast bestScoreToast; //= new Toast(getApplicationContext());
+        bestScoreToast = Toast.makeText(getBaseContext(), R.string.bestScore, Toast.LENGTH_SHORT);
         bestScoreToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
 
-        TextView bestScoreView = new TextView(GameOverActivity.this);
+        /** TextView bestScoreView = new TextView(GameOverActivity.this);
         bestScoreView.setBackgroundColor(Color.BLACK);
         bestScoreView.setTextColor(Color.WHITE);
         bestScoreView.setTextSize(20);
@@ -166,7 +170,7 @@ public class GameOverActivity extends AppCompatActivity {
         Typeface missTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
 
         bestScoreView.setTypeface(missTypeface);
-        bestScoreToast.setView(bestScoreView);
+        bestScoreToast.setView(bestScoreView);**/
         bestScoreToast.show();
     }
 
@@ -174,10 +178,11 @@ public class GameOverActivity extends AppCompatActivity {
      * Toast για την περίπτωση που το σκορ του χρήστη μπαίνει στα Top 10 Best Scores (εκτός της πρώτης θέσης)
      * */
     public void topTenToast(){
-        Toast topTenToast = new Toast(getApplicationContext());
+        Toast topTenToast; // = new Toast(getApplicationContext());
+        topTenToast = Toast.makeText(getBaseContext(), R.string.topTen, Toast.LENGTH_SHORT);
         topTenToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
 
-        TextView topTenView = new TextView(GameOverActivity.this);
+        /** TextView topTenView = new TextView(GameOverActivity.this);
         topTenView.setBackgroundColor(Color.BLACK);
         topTenView.setTextColor(Color.WHITE);
         topTenView.setTextSize(20);
@@ -186,7 +191,7 @@ public class GameOverActivity extends AppCompatActivity {
         Typeface missTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
 
         topTenView.setTypeface(missTypeface);
-        topTenToast.setView(topTenView);
+        topTenToast.setView(topTenView); **/
         topTenToast.show();
     }
 
@@ -194,9 +199,11 @@ public class GameOverActivity extends AppCompatActivity {
      * Toast για την περίπτωση που το σκορ του χρήστη δεν μπει στο Top 10
      * */
     public void notTopTenToast(){
-        Toast notTopTenToast = new Toast(getApplicationContext());
+        Toast notTopTenToast; //= new Toast(getApplicationContext());
+        notTopTenToast = Toast.makeText(getBaseContext(), R.string.notTopTen, Toast.LENGTH_SHORT);
         notTopTenToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
-        TextView notTopTenView = new TextView(GameOverActivity.this);
+
+        /** TextView notTopTenView = new TextView(GameOverActivity.this);
         notTopTenView.setBackgroundColor(Color.BLACK);
         notTopTenView.setTextColor(Color.WHITE);
         notTopTenView.setTextSize(20);
@@ -205,7 +212,7 @@ public class GameOverActivity extends AppCompatActivity {
         Typeface missTypeface = Typeface.create("serif",Typeface.BOLD); //or familyName roman
 
         notTopTenView.setTypeface(missTypeface);
-        notTopTenToast.setView(notTopTenView);
+        notTopTenToast.setView(notTopTenView); **/
         notTopTenToast.show();
     }
 
