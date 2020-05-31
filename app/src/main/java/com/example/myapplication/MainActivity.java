@@ -1,16 +1,8 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-
-import android.content.ComponentName;
-
 import android.content.Intent;
-import android.content.ServiceConnection;
-
 import android.os.Bundle;
-import android.os.IBinder;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -19,12 +11,12 @@ public class MainActivity extends AppCompatActivity {
     private long backPressedTime;
     private Toast backToast;
     Button playButton, settingsButton, scoresButton, exitButton;
-MyService myService;
 
-boolean isBound = false;
-    /**Εδώ κατά την δημιουργια του activity αρχηκοποιουνται τα κουμπία και
-     * οι listener τους οπού οδηγούν στις βασικές δραστηριότητες τις εφαρμογης.
-     * @param savedInstanceState
+
+    /**
+     * Εδώ κατά την δημιουργια του activity αρχικοποιουνται τα κουμπία και
+     * οι listener τους, που οδηγούν στις βασικές δραστηριότητες της εφαρμογής.
+     * @param savedInstanceState .
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +33,9 @@ boolean isBound = false;
         scoresButton = findViewById(R.id.button3);
         exitButton = findViewById(R.id.button4);
 
+        /*
+          Καθορίζονται οι εντολές των onClickListeners για κάθε κουμπί
+         */
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,14 +71,11 @@ boolean isBound = false;
 
     }
 
-
-
     /**
-     * Μεθοδος που ενεργοποιείται όταν ο χρηστης πατάει το backPress στην συσκευή του.
+     * Μεθοδος, που ενεργοποιείται όταν ο χρηστης πατάει το backPress στην συσκευή του.
      * Στο πρώτο πάτημα εμφανίζει ένα κείμενο της προειδοποιησης εξοδού απο την εφαρμογή.
-     * Στο δέυτερο γίνεται έξοδος.
+     * Στο δέυτερο γίνεται έξοδος (αν αυτό γίνει σε διάστημα 2 δευτερολέπτων).
      */
-
     @Override
     public void onBackPressed(){
         if (backPressedTime + 2000 > System.currentTimeMillis()){
@@ -96,25 +88,34 @@ boolean isBound = false;
         }
         backPressedTime=System.currentTimeMillis();
     }
-    /** Εδώ αρχίζει βασική διαδραστική δραστηριότητα GameActivity. */
 
+    /**
+     *  Μέθοδος που ξεκινάει την GameActivity, για να ξεκινήσει το παιχνίδι
+     */
     public void openGameActivity(){
         Intent i = new Intent(this,GameActivity.class);
         startActivity(i);
     }
-    /** Εδώ αρχίζει η δραστηριότητα που αφορά τις ρυθμίσεις. */
 
+    /**
+     * Μέθοδος που ξεκινάει την SettingsActivity (ρυθμίσεις ήχων και μουσικής)
+     */
     public void openSettingsActivity(){
         Intent i = new Intent(this,SettingsActivity.class);
         startActivity(i);
     }
-    /** Εδώ αρχίζει η δραστηριότητα με τα scores που έχουν καταγραφεί στην βάση */
 
+    /**
+     * Μέθοδος που ξεκινάει την ScoresActivity, που δείχνει όλα τα scores που έχουν καταγραφεί στην βάση
+     */
     public void openScoresActivity(){
         Intent i = new Intent(this,ScoresActivity.class);
         startActivity(i);
     }
 
+    /**
+     * Μέθοδος που εμφανίζει στον χρήστη ενα exit dialog, για την επιβεβαίωση της εξόδου του από το παιχνίδι
+     */
     public void exitMainActivity(){
        ExitDialog exitDialog = new ExitDialog();
        exitDialog.show(getSupportFragmentManager(),"exit dialog");
