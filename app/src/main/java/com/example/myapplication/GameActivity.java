@@ -30,7 +30,7 @@ import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     private MediaPlayer countdownSound,hitSound,missSound,popSound,jumpSound;
-    private boolean countdownFinished,gameFinished,hitToastShown,missToastShown,run,nextMolebool,hideMoleBool,backPressed;
+    private boolean countdownFinished,gameFinished,hitToastShown,missToastShown,run, nextMoleBool,hideMoleBool,backPressed;
     private Toast hitToast;
     private Toast missToast;
     private long backPressedTime;
@@ -44,8 +44,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     static boolean soundsPlaying=true;
 
     /**
-     * Σε αυτή την μέθοδο αρχικοποιούνται οι μεταβλητές που χρησημοποιεί αυτο το activity,αρχηκοποιουνταί οι listeners
-     * των κουμπιών και οι mediaplayers.
+     * Σε αυτή την μέθοδο αρχικοποιούνται οι μεταβλητές που χρησιμοποιεί αυτο το activity, αρχικοποιουνταί οι listeners
+     * των κουμπιών και οι Media Players.
      * @param savedInstanceState  Bundle .
      */
 
@@ -61,7 +61,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         pauseCounter=0;
         run = true;
-        // αρχικοποιηση των μεταβλητών παιχνιδιού.
+        // αρχικοποίηση των μεταβλητών παιχνιδιού.
         arrivalTime=1000;
         hideTime=1000;
         score=0;
@@ -71,8 +71,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         missToastShown=false;
         backPressed=false;
         scoreText = findViewById(R.id.textScore);
-
-
 
         lives1=findViewById(R.id.imageView1);
         lives2=findViewById(R.id.imageView2);
@@ -93,8 +91,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         // η μέθοδος αυτή καλείται και ξεκινάει το παιχνίδι.
         startRepeatingTask();
-        // Δημιουργία των mediaPlayer που είναι υπέυθυνοι για τους ήχους των moles
 
+        // Δημιουργία των Media Player, που είναι υπέυθυνοι για τους ήχους των moles
         hitSound = MediaPlayer.create(this,R.raw.hit);
         missSound = MediaPlayer.create(this,R.raw.miss);
         popSound = MediaPlayer.create(this,R.raw.pop);
@@ -119,8 +117,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         pauseButton=findViewById(R.id.toggleButton);
         pauseButton.setVisibility(View.INVISIBLE);
     }
+
     /**
-     * μΜεθοδος που καλείται απο την onCreate και αρχικοποιιταί τα image buttons- moles και ο listener τους
+     * Μέθοδος, που καλείται απο την onCreate και αρχικοποιεί τα image buttons - moles και τους listener τους
      * ακόμα δημιουργείται ένας πίνακας από κουμπία.
      */
     public void createButtons(){
@@ -133,6 +132,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         ImageButton imageButton7 = findViewById(R.id.imageButton7);
         ImageButton imageButton8 = findViewById(R.id.imageButton8);
         ImageButton imageButton9 = findViewById(R.id.imageButton9);
+
         imageButton1.setOnClickListener(this);
         imageButton2.setOnClickListener(this);
         imageButton3.setOnClickListener(this);
@@ -158,46 +158,52 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         boolean musicState = sharedPrefs.getBoolean("sht", true);
       setMediaBool(musicState);
     }
+
     /**
-     * Μέθοδος που παράγη με τυχαιότητα έναν αριθμό 0-8 που αντιπροσωπέβει μία θέση στον πίνακα κουμπιών,
-     * δηλαδή την ΄θεση του  imageButton-mole που θα εμφανιστεί.
+     * Μέθοδος που παράγει τυχαία έναν αριθμό (εύρος 0-8), που αντιπροσωπέυει μία θέση στον πίνακα κουμπιών,
+     * δηλαδή την θέση του imageButton-mole, που θα εμφανιστεί.
      * @return int την θέση.
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public int randomMole(){
         int iMole;
+        //noinspection OptionalGetWithoutIsPresent
         iMole = new Random().ints(0,8).limit(1).findFirst().getAsInt();
         return iMole; }
 
-    /**Μέθοδος που καλείται απο την onCreate,με καθστέρηση τεσσάρων δευτερολέπτων κάλει τον
-     * runnableCode που έμφανίζει τα moles.
+    /**
+     * Μέθοδος που καλείται απο την onCreate, η οποία μέσω ενός handler εκτελεί με καθυστέρηση τεσσάρων δευτερολέπτων (ωστέ να τελειώσει πρώτα το countdown)
+     * τον runnableCode, που έμφανίζει τα moles.
      */
     public void startRepeatingTask() {
         Handler mHandler=new Handler();
         mHandler.postDelayed(runnableCode, 4000);
 
     }
-    /**Η Μέθοδος αυτή καλή τον runnableCode 2  που κρύβει τα moles .
-     * @param r
+
+    /**
+     * Η μέθοδος αυτή καλεί τον runnableCode 2  που κρύβει τα moles. (καθυστέρηση καθορισμένη από την τιμή της μεταβλητής hideTime)
      */
-    public void hideMole(int r){
+    public void hideMole(){
         hideMoleBool=true;
         Handler mHandler2=new Handler();
         mHandler2.postDelayed(runnableCode2,hideTime);
     }
-    /**Η Μέθοδος αυτή καλή τον runnableCode   που εμφανίζει τα moles .
+
+    /**
+     * Η μέθοδος αυτή καλεί τον runnableCode, που εμφανίζει τα moles. (καθυστέρηση καθορισμένη από την τιμή της μεταβλητής arrivalTime)
      */
     public void nextMole(){
-        nextMolebool =true;
+        nextMoleBool =true;
         backPressed = false;
         mHandler3.postDelayed(runnableCode, arrivalTime);
 
     }
 
     /**
-     * Ο κώδικας αυτός είναι υπέυθηνος για την έμφανισει των moles,από την randomMole()  έχουμε το κουμπί
-     *που θα εμφανιστεί,στο τέλος καλεί την hideMole.Πριν εκτελεστεί ο κώδικας ελέγχει την
-     * μεταβλητή run (που ορίζει αν είναι σε πάυση η δραστηριότητα ).
+     * Ο κώδικας αυτός είναι υπεύθυνος για την τυχαία εμφάνιση των moles (μέσω της randomMole())
+     * Στο τέλος καλεί την hideMole. Πριν εκτελεστεί ο κώδικας ελέγχει την
+     * μεταβλητή run (που ορίζει αν είναι σε πάυση η δραστηριότητα).
      */
     private Runnable runnableCode=new Runnable() {
         @RequiresApi(api = Build.VERSION_CODES.N)
@@ -205,22 +211,22 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         public void run() {
             pauseButton.setVisibility(View.VISIBLE);
             Log.d("Handlers","Called on Main Thread");
-            nextMolebool=false;
+            nextMoleBool =false;
           if (run) {
               r = randomMole();
               arrayOfButtons[r].setVisibility(View.VISIBLE);
               soundsMaker(popSound);
               sumOfMoles++;
-              hideMole(r);
+              hideMole();
           }
         }
     };
+
     /**
-     * O κώδικας που κρύβει τα κουμπία,ήτε είναι pause το activity ήτε όχι,κρύβουμε το
-     * κουμπί που ήταν πριν ανοικτό,προκειμένου να μην μήνει αν ο παίκτης πατησει το  pause.
-     * O κώδικας την συνέχεια πέρα απο την μεταβλητή run (που ορίζει αν είναι σε πάυση η δραστηριότητα )
-     * ελέγχει και αν το άθροισμα των κουμπίων-moles που εμφανίστηκαν έιναι ίσω με το score.Αν
-     * όχι αφερεί μια ζωή.Τέλος πριν καλέσει την nextMole ελέγχει και αν το παιχνίδι έχει τελειώσει η αν είναι σε πάυση.
+     * O κώδικας αυτός κρύβει τα κουμπία - moles. Αν το activity είναι paused, το mole κρύβεται (ο παίκτης δεν χάνει ζωή, πρακτικά ο κώδικας λειτουργεί λες και αυτό το mole δεν εμφανίστηκε ποτέ.
+     * Αν το activity δεν είναι paused, o κώδικας καλείται για να κρύψει μετά από ένα διάστημα εμφάνισης, το mole.
+     * Ελέγχεται η μεταβλητή run (που ορίζει αν είναι σε πάυση η δραστηριότητα) και αν το άθροισμα των κουμπίων-moles, που εμφανίστηκαν, έιναι ίσο με το score.
+     * Αν όχι αφαιρεί μια ζωή. Τέλος πριν καλέσει την nextMole, ελέγχει και αν το παιχνίδι έχει τελειώσει ή αν είναι σε πάυση.
      */
     private Runnable runnableCode2= new Runnable() {
         @Override
@@ -240,11 +246,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
 
-    /**Αυτή η μέθοδος αυξάνει το score κάθε φορά που ένα κουμπί έχει πατηθεί.
-     * Ακόμα κάθε φόρα που το σκορ αυξάνεται κατά 5 μειώνεται ο χρόνος εμφάνισεις και
-     * όταν αυξάνεται κατα 10 μειώνεται χρόνος απόκρυψης.
-     * Αυτοί οι ΄χρονοι αντιπροσοπέυουν την δυσκολεία,αφού με αυτούς τους χρόνους καλούνται οι συναρτησεις
-     * εμφάνισεις και απόκρυψης
+    /**
+     * Αυτή η μέθοδος αυξάνει το score κάθε φορά που ο παίκτης χτυπήσει το mole.
+     * Ακόμα, κάθε φορά που το σκορ αυξάνεται κατά 5 μειώνεται ο χρόνος εμφάνισης και κάθε φορά που αυξάνεται κατα 10 μειώνεται χρόνος απόκρυψης.
+     * Η μείωση των δύο αυτών χρόνων, που χρησιμοποιούνται κατά την κλήση των συναρτήσεων εμφάνισης και απόκρυψης των moles, αυξάνει την δυσκολία του παιχνιδιού σταδιακά
      */
     @SuppressLint("SetTextI18n")
     public void updateScore(){
@@ -257,8 +262,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
         scoreText.setText(Integer.toString(score));
     }
+
     /**
-     * Μέθοδος η οποία εμφανίζει τα text- τα νούμερα τις εκκινησης 3-2-1.
+     * Μέθοδος, η οποία εμφανίζει τα text - νούμερα της αντίστροφης μέτρησης, πριν την έναρξη του παιχνιδιού.
      */
     public void updateCountdown(){
         countdownText.setText("2");
@@ -276,8 +282,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
         countdownFinished=true;
     }
+
     /**
-     * Μέθοδος που κατασκευάζει το miss-αστοχεια toast και το εμφανίζει.
+     * Μέθοδος, που κατασκευάζει και εμφανίζει στον χρήστη το miss toast (αστοχία).
+     * χρησιμοποιείται η μεταβλητή myY η οποία καθορίζει το yOffset στο setGravity του Toast. Η myY καθορίζεται αναλογικά με το ύψος της οθόνης της εκάστοτε συσκευής.
      */
     @SuppressLint("SetTextI18n")
     public void missToast(){
@@ -298,7 +306,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         missToastShown = true;
 
     }
-    //////////
+
+    /**
+     * Μέθοδος, που κατασκευάζει και εμφανίζει στον χρήστη το hit toast (χτύπημα).
+     * χρησιμοποιείται η μεταβλητή myY η οποία καθορίζει το yOffset στο setGravity του Toast. Η myY καθορίζεται αναλογικά με το ύψος της οθόνης της εκάστοτε συσκευής.
+     */
     @SuppressLint("SetTextI18n")
     public void hitToast(){
         hitToast = new Toast(getApplicationContext());
@@ -318,6 +330,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         hitToastShown = true;
     }
 
+    /**
+     * Μέθοδος, που μετράει το ύψος της οθόνης της συσκευής και καθορίζει βάσει αυτού, το κατάλληλο (αναλογικά) ύψος για την εμφάνιση των toasts.
+     */
     public int rightYOffset(){
         int myHeight;
         DisplayMetrics displayMetrics=new DisplayMetrics();
@@ -327,8 +342,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         return myHeight;
     }
+
     /**
-     * Listener για όλα τα κουμπιία-moles η οποία καλει την hitToast,αναπαράγει τον ήχο χτυπήματος εξαφανίζοντας και  το αντιστοιχο  κουμπι.
+     * Listener για όλα τα κουμπιά - moles, η οποία καλεί την hitToast, αναπαράγει τον ήχο χτυπήματος, εξαφανίζοντας παράλληλα και το αντίστοιχο κουμπί.
      * Επίσης καλεί την upDateScore.
      * @param v View
      */
@@ -338,15 +354,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         if(countdownFinished && run){
             hitToast();
             soundsMaker(hitSound);
-
             ImageButton btn = findViewById(v.getId());
             btn.setVisibility(View.GONE);
             updateScore();
         }
     }
+
     /**
-     * Μέθοδος που καλείται από τον runableCode2-hideMole όταν ένα κουμπί εξαφανιστεί χώρις να πατηθεί.
-     * Αφαιρεί μια ζωή την φορά και εξαφανίζει ένα liveText-εικονηδιο καρδιά.
+     * Μέθοδος, που καλείται από τον runnableCode2-hideMole, όταν ένα mole εξαφανιστεί, χωρίς να πατηθεί.
+     * Αφαιρεί μια ζωή την φορά και εξαφανίζει ένα ImageView - εικονιδιο καρδιά.
+     * Όταν η ακέραια μεταβλητή lives μηδενιστεί, καλεί την openGameOverActivity
      */
     @SuppressLint("SetTextI18n")
     public void updateLives(){
@@ -363,8 +380,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             openGameOverActivity();
         }
     }
-    /**Καλείται όταν οι ζωές είναι 0,
-     * καλείται το GameOverActivity και καταστρέφει αυτό.
+
+    /**
+     * Μέθοδος, που καλείται όταν η ακέραια μεταβλητή lives μηδενιστεί,
+     * Μέσω intent, περνάει το σκορ του παίκτη στην GameOverActivity, ξεκινάει την GameOverActivity και τερματίζει την GameActivity.
      */
     public void openGameOverActivity(){
 
@@ -379,11 +398,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(i);
         finish();
     }
+
     /**
-     * μέθοδος που καλείται όταν το activity από το παρασκήνιο επιστρέφει στο προσκήνιο.
-     * Το pause button πάει στην μορφή πάυσης, η μεταβλητή run γίνεται true προκειμένου να τρέχουν οι κώδικες
-     * των hidemole-nextMole.Ακόμα το αθροισμά των moles που εμφανίστηκαν γίνεται ίσο με το σκορ έτσι ώστε  να μην
-     * καταμετρηθει αν βγηκε κάποιο την ώρα του pause click.
+     * Μέθοδος, που καλείται όταν το activity επιστρέφει, από το παρασκήνιο, στο προσκήνιο.
+     * Το pause button πάει ξανά στην μορφή πάυσης, η μεταβλητή run γίνεται true προκειμένου να τρέχουν οι κώδικες
+     * των hideMole-nextMole. Ακόμα, το αθροισμά των moles που εμφανίστηκαν γίνεται ίσο με το σκορ έτσι ώστε να μην
+     * χάσει ο παίκτης ζωή, αν βγήκε κάποιο mole την ώρα του pause click.
      */
    @Override
    protected void onResume() {
@@ -391,12 +411,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
        if (pauseCounter!=0){
         pauseButton.setChecked(true);
            run=true;
-           sumOfMoles =score;
+           sumOfMoles=score;
            backPressed=true;
        }
    }
+
     /**
-     * H μέθοδος αυτή καλείται όταν η εφαρμογή είναι σε πάυση-not visible.
+     * Μέθοδος, που καλείται όταν η εφαρμογή είναι σε πάυση-not visible.
      * Σταματάει τους ήχους και τα toasts.
      */
     @Override
@@ -431,30 +452,36 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }/**
-     * θέτει την μεταβλητή για τους ήχους
-     * @param x bool η οποία καθορίζει αν θα αναπαράγωνται οι ήχοι των moles.Καλείται από το settings activity
-     *          για την αντοιστιχη ρύθμιση.
+    }
+
+    /**
+     * Θέτει την μεταβλητή για τους ήχους
+     * @param x bool η οποία καθορίζει αν θα αναπαράγονται οι ήχοι των moles. Καλείται από το settings activity
+     *          για την αντίστοιχη ρύθμιση.
      */
      public static void setMediaBool(boolean x){
         soundsPlaying=x;
      }
-    /**
-     * Getter για την μεταβγλητή
-     * @return soundPlaying.
+
+     /**
+     * Getter για την μεταβλητή
+     * @return soundsPlaying.
      */
      public static boolean getMediaBool(){
         return soundsPlaying;
      }
-    /**Ελέγχει αν η μεταβλητή soundsPlaying είναι true η όχι και αναπαράγει τον
-     * @param player mediaPlayer ηχο που δέχεται.
+
+    /**
+     * Ελέγχει αν η μεταβλητή soundsPlaying είναι true η όχι και αναπαράγει τον mediaPlayer ηχο που δέχεται.
+     * @param player .
      */
     public  static  void soundsMaker(MediaPlayer player){
         if (getMediaBool()){ player.start();}
     }
+
     /**
-     * Μέθοδος που καλείται όταν το pause button έχει πατηθεί.Είναι υπέυθηνη για την πάυση του παιχνιδιού και την ενεργοποιησή του έπειτα.
-     * @param view
+     * Μέθοδος, που καλείται όταν το pause button έχει πατηθεί. Είναι υπέυθυνη για την πάυση του παιχνιδιού και την ενεργοποίηση του μετέπειτα.
+     * @param view v.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void pauseClicked(View view) {
@@ -465,7 +492,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         }else {
             {
-                  if (( nextMolebool && !hideMoleBool )|| (!nextMolebool && hideMoleBool)){
+                  if (( nextMoleBool && !hideMoleBool )|| (!nextMoleBool && hideMoleBool)){
                       run=true;
                       sumOfMoles=score;
                   }else {
@@ -477,10 +504,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
+
     /**
-     * Μεθοδος που ενεργοποιείται όταν ο χρηστης πατάει το backPress στην συσκευή του.
-     * Στο πρώτο πάτημα εμφανίζει ένα κείμενο της προειδοποιησης εξοδού απο το παιχνίδι,στο
-     * δέυτερο βγαίνει απο το activity αν πατηθεί σε χρόνο μικρότερο των δύο δευτερολέπτων.
+     * Μεθοδος, που ενεργοποιείται όταν ο χρηστης πατάει το backPress στην συσκευή του.
+     * Στο πρώτο πάτημα εμφανίζει ένα κείμενο προειδοποίησης εξοδού απο το παιχνίδι και στο
+     * δέυτερο πάτημα βγαίνει απο το activity (αν πατηθεί 2η φορά σε χρόνο μικρότερο των δύο δευτερολέπτων).
      */
     @Override
     public void onBackPressed(){
