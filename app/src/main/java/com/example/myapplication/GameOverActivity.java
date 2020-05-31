@@ -3,11 +3,10 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -40,7 +39,7 @@ public class GameOverActivity extends AppCompatActivity {
         final Button submitScore= findViewById(R.id.gameOverSubmit);
         submitScore.setOnClickListener(new View.OnClickListener() {                                 //On Click Listener για το κουμπί υποβολής
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {                                                      // OnclickListener για το κουμπί υποβολής
 
                 if(yourName.toString().contentEquals("")){                                      // περίπτωση που ο χρήστης δεν πληκτρολογήσει τίποτα
                     wrongNameToast();
@@ -79,14 +78,14 @@ public class GameOverActivity extends AppCompatActivity {
 
 
                     Handler myHandler= new Handler();
-                    myHandler.postDelayed(r, 1000);                                       //καλεί μέσω handler το Runnable Code r
+                    myHandler.postDelayed(r, 1000);                                       //καλεί μέσω handler το Runnable Code r, με καθυστέρηση 1 δευτερόλεπτο
 
 
                 }
             }
         });
 
-        Button playAgain = findViewById(R.id.gameOverPlayAgain);
+        Button playAgain = findViewById(R.id.gameOverPlayAgain);                                     // OnclickListener για το κουμπί "Παίξε Ξανά". Δρομολογεί στην οθόνη του παιχνιδιού, που ξεκινά νέο παιχνίδι
         playAgain.setOnClickListener(new View.OnClickListener() {                                    //On Click Listener για το κουμπί "Παίξε Ξανά"
             @Override
             public void onClick(View v) {
@@ -94,7 +93,7 @@ public class GameOverActivity extends AppCompatActivity {
             }
         });
 
-        Button gameOverExit = findViewById(R.id.gameOverExit);                                       //On Click Listener για το κουμπί εξόδου από το παιχνίδι. Επιστρέφει στην αρχική οθόνη
+        Button gameOverExit = findViewById(R.id.gameOverExit);                                       //On Click Listener για το κουμπί εξόδου από το παιχνίδι. Δρομολογεί στην αρχική οθόνη
         gameOverExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,53 +112,72 @@ public class GameOverActivity extends AppCompatActivity {
     }
 
     /**
-     * Toast για την περίπτωση που ο χρήστης δεν πληκτρολογήσει τίποτα
+     * Μέθοδος, που μετράει το ύψος της οθόνης της συσκευής και καθορίζει βάσει αυτού, το κατάλληλο (αναλογικά) ύψος για την εμφάνιση των toasts.
+     */
+    public int rightYOffset(){
+        int myHeight;
+        DisplayMetrics displayMetrics=new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height=displayMetrics.heightPixels;
+        myHeight=height/4;
+
+        return myHeight;
+    }
+
+
+    /**
+     * Μέθοδος για την εμφάνιση Toast, για την περίπτωση που ο χρήστης δεν πληκτρολογήσει τίποτα
      * */
     public void wrongNameToast(){
         Toast wrongNameToast;
         wrongNameToast = Toast.makeText(getBaseContext(), R.string.wrong_name_toast, Toast.LENGTH_SHORT);
-        wrongNameToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
+        int myY=rightYOffset();
+        wrongNameToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,myY);
 
         wrongNameToast.show();
     }
 
     /**
-     * Toast για την περίπτωση που το όνομα που πληκτρολογεί ο χρήστης είναι πολύ μεγάλο (πάνω από 15 χαρακτήρες)
+     * Μέθοδος για την εμφάνιση Toast, για την περίπτωση που το όνομα που πληκτρολογεί ο χρήστης είναι πολύ μεγάλο (πάνω από 15 χαρακτήρες)
      * */
     private void longNameToast() {
         Toast longNameToast;
         longNameToast = Toast.makeText(getBaseContext(), R.string.long_name, Toast.LENGTH_SHORT);
-        longNameToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
+        int myY=rightYOffset();
+        longNameToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,myY);
         longNameToast.show();
     }
 
     /**
-     * Toast για την περίπτωση που γίνει νέο Best High Score
+     * Μέθοδος για την εμφάνιση Toast, για την περίπτωση που γίνει νέο Best High Score
      * */
     public void bestScoreToast(){
         Toast bestScoreToast;
         bestScoreToast = Toast.makeText(getBaseContext(), R.string.bestScore, Toast.LENGTH_SHORT);
-        bestScoreToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
+        int myY=rightYOffset();
+        bestScoreToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,myY);
         bestScoreToast.show();
     }
 
     /**
-     * Toast για την περίπτωση που το σκορ του χρήστη μπαίνει στα Top 10 Best Scores (εκτός της πρώτης θέσης)
+     * Μέθοδος για την εμφάνιση Toast, για την περίπτωση που το σκορ του χρήστη μπαίνει στα Top 10 Best Scores (εκτός της πρώτης θέσης)
      * */
     public void topTenToast(){
         Toast topTenToast;
         topTenToast = Toast.makeText(getBaseContext(), R.string.topTen, Toast.LENGTH_SHORT);
-        topTenToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
+        int myY=rightYOffset();
+        topTenToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,myY);
         topTenToast.show();
     }
 
     /**
-     * Toast για την περίπτωση που το σκορ του χρήστη δεν μπει στο Top 10
+     * Μέθοδος για την εμφάνιση Toast, για την περίπτωση που το σκορ του χρήστη δεν μπει στο Top 10
      * */
     public void notTopTenToast(){
         Toast notTopTenToast;
         notTopTenToast = Toast.makeText(getBaseContext(), R.string.notTopTen, Toast.LENGTH_LONG);
-        notTopTenToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,400);
+        int myY=rightYOffset();
+        notTopTenToast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,myY);
         notTopTenToast.show();
     }
 
