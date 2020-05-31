@@ -11,8 +11,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.widget.Toast;
-
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,9 +20,9 @@ import java.lang.ref.WeakReference;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Η κλάσση αυτή είναι κατασκευασμένη για ενημερώσεις μετάβασης,
+ * Η κλάση αυτή είναι κατασκευασμένη για ενημερώσεις μετάβασης,
  * απο το προσκήνιο στο παρασκήνιο και το αντιστροφό αυτής εφαρμογής.
- * Γνωρίζει την διάρκεια ζωής όλων τον δραστηριοτήτων
+ * Γνωρίζει την διάρκεια ζωής όλων των δραστηριοτήτων
  */
 public class MyApplication extends Application   implements Application.ActivityLifecycleCallbacks {
     private static MyService myService;
@@ -39,9 +37,9 @@ public class MyApplication extends Application   implements Application.Activity
     private static final long INTERVAL_BACKGROUND_STATE_CHANGE = 750L;
 
     /**
-     * Αυτή η μέθοδος ελέγχει αν μια δραστηριότητα  ήρθε στο προσκήνιο,ελέγχει
-     * την λογικη ατομικη  applicationBackgrounded η οποία είναι αληθής όταν το activity ήρθε στο
-     * προσκήνιο απο το παρασκήνιο,η δημιουργήθηκε τώρα.Προκειμένου να μην παραχθεί σφάλμα.
+     * Αυτή η μέθοδος ελέγχει αν μια δραστηριότητα ήρθε στο προσκήνιο.
+     * Ελέγχει την λογική ατομική applicationBackgrounded η οποία είναι αληθής, αν το activity ήρθε στο
+     * προσκήνιο απο το παρασκήνιο ή αν δημιουργήθηκε τώρα. Προκειμένου να μην παραχθεί σφάλμα.
      */
     private void determineForegroundStatus() {
         if(applicationBackgrounded.get()){
@@ -55,10 +53,10 @@ public class MyApplication extends Application   implements Application.Activity
     }
 
     /**
-     * Αντιστοιχά εδω ελέγχεται το αν η δραστηριότητα εισέρχεται στο παρασκήνιο,μόνο αν πριν ήταν στο προσκήνιο.
-     * ένας handler τρέχει τον παρκάτο κώδικα σε χρονική καθηστέρηση 0.75 δευτερόλεπτα.Επαληθέυει αν η κατάσταση μετάβηκε
+     * Αντίστοιχα εδώ ελέγχεται αν η δραστηριότητα εισέρχεται στο παρασκήνιο, μόνο αν πριν ήταν στο προσκήνιο.
+     * Ένας handler τρέχει τον παρκάτο κώδικα σε χρονική καθυστέρηση 0.75 δευτερόλεπτα. Επαληθέυει αν η κατάσταση μετάβηκε
      * στο παρασκήνιο με τις δύο μεταλητες applicationBackgrounded currentActivityReference που είναι η αναφορά
-     * μας για την κατάσταση.¨Αν δεν περάση αυτή η συνθήκη σημαίνει ότι ένα άλλο activity δημιουργήθηκε,άρα δεν
+     * μας για την κατάσταση. Αν δεν περάσει αυτή η συνθήκη σημαίνει ότι ένα άλλο activity δημιουργήθηκε, άρα δεν
      * είναι η εφαρμογή μας στο παρασκήνιο.
      */
     private void determineBackgroundStatus() {
@@ -82,12 +80,12 @@ public class MyApplication extends Application   implements Application.Activity
 
         this.registerActivityLifecycleCallbacks(this);
         Intent intent = new Intent(this,MyService.class);
-        bindService(intent,conect, (Context.BIND_ALLOW_OOM_MANAGEMENT));
+        bindService(intent,connect, (Context.BIND_ALLOW_OOM_MANAGEMENT));
     }
 
     /**
      * Καλείται όταν ξέρουμε ότι η κατάσταση της εφαρμογής μεταβαίνει στο προσκήνιο.
-     * Εδώ δημηουργούμε την μουσική απο την υπηρεσία μας.
+     * Εδώ δημιουργούμε την μουσική απο την κλάση service.
      */
     public static void onEnterForeground() {
         if (times != 0 && musicState) {
@@ -96,7 +94,7 @@ public class MyApplication extends Application   implements Application.Activity
     }
     /**
      * Καλείται όταν ξέρουμε ότι η κατάσταση της εφαρμογής είναι στο παρασκήνιο.
-     * Εδώ σταματάμε την μουσική απο την κλάσση service μας.
+     * Εδώ σταματάμε την μουσική απο την κλάση service.
      */
     public static void onEnterBackground()  {
      times ++;
@@ -107,7 +105,7 @@ public class MyApplication extends Application   implements Application.Activity
     /**
      * Μέθοδος για την απόκηση πρόσβασης στην υπηρεσία της εφαρμογης.
      */
-    private ServiceConnection conect = new ServiceConnection() {
+    private ServiceConnection connect = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             MyService.LocalBinder binder = (MyService.LocalBinder)service;
@@ -135,8 +133,8 @@ public class MyApplication extends Application   implements Application.Activity
 
     /**
      * Η μέθοδος αυτή καλείται όταν μία δραστηριότητα μπαίνει στο προσκήνιο,
-     * αποθηκέυουμε μία αναφορά  της τρέχων δραστηριότητας.
-     * @param activity η τρέχων δραστηριότητα.
+     * αποθηκεύουμε μία αναφορά της τρέχουσας δραστηριότητας.
+     * @param activity η τρέχουσα δραστηριότητα.
      */
     @Override
     public void onActivityResumed(@NonNull Activity activity) {
@@ -149,7 +147,7 @@ public class MyApplication extends Application   implements Application.Activity
     /**
      * Η μέθοδος καλείται όταν η δραστηριότητα εισέρχεται στό προσκήνιο,
      * για αυτό θέτουμε την αναφορά σε κενή.
-     * @param activity η τρέχων δραστηριότητα.
+     * @param activity η τρέχουσα δραστηριότητα.
      */
     @Override
     public void onActivityPaused(@NonNull Activity activity) {
