@@ -17,8 +17,8 @@ class PlayerScore {
     }
 
     /**
-     *    Μέθοδοι για set and get του id, του ονόματος και του σκορ του παίκτη / εγγραφής
-     * @param id
+     *    Μέθοδοι για set and get του id, του ονόματος και του σκορ του παίκτη/εγγραφής
+     * @param id, playerName, playerScore .
      */
     void set_id(int id){ this._id=id; }
 
