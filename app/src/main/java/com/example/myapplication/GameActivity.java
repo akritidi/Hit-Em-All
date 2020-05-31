@@ -13,6 +13,7 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -281,7 +282,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @SuppressLint("SetTextI18n")
     public void missToast(){
         missToast = new Toast(getApplicationContext());
-        missToast.setGravity(Gravity.CENTER|Gravity.TOP, 0, 550);
+        int myY=rightYOffset();
+        missToast.setGravity(Gravity.CENTER|Gravity.TOP, 0, myY);
 
         TextView missTextView = new TextView(GameActivity.this);
         missTextView.setBackgroundColor(Color.TRANSPARENT);
@@ -300,7 +302,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @SuppressLint("SetTextI18n")
     public void hitToast(){
         hitToast = new Toast(getApplicationContext());
-        hitToast.setGravity(Gravity.CENTER|Gravity.TOP, 0, 550);
+        int myY=rightYOffset();
+        hitToast.setGravity(Gravity.CENTER|Gravity.TOP, 0, myY);
 
         TextView hitTextView = new TextView(GameActivity.this);
         hitTextView.setBackgroundColor(Color.TRANSPARENT);
@@ -313,6 +316,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         hitToast.setView(hitTextView);
         hitToast.show();
         hitToastShown = true;
+    }
+
+    public int rightYOffset(){
+        int myHeight;
+        DisplayMetrics displayMetrics=new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height=displayMetrics.heightPixels;
+        myHeight=height/4;
+
+        return myHeight;
     }
     /**
      * Listener για όλα τα κουμπιία-moles η οποία καλει την hitToast,αναπαράγει τον ήχο χτυπήματος εξαφανίζοντας και  το αντιστοιχο  κουμπι.
