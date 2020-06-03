@@ -28,7 +28,7 @@ public class MyApplication extends Application   implements Application.Activity
     private static MyService myService;
      static int times = 0;
     private static boolean musicState=true;
-    boolean isBound = false;
+    static boolean isBound = false;
 
     private static WeakReference<Activity> currentActivityReference;
 
@@ -43,12 +43,12 @@ public class MyApplication extends Application   implements Application.Activity
      */
     private void determineForegroundStatus() {
         if(applicationBackgrounded.get()){
-
-            MyApplication.onEnterForeground();
-            applicationBackgrounded.set(false);
-
             SharedPreferences sharedPrefs  = getSharedPreferences("state", MODE_PRIVATE);
             musicState=sharedPrefs.getBoolean("music",true);
+            MyApplication.onEnterForeground(musicState);
+            applicationBackgrounded.set(false);
+
+
         }
     }
 
@@ -87,8 +87,8 @@ public class MyApplication extends Application   implements Application.Activity
      * Καλείται όταν ξέρουμε ότι η κατάσταση της εφαρμογής μεταβαίνει στο προσκήνιο.
      * Εδώ δημιουργούμε την μουσική απο την κλάση service.
      */
-    public static void onEnterForeground() {
-        if (times != 0 && musicState) {
+    public static void onEnterForeground(boolean m) {
+        if ( times !=0 && m) {
             myService.setPlayer();
         }
     }
