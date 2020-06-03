@@ -75,11 +75,6 @@ public class MyService extends Service {
 
     }
 
-//        public void pause()  {
-//
-//            player.pause();
-//
-//        }
 
     /**
      * Μέθοδος, που σταματάει την μουσική, αφού την κανει παύση,

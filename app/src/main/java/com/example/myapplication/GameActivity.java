@@ -535,4 +535,20 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
         backPressedTime=System.currentTimeMillis();
     }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        hitSound.stop();
+        hitSound.release();
+        missSound.stop();
+        missSound.release();
+        countdownSound.stop();
+        countdownSound.release();
+        popSound.stop();
+        popSound.release();
+        jumpSound.stop();
+        jumpSound.release();
+    }
 }
