@@ -26,9 +26,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class MyApplication extends Application   implements Application.ActivityLifecycleCallbacks {
     private static MyService myService;
-     static int times = 0;
-    private static boolean musicState=true;
-    static boolean isBound = false;
+    static int times = 0;
 
     private static WeakReference<Activity> currentActivityReference;
 
@@ -44,7 +42,7 @@ public class MyApplication extends Application   implements Application.Activity
     private void determineForegroundStatus() {
         if(applicationBackgrounded.get()){
             SharedPreferences sharedPrefs  = getSharedPreferences("state", MODE_PRIVATE);
-            musicState=sharedPrefs.getBoolean("music",true);
+            boolean musicState = sharedPrefs.getBoolean("music", true);
             MyApplication.onEnterForeground(musicState);
             applicationBackgrounded.set(false);
 
@@ -105,17 +103,15 @@ public class MyApplication extends Application   implements Application.Activity
     /**
      * Μέθοδος για την απόκηση πρόσβασης στην υπηρεσία της εφαρμογης.
      */
-    private ServiceConnection connect = new ServiceConnection() {
+    private final ServiceConnection connect = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             MyService.LocalBinder binder = (MyService.LocalBinder)service;
             myService = binder.getService();
-            isBound=true;
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            isBound = false;
         }
     };
 

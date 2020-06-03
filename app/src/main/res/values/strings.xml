@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">My Application</string>
     <string name="n3" translatable="false">3</string>
     <string name="game_over">GAME OVER</string>
     <string name="play">Play</string>
@@ -33,7 +32,6 @@
     <string name="n9" translatable="false">9</string>
     <string name="n10" translatable="false">10</string>
     <string name="long_name">Very long Name!</string>
-    <string name="sound" translatable="false">sht</string>
     <string name="mof">The music has turned off</string>
     <string name="mon">The music has turned on</string>
     <string name="sof">The sounds has turned off</string>

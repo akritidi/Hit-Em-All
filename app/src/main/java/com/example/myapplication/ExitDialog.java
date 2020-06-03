@@ -3,6 +3,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 /** Αυτή η κλάσση αντιπροσωπεύει έναν δίαλογο εξόδου με τον χρήστη.*/
@@ -15,6 +17,7 @@ public class ExitDialog extends AppCompatDialogFragment {
      *Επιστρέφει
      * @return builder αντικείμενο διλόγου.
      */
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

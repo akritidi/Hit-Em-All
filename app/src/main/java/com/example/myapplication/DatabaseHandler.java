@@ -20,8 +20,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     /**ο Constructor της ΒΔ*/
-    DatabaseHandler(Context context, SQLiteDatabase.CursorFactory factory) {
-        super(context, DATABASE_NAME , factory, DATABASE_VERSION);
+    DatabaseHandler(Context context) {
+        super(context, DATABASE_NAME , null, DATABASE_VERSION);
     }
 
     /**Δημιουργία του σχήματος της ΒΔ -> πίνακας scores*/
@@ -55,7 +55,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     /**Μέθοδος για την προσθήκη νέας εγγραφής στην ΒΔ
-     * @param playerScore
+     * @param playerScore PlayerScore
      */
         void addScore(PlayerScore playerScore) {
         ContentValues values = new ContentValues();

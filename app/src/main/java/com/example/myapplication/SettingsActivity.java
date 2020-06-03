@@ -19,7 +19,6 @@ public class SettingsActivity extends AppCompatActivity  {
   Switch music,sounds;
    Toast switch1,s;
    MyService myService;
-   boolean isBound = false;
     SharedPreferences sharedPrefs;
     /**
      * Εδώ  αρχικοποιούνται οι listeners των δυο switch button, που περιέχει αυτή η δραστηριότητα.
@@ -74,6 +73,7 @@ public class SettingsActivity extends AppCompatActivity  {
         sounds.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //noinspection IfStatementWithIdenticalBranches
                 if(!isChecked){
 
                     SharedPreferences.Editor editor = sharedPrefs.edit();
@@ -102,17 +102,15 @@ public class SettingsActivity extends AppCompatActivity  {
     /**
      * Εδω αποκτάται πρόσβαση στο ήδη υπάρχον-τρέχον service
      */
-    private ServiceConnection connect = new ServiceConnection() {
+    private final ServiceConnection connect = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             MyService.LocalBinder binder = (MyService.LocalBinder)service;
             myService = binder.getService();
-            isBound=true;
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            isBound = false;
         }
     };
 

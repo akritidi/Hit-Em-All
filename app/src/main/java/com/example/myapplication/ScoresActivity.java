@@ -16,7 +16,7 @@ public class ScoresActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scores);
 
         TextView[][] data=matchTextViews();
-        DatabaseHandler db=new DatabaseHandler(this, null);
+        DatabaseHandler db=new DatabaseHandler(this);
 
         int k;
 

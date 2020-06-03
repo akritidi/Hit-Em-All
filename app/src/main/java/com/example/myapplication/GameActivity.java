@@ -205,7 +205,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      * Στο τέλος καλεί την hideMole. Πριν εκτελεστεί ο κώδικας ελέγχει την
      * μεταβλητή run (που ορίζει αν είναι σε πάυση η δραστηριότητα).
      */
-    private Runnable runnableCode=new Runnable() {
+    private final Runnable runnableCode=new Runnable() {
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void run() {
@@ -228,7 +228,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      * Ελέγχεται η μεταβλητή run (που ορίζει αν είναι σε πάυση η δραστηριότητα) και αν το άθροισμα των κουμπίων-moles, που εμφανίστηκαν, έιναι ίσο με το score.
      * Αν όχι αφαιρεί μια ζωή. Τέλος πριν καλέσει την nextMole, ελέγχει και αν το παιχνίδι έχει τελειώσει ή αν είναι σε πάυση.
      */
-    private Runnable runnableCode2= new Runnable() {
+    private final Runnable runnableCode2= new Runnable() {
         @Override
         public void run() {
             Log.d("Handlers","Called on Main Thread");

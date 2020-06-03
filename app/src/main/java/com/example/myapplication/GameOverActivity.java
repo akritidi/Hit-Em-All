@@ -18,7 +18,7 @@ import android.widget.Toast;
 public class GameOverActivity extends AppCompatActivity {
     private Editable yourName;
     private int yourScore;
-    DatabaseHandler db=new DatabaseHandler(this, null);
+    final DatabaseHandler db=new DatabaseHandler(this);
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -106,7 +106,7 @@ public class GameOverActivity extends AppCompatActivity {
     * Μέθοδος για την προσθήκη νέου σκορ στην ΒΔ
     * */
     public void addScore(Editable yourName, int yourScore) {
-        DatabaseHandler db=new DatabaseHandler(this, null);
+        DatabaseHandler db=new DatabaseHandler(this);
         PlayerScore playerScore=new PlayerScore(yourName,yourScore);
         db.addScore(playerScore);
     }
@@ -185,7 +185,7 @@ public class GameOverActivity extends AppCompatActivity {
     /**
     * Runnable Code που ανακατευθύνει στην Scores Activity
     * */
-    private Runnable r=new Runnable() {
+    private final Runnable r=new Runnable() {
         @Override
         public void run() {
             openScoresActivity();
